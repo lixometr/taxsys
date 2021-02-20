@@ -4,6 +4,8 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import auth from "./routes/auth"
 import statistics from './routes/statistics'
 import finances from './routes/finances'
+import user from './routes/user'
+import settings from './routes/settings'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -15,6 +17,8 @@ const routes: Array<RouteConfig> = [
   ...auth,
   ...statistics,
   ...finances,
+  ...user,
+  ...settings,
   {
     path: '*',
     name: "PageNotFound",

@@ -37,6 +37,8 @@ export default class HeaderSearch extends Vue {}
 .header-search {
   display: flex;
   position: relative;
+  max-width: 300px;
+  flex: 1;
   &__btn {
     color: $purple;
     position: absolute;
@@ -54,6 +56,7 @@ export default class HeaderSearch extends Vue {}
     outline: none;
     border: none;
     font-size: $fz_sm;
+    width: 100%;
   }
 }
 </style>

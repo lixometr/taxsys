@@ -35,12 +35,10 @@ export default class LayoutDefault extends Vue {}
     align-items: stretch;
     min-height: 100vh;
   }
-  &__sidebar {
-    margin-right: 20px;
-    
-  }
+  
   &__content {
     flex: 1;
+    padding: 0 20px;
   }
 }
 </style>

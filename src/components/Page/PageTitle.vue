@@ -1,6 +1,6 @@
 <template>
-  <div>
-   Not Found
+  <div class="page-title">
+    <slot />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class PageNotFound extends Vue {}
+export default class PageTitle extends Vue {}
 </script>
 
 <style >

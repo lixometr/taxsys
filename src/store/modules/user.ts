@@ -6,7 +6,9 @@ import { UserEntity } from "@/models/user.entity";
 const TOKEN_KEY = 'token'
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule {
-  user: UserEntity | null = null
+  user: UserEntity | null = {
+    name: 'Test user'
+  }
   token: string | null = null
   get isAuth() {
     return !!this.token
@@ -60,9 +62,12 @@ class User extends VuexModule {
     })
     await login.exec({ phone, password })
     if (login.result.value) {
-      this.setTokenWithCookie({token: login.result.value.token, expiresIn: login.result.value.expires_in});
+      this.setTokenWithCookie({ token: login.result.value.token, expiresIn: login.result.value.expires_in });
     }
     return login
+  }
+  async logout() {
+    return true
   }
 }
 export const UserModule = getModule(User)

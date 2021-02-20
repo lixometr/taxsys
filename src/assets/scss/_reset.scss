@@ -91,6 +91,7 @@ video {
     font-weight: normal;
     font-style: normal;
     font: inherit;
+    box-sizing: border-box;
     vertical-align: baseline;
 }
 
@@ -178,6 +179,7 @@ svg {
     fill: inherit;
     stroke: inherit;
     max-width: 100%;
+    display: inline-block;
 }
 
 input, textarea {

@@ -1,0 +1,67 @@
+<template>
+  <div class="header-account">
+    <router-link :to="{ name: 'Profile' }" class="header-account__user">
+      <div class="header-account__icon">
+        <svgUser />
+      </div>
+      <div class="header-account__user-name">
+        {{ userName }}
+      </div>
+    </router-link>
+    <a href="#" class="header-account__exit" @click.prevent="exit">Выход</a>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import svgUser from "@/assets/icons/user.svg";
+import { UserModule } from "@/store/modules/user";
+@Component({
+  components: {
+    svgUser,
+  },
+  setup() {
+    const exit = async () => {
+      await UserModule.logout();
+    };
+    return {
+      exit,
+    };
+  },
+})
+export default class HeaderAccount extends Vue {
+  get userName() {
+    return UserModule.user?.name;
+  }
+}
+</script>
+
+<style lang="scss">
+.header-account {
+  color: $purple;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: $fz_xs;
+  flex-shrink: 0;
+  &__icon {
+    font-size: 0;
+  }
+  &__user {
+    display: flex;
+    align-items: center;
+    &::after {
+        content: "";
+        display: block;
+        background: $purple;
+        width: 1px;
+        margin: 0 12px;
+        height: 15px;
+    }
+    &-name {
+      text-transform: uppercase;
+      margin-left: 12px;
+    }
+  }
+}
+</style>

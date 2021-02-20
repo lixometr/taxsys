@@ -1,6 +1,27 @@
 .color-purple {
     color: $purple;
 }
+.color-grey-1 {
+  color: $grey_1;
+}
+.color-grey-2 {
+  color: $grey_2;
+}
+.color-grey-3 {
+  color: $grey_3;
+}
+.font-lg {
+  font-size: $fz_lg;
+}
+.font-md {
+  font-size: $fz_md;
+}
+.font-sm {
+  font-size: $fz_sm;
+}
+.font-xs {
+  font-size: $fz_xs;
+}
 .bold {
     font-weight: $bold;
 }
@@ -9,4 +30,19 @@
 }
 .flex {
     display: flex;
+}
+
+$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100); 
+$sides: (top, bottom, left, right); 
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space/10}rem !important;
+    }
+  
+    .p#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space/10}rem !important;
+    }
+  }
 }

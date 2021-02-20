@@ -9,12 +9,12 @@ const routes: Array<RouteConfig> = [
         },
         children: [
             {
-                name: "Travels",
+                name: "FinancesTravels",
                 path: 'travels',
                 component: () => import('@/views/Finances/Travels.vue')
             },
             {
-                name: "SuspiciousTravels",
+                name: "FinancesSuspiciousTravels",
                 path: 'suspicious-travels',
                 component: () => import('@/views/Finances/SuspiciousTravels.vue')
             },

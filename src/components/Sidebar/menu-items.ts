@@ -8,22 +8,22 @@ interface IMenuItems {
 const menuItems: IMenuItems[] = [
     {
         name: 'Статистика',
-        img: '/assets/img/stat.svg',
+        img: require('@/assets/icons/statistics.svg'),
         routeName: 'Statistics',
         children: []
     },
     {
         name: 'Финансы',
-        img: '/assets/img/finance.svg',
+        img: require('@/assets/icons/finances.svg'),
         // routeName: "Finances",
         children: [
             {
                 name: "Поездки",
-                // routeName: 'FinancesTravels'
+                routeName: 'FinancesTravels'
             },
             {
                 name: "Подозрительные поездки",
-                // routeName: 'FinancesSuspiciousTravels'
+                routeName: 'FinancesSuspiciousTravels'
             },
             {
                 name: "Ручные выплаты",
@@ -37,7 +37,7 @@ const menuItems: IMenuItems[] = [
     },
     {
         name: "Водители",
-        img: '/assets/img/user.svg',
+        img: require('@/assets/icons/user_menu.svg'),
         children: [
             {
                 name: "Заявки водителей"
@@ -55,24 +55,18 @@ const menuItems: IMenuItems[] = [
     },
     {
         name: 'Аренда',
-        img: '/assets/img/car.svg'
+        img: require('@/assets/icons/car.svg')
     },
     {
         name: "Штрафы",
-        img: '/assets/img/alert-circle.svg'
+        img: require('@/assets/icons/fines.svg')
     },
     {
         name: "Приложение",
-        img: '/assets/img/smartphone.svg'
+        img: require('@/assets/icons/smartphone.svg')
     },
-    {
-        name: 'Партнеры',
-        img: '/assets/img/user.svg'
-    },
-    {
-        name: "Настройки",
-        img: '/assets/img/settings.svg'
-    }
+   
+   
 ]
 
 export default menuItems

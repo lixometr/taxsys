@@ -5,7 +5,6 @@
         class="login-form__input"
         label="+7 999 999 99 99*"
         v-model="loginForm.values.phone"
-        @input="onPhoneInput"
         :errors="loginForm.errors.phone"
       />
       <app-input
@@ -50,23 +49,16 @@ import "yup-phone";
     // });
     const loginForm = useForm({
       fields: {
-        phone: useField("+79660108888", [
+        phone: useField(process.env.NODE_ENV === 'development' ? "+79660108888" : '', [
           yup.string().phone("7", true, "Введите корректный номер телефона"),
         ]),
-        password: useField("123456", [yup.string().required("Введите пароль")]),
+        password: useField(process.env.NODE_ENV === 'production' ? "123456" : '', [yup.string().required("Введите пароль")]),
       },
 
       watchAfterSubmit: true,
     });
-    const onPhoneInput = (value) => {
-      // value.matchAll(/\d/);
-      // const pattern = "(##)##";
-      // // pattern.match(pattern)
-      // loginForm.values.phone = `+7 ${value}`;
-    };
-    watch(loginForm.values, (values) => {
-      const phone = values.phone;
-    });
+   
+   
 
     let serverError = ref(null);
     const sendInfo = async () => {
@@ -89,7 +81,6 @@ import "yup-phone";
     return {
       onLogin,
       loginForm,
-      onPhoneInput,
     };
   },
 })

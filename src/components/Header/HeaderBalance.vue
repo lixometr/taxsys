@@ -1,7 +1,7 @@
 <template>
   <div class="header-balance">
-    <header-taxy-balance class="header-balance__taxy"/>
-    <header-qiwi-balance />
+    <header-taxy-balance class="header-balance__item header-balance__taxy"  />
+    <header-qiwi-balance class="header-balance__item" />
   </div>
 </template>
 
@@ -21,10 +21,13 @@ export default class HeaderBalance extends Vue {}
 
 <style lang="scss">
 .header-balance {
-    display: flex;
-    align-items: center;
-    &__taxy {
-      margin-right: 2rem;
-    }
+  display: flex;
+  align-items: center;
+  &__item {
+    flex-shrink: 0;
+  }
+  &__taxy {
+    margin-right: 2rem;
+  }
 }
 </style>
