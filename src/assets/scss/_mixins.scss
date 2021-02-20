@@ -1,0 +1,30 @@
+@mixin lg {
+    @media screen and (max-width: $bp_lg) {
+        @content;
+    }
+}
+@mixin md {
+    @media screen and (max-width: $bp_md) {
+        @content;
+    }
+}
+@mixin sm {
+    @media screen and (max-width: $bp_sm) {
+        @content;
+    }
+}
+@mixin xs {
+    @media screen and (max-width: $bp_xs) {
+        @content;
+    }
+}
+
+@mixin fz($font-size) {
+    font-size: $font-size;
+    font-weight: normal;
+    font-style: normal;
+}
+
+@mixin basic_shadow {
+    box-shadow: 15px 10px 50px rgba(0, 0, 0, 0.4);
+}

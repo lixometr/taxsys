@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha512-H9jrZiiopUdsLpg94A333EfumgUBpO9MdbxStdeITo+KEIMaNfHNvwyjjDJb+ERPaRS6DpyRlKbvPUasNItRyw==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/assets/css/datepicker.css">
+    <link rel="stylesheet" href="/assets/css/chartist.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="shortcut icon" type="image/ico" href="/assets/img/favicon.ico" />
+    <title>TAXYS</title>
+
+
+</head>
+
+<body>
+    <header class="header " id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <div class="nav__img"><img src="/assets/img/logo-big.svg" alt="">
+                </div>
+                <div class="nav__title">Taxys</div>
+            </div>
+            <ul class="menu">
+                <li class="menu__link active">
+                    <img src="/assets/img/stat.svg" alt="#">
+                    <a href="statistic.html">
+                        <div class="menu__text">Статистика</div>
+                    </a>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/finance.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Финансы</div>
+                    </a>
+                    <ul class="sub-menu ">
+                        <li>
+                            <a href="Travel.html" class="sub-menu__link">Поездки</a>
+                        </li>
+                        <li>
+                            <a href="Suspicioustrips.html" class="sub-menu__link">Подозрительные поездки</a>
+                        </li>
+                        <li>
+                            <a href="ManualpaymentsApplications.html" class="sub-menu__link">Ручные выплаты</a>
+                        </li>
+                        <li>
+                            <a href="Automaticpayments.html" class="sub-menu__link">Автоматические выплаты</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/user.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Водители</div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="DriverApplications.html" class="sub-menu__link">Заявки водителей</a>
+                        </li>
+                        <li>
+                            <a href="Listofdrivers.html" class="sub-menu__link">Список водителей</a>
+                        </li>
+                        <li>
+                            <a href="Drivercheck.html" class="sub-menu__link">Проверить водителя</a>
+                        </li>
+                        <li>
+                            <a href="BlackList.html" class="sub-menu__link">Черный список</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/car.svg" alt="#">
+                    <a href="Rentacarfree.html">
+                        <div class="menu__text">Аренда</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/alert-circle.svg" alt="#">
+                    <a href="Penalties.html">
+                        <div class="menu__text">Штрафы</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/smartphone.svg" alt="#">
+                    <a href="28.html">
+                        <div class="menu__text">Приложение</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/user.svg" alt="#">
+                    <a href="Partners.html">
+                        <div class="menu__text">Партнёры</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/settings.svg" alt="#">
+                    <a href="Profile.html">
+                        <div class="menu__text">Настройки</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <div class="mob-menus ">
+        <a href="" class="mob-menu__spana"><span class="mob-menu__span"></span></a>
+        <ul class="mob-menu">
+            <li class="mob-menu-link">
+                <a href="statistic.html">Статистика</a>
+            </li>
+            <li class="mob-menu-link sub__link">Финансы
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="Travel.html">Поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Suspicioustrips.html">Подозрительные поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="ManualpaymentsApplications.html">Ручные выплаты</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Automaticpayments.html">Автоматические выплаты</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link sub__link">Водители
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="DriverApplications.html">Заявки водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Listofdrivers.html">Список водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Drivercheck.html">Проверить водителя</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="BlackList.html">Черный список</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Rentacarfree.html">Аренда</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Penalties.html">Штрафы</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="28.html">Приложение</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Partners.html">Партнёры</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Profile.html">Настройки</a>
+            </li>
+        </ul>
+    </div>
+    <main class="main lock-padding" id="main">
+        <div class="toolbar">
+            <div class="search">
+                <img src="/assets/img/search.svg" alt="">
+                <input type="search" placeholder="Поиск...">
+            </div>
+            <div class="taxsys">
+
+                <div class="taxsys__title">Taxsys:</div>
+                <a href="#popup21" class="popup-link"><img src="/assets/img/minus-circle.svg" alt=""></a>
+                <div class="taxsys__value">1 000 859 ₽</div>
+                <a href="#popup20" class="popup-link"><img src="/assets/img/plus-circle.svg" alt=""></a>
+            </div>
+            <div class="qiwi">
+                <div class="qiwi__title">QIWI:</div>
+                <div class="qiwi__value">3 000 859 ₽</div>
+            </div>
+            <div class="not-mess">
+                <div class="not-mess__notification">
+                    <a href="Notifications.html"><img src="/assets/img/notification_bell.svg" alt="" class="bell"><img src="/assets/img/Ellipse2.svg" alt="" class="point active"></a>
+                </div>
+                <span></span>
+                <div class="not-mess__message">
+                    <a href="ChatRooms.html"><img src="/assets/img/Message.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="lk">
+                <img src="/assets/img/stroke.svg" alt="">
+                <div class="lk__user"><a href="Profile.html">Транзит момент</a></div>
+                <span></span>
+                <div class="lk__exit"><a href="">Выход</a></div>
+            </div>
+        </div>
+        <div class="sort ">
+            <div class="sort__date">
+                <img src="/assets/img/calendar.svg" alt="">
+                <div class="sort__period">Период</div>
+                <input type="text" data-range="true" data-multiple-dates-separator=" &mdash; " class="datepicker-here" placeholder="14.06.2019 &mdash; 14.06.2019" />
+            </div>
+            <div class="sort__agreg mw240 mr50">
+                <div class="agreg active"><a href="" class="connect-btn">Подключение</a></div>
+                <div class="agreg "><a href="" class="rent-btn">Аренда</a></div>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion__title ">
+                <div>Список водителей</div>
+                <a href="Adddriver.html" class="acc-header__btn--yellow">Добавить водителя</a>
+            </div>
+            <div class="accordion__item pp3218 connect">
+                <div class="accordion-header header-acc">
+                    <div class="accordion-header__column1 header-column1">
+                        <div class="accordion-header__number header-number">123456789</div>
+                        <div class="accordion-header__datetime header-datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2 header-column2">
+                        <div class="accordion-header__fio header-fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__tel header-tel">+7 900 800 90 08</div>
+                    </div>
+                    <div class="accordion-header__column3 header-column3">
+                        <div class="accordion-header__number-car header-number-car"><a href="Vehicledata.html"><span class="number-car">a<b>450</b>вп 777</span></a>
+                        </div>
+                        <div class="accordion-header__town header-town">Самара</div>
+                        <div class="accordion-header__agregs header-agregs">
+                            <a href="#" data-title="2000 ₽" class="jn-tooltip "><img src="/assets/img/yandex.svg"></a>
+                            <a href="#" data-title="3000 ₽" class="jn-tooltip "><img src="/assets/img/citymobil.svg"></a>
+                            <a href="#" data-title="4000 ₽" class="jn-tooltip "> <img src="/assets/img/gett.svg"></a>
+                        </div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="agreg-mod">
+                    <div class="agreg-mod__yandex">
+                        <div class="yandex--item">
+                            <span><img src="/assets/img/yandex.svg" alt="">Яндекс.Такси</span>
+                            <div class="yandex--item__value">1277.50 ₽</div>
+                            <a href="#popup2" class="popup-link"><img src="/assets/img/mod.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="agreg-mod__city">
+                        <div class="city--item">
+                            <span><img src="/assets/img/citymobil.svg" alt="">Ситимобил</span>
+                            <div class="city--item__value">1277.50 ₽</div>
+                            <a href="#popup2" class="popup-link"><img src="/assets/img/mod.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="agreg-mod__gett">
+                        <div class="gett--item">
+                            <span><img src="/assets/img/gett.svg" alt="">Gett</span>
+                            <div class="gett--item__value">1277.50 ₽</div>
+                            <a href="#popup2" class="popup-link"><img src="/assets/img/mod.svg" alt=""></a>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1--1">
+                        <div class="column__accordion1--title">Данные водителя</div>
+                        <div class="row">
+                            <div class="text">Серия/номер В.У.:</div>
+                            <div class="value">5513 490490</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Стаж вождения:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Дата выдачи В.У.:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Срок действия В.У.:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Дата рождения:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Страна выдачи:</div>
+                            <div class="value">Россия</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Серия/Номер паспорта</div>
+                            <div class="value">10 12 451245</div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="text">Кем выдан:</div>
+                            <div class="value">Отделом уфмс по гор. москве по району выхино-жулебино</div>
+                        </div>
+                        <div class="images1">
+                            <div class="img">
+                                <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                    <img src="/assets/img/face3.jpg" class="picture" />
+                                </a><img src="/assets/img/vy.svg" alt="" class="icon"></div>
+                            <div class="img">
+                                <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                    <img src="/assets/img/face3.jpg" class="picture" />
+                                </a><img src="/assets/img/book.svg" alt="" class="icon"></div>
+                            <div class="img">
+                                <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                    <img src="/assets/img/face3.jpg" class="picture" />
+                                </a><img src="/assets/img/user.svg" alt="" class="icon"></div>
+                        </div>
+                    </div>
+                    <div class="accordion-body__column-not-standart">
+                        <div class="recvisit">
+                            <div class="row-row-row">
+                                <div class="column__accordion3--title">Реквизиты</div>
+                                <div class="column__card-title"><a href="#popup3" class="violet-btn popup-link">Добавить карту</a></div>
+                            </div>
+
+
+
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 1:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 2:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" >
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 3:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" >
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="avto__data"></div>
+                        <div class="accordion-body__column column__accordion3--3 mt40">
+                            <div class="column__accordion3--title">Данные авто</div>
+                            <div class="row">
+                                <div class="text">Марка/модель:</div>
+                                <div class="value">Kia Rio</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Цвет:</div>
+                                <div class="value">Белый</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Год:</div>
+                                <div class="value">2019</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">VIN:</div>
+                                <div class="value">WDDGG128271674910</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">СТС серия/номер:</div>
+                                <div class="value">99 12 265397</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Gett ID:</div>
+                                <div class="value">151765</div>
+                            </div>
+                            <div class="images2">
+                                <div class="img">
+                                    <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                        <img src="/assets/img/face3.jpg" class="picture" />
+                                    </a><img src="/assets/img/file-text.svg" alt="" class="icon img__popup"></div>
+                                <div class="img">
+                                    <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                        <img src="/assets/img/face3.jpg" class="picture" />
+                                    </a><img src="/assets/img/picture.svg" alt="" class="icon"></div>
+                                <div class="img">
+                                    <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                        <img src="/assets/img/face3.jpg" class="picture" />
+                                    </a><img src="/assets/img/picture.svg" alt="" class="icon"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="accordion-body__column column__accordion5--5">
+                        <div class="column__accordion5--title">Агрегаторы</div>
+                        <div class="column__accordion5--title-body">
+                            <div class="column__row row__column">
+                                <div class="column__text ">Яндекс.Такси</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                            <div class="column__row row__column">
+                                <div class="column__text ">Gett</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                            <div class="column__row row__column">
+                                <div class="column__text ">Ситимобил</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                            <div class="column__row row__column">
+                                <div class="column__text ">Wheely</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" >
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="column__accordion5--title ofer">Оферта</div>
+                        <div class="oferta">
+                            <div class="column__accordion5--title-body">
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Оферта информационных услуг</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Обработка персональных данных</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Договор аренды автомобиля</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Согласие на списания денежных средств...</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Акт приема автомобиля</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Акт Возврата автомобиля</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Расписка на остаток задолженности</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <a href="Drivercheck.html" class="check-driver__btn">проверить водителя</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+            <div class="accordion__item pp3218 rent active">
+                <div class="accordion-header header-acc">
+                    <div class="accordion-header__column1 header-column1">
+                        <div class="accordion-header__number header-number">123456789</div>
+                        <div class="accordion-header__datetime header-datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2 header-column2">
+                        <div class="accordion-header__fio header-fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__tel header-tel">+7 900 800 90 08</div>
+                    </div>
+                    <div class="accordion-header__column3 header-column3">
+                        <div class="accordion-header__number-car header-number-car"><a href="Vehicledata.html"><span class="number-car">a<b>450</b>вп 777</span></a>
+                        </div>
+                        <div class="accordion-header__town header-town">Самара</div>
+                        <div class="accordion-header__agregs header-agregs">
+                            <a href="#" data-title="2000 ₽" class="jn-tooltip "><img src="/assets/img/yandex.svg"></a>
+                            <a href="#" data-title="3000 ₽" class="jn-tooltip "><img src="/assets/img/citymobil.svg"></a>
+                            <a href="#" data-title="4000 ₽" class="jn-tooltip "> <img src="/assets/img/gett.svg"></a>
+                        </div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="agreg-mod">
+                    <div class="agreg-mod__yandex">
+                        <div class="yandex--item">
+                            <span><img src="/assets/img/yandex.svg" alt="">Яндекс.Такси</span>
+                            <div class="yandex--item__value">1277.50 ₽</div>
+                            <a href="#popup2" class="popup-link"><img src="/assets/img/mod.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="agreg-mod__city">
+                        <div class="city--item">
+                            <span><img src="/assets/img/citymobil.svg" alt="">Ситимобил</span>
+                            <div class="city--item__value">1277.50 ₽</div>
+                            <a href="#popup2" class="popup-link"><img src="/assets/img/mod.svg" alt=""></a>
+                        </div>
+                    </div>
+                    <div class="agreg-mod__gett">
+                        <div class="gett--item">
+                            <span><img src="/assets/img/gett.svg" alt="">Gett</span>
+                            <div class="gett--item__value">1277.50 ₽</div>
+                            <a href="#popup2" class="popup-link"><img src="/assets/img/mod.svg" alt=""></a>
+                        </div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1--1">
+                        <div class="column__accordion1--title">Данные водителя</div>
+                        <div class="row">
+                            <div class="text">Серия/номер В.У.:</div>
+                            <div class="value">5513 490490</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Стаж вождения:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Дата выдачи В.У.:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Срок действия В.У.:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Дата рождения:</div>
+                            <div class="value">10.10.2010</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Страна выдачи:</div>
+                            <div class="value">Россия</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Серия/Номер паспорта</div>
+                            <div class="value">10 12 451245</div>
+                        </div>
+
+
+
+                        <div class="row">
+                            <div class="text">Кем выдан:</div>
+                            <div class="value">Отделом уфмс по гор. москве по району выхино-жулебино</div>
+                        </div>
+                        <div class="images1">
+                            <div class="img">
+                                <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                    <img src="/assets/img/face3.jpg" class="picture" />
+                                </a><img src="/assets/img/vy.svg" alt="" class="icon"></div>
+                            <div class="img">
+                                <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                    <img src="/assets/img/face3.jpg" class="picture" />
+                                </a><img src="/assets/img/book.svg" alt="" class="icon"></div>
+                            <div class="img">
+                                <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                    <img src="/assets/img/face3.jpg" class="picture" />
+                                </a><img src="/assets/img/user.svg" alt="" class="icon"></div>
+                        </div>
+                    </div>
+                    <div class="accordion-body__column-not-standart">
+                        <div class="recvisit">
+                            <div class="row-row-row">
+                                <div class="column__accordion3--title">Реквизиты</div>
+                                <div class="column__card-title"><a href="#popup3" class="violet-btn popup-link">Добавить карту</a></div>
+                            </div>
+
+
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 1:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 1:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 1:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 1:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" checked>
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 2:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" >
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-row-row">
+                                <div class="column__text">Карта 3:
+                                    <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                                </div>
+                                <div class="column__card-item">
+                                    5858 8585 8878 9854 <label class="checkbox">
+                                        <input type="checkbox" >
+                                        <span class="box"><img src="/assets/img/star.svg" alt=""></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="avto__data"></div>
+                        <div class="accordion-body__column column__accordion3--3 mt40">
+                            <div class="column__accordion3--title">Данные авто</div>
+                            <div class="row">
+                                <div class="text">Марка/модель:</div>
+                                <div class="value">Kia Rio</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Цвет:</div>
+                                <div class="value">Белый</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Год:</div>
+                                <div class="value">2019</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">VIN:</div>
+                                <div class="value">WDDGG128271674910</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">СТС серия/номер:</div>
+                                <div class="value">99 12 265397</div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Gett ID:</div>
+                                <div class="value">151765</div>
+                            </div>
+                            <div class="images2">
+                                <div class="img">
+                                    <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                        <img src="/assets/img/face3.jpg" class="picture" />
+                                    </a><img src="/assets/img/file-text.svg" alt="" class="icon img__popup"></div>
+                                <div class="img">
+                                    <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                        <img src="/assets/img/face3.jpg" class="picture" />
+                                    </a><img src="/assets/img/picture.svg" alt="" class="icon"></div>
+                                <div class="img">
+                                    <a href="/assets/img/face3.jpg" data-fancybox class="picture">
+                                        <img src="/assets/img/face3.jpg" class="picture" />
+                                    </a><img src="/assets/img/picture.svg" alt="" class="icon"></div>
+                            </div>
+                            <div class="rent__buttons active">
+                                <a href="" class="destroy-btn">Забрать</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="accordion-body__column column__accordion5--5">
+                        <div class="column__accordion5--title">Агрегаторы</div>
+                        <div class="column__accordion5--title-body">
+                            <div class="column__row row__column">
+                                <div class="column__text ">Яндекс.Такси</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                            <div class="column__row row__column">
+                                <div class="column__text ">Gett</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                            <div class="column__row row__column">
+                                <div class="column__text ">Ситимобил</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked>
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                            <div class="column__row row__column">
+                                <div class="column__text ">Wheely</div>
+                                <label class="checkbox">
+                                    <input type="checkbox" >
+                                    <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="column__accordion5--title ofer">Оферта</div>
+                        <div class="oferta">
+                            <div class="column__accordion5--title-body">
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Оферта информационных услуг</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Обработка персональных данных</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Договор аренды автомобиля</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Согласие на списания денежных средств...</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Акт приема автомобиля</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Акт Возврата автомобиля</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <div class="column__text ">Расписка на остаток задолженности</div>
+                                    <label class="checkbox">
+                                        <input type="checkbox" checked onclick="color(this)">
+                                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                                    </label>
+                                </div>
+                                <div class="column__row row__column">
+                                    <a href="Drivercheck.html" class="check-driver__btn">проверить водителя</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+        </div>
+        <div class="popup-overlay ">
+            <div class="popup " id="popup21">
+                <span></span>
+                <div class="popup__title">Вывести с баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                    <select>
+                <option value=""></option>
+                <option value="">Карта</option>
+                <option value="">счёт</option>
+            </select>
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Списать</a>
+                </div>
+            </div>
+            <div class="popup " id="popup20">
+                <span></span>
+                <div class="popup__title">Пополнить баланс <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Пополнить</a>
+                </div>
+            </div>
+            <div class="popup " id="popup2">
+                <span></span>
+                <div class="popup__title">Изменение баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+                    <div class="buttons">
+                        <a href="" class="write_off active">Списать</a>
+                        <a href="" class="replenish ">Пополнить</a>
+                    </div>
+                    <input type="text" placeholder="Сумма" class="ss">
+                    <input type="text" placeholder="Комментарий">
+                </div>
+                <div class="popup__checkbox active">
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                    </label>
+                    <div class="checkbox-text">Выплатить</div>
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">Выполнить</a>
+                </div>
+            </div>
+
+
+            <div class="popup " id="popup3">
+                <span></span>
+                <div class="popup__title">Добавление карты<img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Номер карты" class="ss">
+
+                </div>
+                <div class="popup__checkbox active">
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                    </label>
+                    <div class="checkbox-text">Сделать картой по умолчанию</div>
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">сохранить</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer ">
+            <a href="" class="show_more">Показать ещё</a>
+            <div class="pagination">
+                <a href=""><img src="/assets/img/strelka-l.svg" alt=""></a>
+                <span>16  /  1500</span>
+                <a href=""><img src="/assets/img/strelka-r.svg" alt=""></a>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+        <script src="/assets/js/datepicker.min.js "></script>
+        <script src="/assets/js/header__main__width.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha512-uURl+ZXMBrF4AwGaWmEetzrd+J5/8NRkWAvJx5sbPSSuOb0bZLqf+tOzniObO00BjHa/dD7gub9oCGMLPQHtQA==" crossorigin="anonymous"></script>
+        <script src="/assets/js/popups.js"></script>
+        <script src="/assets/js/accordion__item.js"></script>
+        <script src="/assets/js/click_checkbox.js"></script>
+        <script src="/assets/js/popupimg.js"></script>
+        <script src="/assets/js/rent__connect.js"></script>
+    </main>
+
+
+</body>
+
+</html>

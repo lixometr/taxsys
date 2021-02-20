@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/datepicker.css">
+    <link rel="stylesheet" href="/assets/css/chartist.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="shortcut icon" type="image/ico" href="/assets/img/favicon.ico" />
+    <title>TAXYS</title>
+
+
+</head>
+
+<body>
+    <header class="header " id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <div class="nav__img"><img src="/assets/img/logo-big.svg" alt="">
+                </div>
+                <div class="nav__title">Taxys</div>
+            </div>
+            <ul class="menu">
+                <li class="menu__link active">
+                    <img src="/assets/img/stat.svg" alt="#">
+                    <a href="statistic.html">
+                        <div class="menu__text">Статистика</div>
+                    </a>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/finance.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Финансы</div>
+                    </a>
+                    <ul class="sub-menu ">
+                        <li>
+                            <a href="Travel.html" class="sub-menu__link">Поездки</a>
+                        </li>
+                        <li>
+                            <a href="Suspicioustrips.html" class="sub-menu__link">Подозрительные поездки</a>
+                        </li>
+                        <li>
+                            <a href="ManualpaymentsApplications.html" class="sub-menu__link">Ручные выплаты</a>
+                        </li>
+                        <li>
+                            <a href="Automaticpayments.html" class="sub-menu__link">Автоматические выплаты</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/user.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Водители</div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="DriverApplications.html" class="sub-menu__link">Заявки водителей</a>
+                        </li>
+                        <li>
+                            <a href="Listofdrivers.html" class="sub-menu__link">Список водителей</a>
+                        </li>
+                        <li>
+                            <a href="Drivercheck.html" class="sub-menu__link">Проверить водителя</a>
+                        </li>
+                        <li>
+                            <a href="BlackList.html" class="sub-menu__link">Черный список</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/car.svg" alt="#">
+                    <a href="Rentacarfree.html">
+                        <div class="menu__text">Аренда</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/alert-circle.svg" alt="#">
+                    <a href="Penalties.html">
+                        <div class="menu__text">Штрафы</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/smartphone.svg" alt="#">
+                    <a href="28.html">
+                        <div class="menu__text">Приложение</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/user.svg" alt="#">
+                    <a href="Partners.html">
+                        <div class="menu__text">Партнёры</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/settings.svg" alt="#">
+                    <a href="Profile.html">
+                        <div class="menu__text">Настройки</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <div class="mob-menus ">
+        <a href="" class="mob-menu__spana"><span class="mob-menu__span"></span></a>
+        <ul class="mob-menu">
+            <li class="mob-menu-link">
+                <a href="statistic.html">Статистика</a>
+            </li>
+            <li class="mob-menu-link sub__link">Финансы
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="Travel.html">Поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Suspicioustrips.html">Подозрительные поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="ManualpaymentsApplications.html">Ручные выплаты</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Automaticpayments.html">Автоматические выплаты</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link sub__link">Водители
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="DriverApplications.html">Заявки водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Listofdrivers.html">Список водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Drivercheck.html">Проверить водителя</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="BlackList.html">Черный список</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Rentacarfree.html">Аренда</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Penalties.html">Штрафы</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="28.html">Приложение</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Partners.html">Партнёры</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Profile.html">Настройки</a>
+            </li>
+        </ul>
+    </div>
+    <main class="main lock-padding" id="main">
+        <div class="toolbar">
+            <div class="search">
+                <img src="/assets/img/search.svg" alt="">
+                <input type="search" placeholder="Поиск...">
+            </div>
+            <div class="taxsys">
+
+                <div class="taxsys__title">Taxsys:</div>
+                <a href="#popup21" class="popup-link"><img src="/assets/img/minus-circle.svg" alt=""></a>
+                <div class="taxsys__value">1 000 859 ₽</div>
+                <a href="#popup20" class="popup-link"><img src="/assets/img/plus-circle.svg" alt=""></a>
+            </div>
+            <div class="qiwi">
+                <div class="qiwi__title">QIWI:</div>
+                <div class="qiwi__value">3 000 859 ₽</div>
+            </div>
+            <div class="not-mess">
+                <div class="not-mess__notification">
+                    <a href="Notifications.html"><img src="/assets/img/notification_bell.svg" alt="" class="bell"><img src="/assets/img/Ellipse2.svg" alt="" class="point active"></a>
+                </div>
+                <span></span>
+                <div class="not-mess__message">
+                    <a href="ChatRooms.html"><img src="/assets/img/Message.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="lk">
+                <img src="/assets/img/stroke.svg" alt="">
+                <div class="lk__user"><a href="Profile.html">Транзит момент</a></div>
+                <span></span>
+                <div class="lk__exit"><a href="">Выход</a></div>
+            </div>
+        </div>
+        <div class="sort2">
+            <div class="sort2__title">
+                <a href=""></a>
+                <div class="title__text">
+                    Проверка водителя</div>
+            </div>
+            <div class="sort2__buttons">
+
+                <a href="" class="attach-driver">Новая проверка</a>
+            </div>
+        </div>
+        <form class="check-driver ">
+            <div class="form__row1">
+                <input type="text" placeholder="Фамилия ">
+                <input type="text" placeholder="Имя ">
+                <input type="text" placeholder="Отчество">
+                <input type="text" placeholder="Дата рождения" data-range="false" class="datepicker-here data" maxlength="10">
+            </div>
+            <div class="form__row2">
+                <input type="text" placeholder="Серия / номер паспорта" class="ss" maxlength="10">
+                <input type="text" placeholder="Серия / номер В.У.">
+                <input type="text" placeholder="Дата выдачи В.У." data-range="false" class="datepicker-here data" maxlength="10">
+            </div>
+            <div class="form__btn">
+                <a href="" class="verify">Проверить</a>
+                <img src="/assets/img/info.svg" alt="" class="jn-tooltip" data-title="212312">
+            </div>
+        </form>
+        <div class="windows8 ">
+            <div class="wBall" id="wBall_1">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_2">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_3">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_4">
+                <div class="wInnerBall"></div>
+            </div>
+            <div class="wBall" id="wBall_5">
+                <div class="wInnerBall"></div>
+            </div>
+        </div>
+        <div class="accordion-no-open show-hide">
+            <div class="accordion__item active">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__fio">Иванов Тимофей Петрович</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__passport">
+                            <div class="passport__title">Паспорт</div>
+                            <div class="passport__number">46 05 549656</div>
+                            <div class="passport__check"><label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                            </label></div>
+                        </div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__vy">
+                            <div class="vy__title">В.У.</div>
+                            <div class="vy__number">46 05 549656</div>
+                            <div class="vy__check"><label class="checkbox">
+                                <input type="checkbox" checked>
+                                <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                            </label></div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="accordion-body--title--purple">Проверка В.У.</div>
+                <div class="accordion-body--mod">
+                    <div class="mod__column">
+                        <div class="mod__column--rows">Дата рождения:</div>
+                        <div class="mod__column--rows">Дата выдачи:</div>
+                        <div class="mod__column--rows">Срок действия:</div>
+                        <div class="mod__column--rows">Категории ТС:</div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--rows">15.06.1991</div>
+                        <div class="mod__column--rows">15.06.1991</div>
+                        <div class="mod__column--rows">20.01.2016</div>
+                        <div class="mod__column--rows">B, B1, C, C1, D, D1, M</div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--title">Лишение права управления #1</div>
+                        <div class="mod__column--rows">Дата постановления:</div>
+                        <div class="mod__column--rows">Срок лишения:</div>
+                        <div class="mod__column--rows">Состояние:</div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">20.01.2013</div>
+                        <div class="mod__column2--rows">24 мес</div>
+                        <div class="mod__column2--rows">Начато начисление срока </div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--title">Лишение права управления #2</div>
+                        <div class="mod__column--rows">Дата постановления:</div>
+                        <div class="mod__column--rows">Срок лишения:</div>
+                        <div class="mod__column--rows">Состояние:</div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">20.01.2013</div>
+                        <div class="mod__column2--rows">24 мес</div>
+                        <div class="mod__column2--rows">Начато начисление срока </div>
+                    </div>
+
+                    <!-- <div class="accordion__body"></div> -->
+                </div>
+            </div>
+            <div class="accordion__item active">
+                <div class="accordion-body--title--purple">ФССП</div>
+                <div class="body-header">
+                    <div class="body-header__column">
+                        <div class="column__text">ФИО:</div>
+                        <div class="column__value">Долгополов Иван Дмитриевич</div>
+                    </div>
+                    <div class="body-header__column">
+                        <div class="column__text">Дата рождения:</div>
+                        <div class="column__value">07.08.1980</div>
+                    </div>
+                    <div class="body-header__column">
+                        <div class="column__text">Регион:</div>
+                        <div class="column__value">Самара</div>
+                    </div>
+                </div>
+                <div class="accordion-body--mod-fssp">
+                    <div class="mod__column">
+                        <div class="row">
+                            <div class="text">Исполнительное производство:</div>
+                            <div class="value">174462/18/55004-ИП от 03.10.2018 </div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Исполнительная документация:</div>
+                            <div class="value">Акт органа, осуществляющего контрольные функции от 21.06.2019 № 4505 </div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Исполнительная документация:</div>
+                            <div class="value">Взыскание налогов и сборов, включая пени: 1000.00 руб. Исполнительский сбор: 1000.00 руб. </div>
+                        </div>
+
+
+
+                        <!-- <div class="accordion__body"></div> -->
+                    </div>
+
+                    <!-- <div class="accordion__body"></div> -->
+                </div>
+                <hr class="bd-drivers">
+                <div class="body-header">
+                    <div class="body-header__column">
+                        <div class="column__text">ФИО:</div>
+                        <div class="column__value">Долгополов Иван Дмитриевич</div>
+                    </div>
+                    <div class="body-header__column">
+                        <div class="column__text">Дата рождения:</div>
+                        <div class="column__value">07.08.1980</div>
+                    </div>
+                    <div class="body-header__column">
+                        <div class="column__text">Регион:</div>
+                        <div class="column__value">Самара</div>
+                    </div>
+                </div>
+                <div class="accordion-body--mod-fssp">
+                    <div class="mod__column">
+                        <div class="row">
+                            <div class="text">Исполнительное производство:</div>
+                            <div class="value">174462/18/55004-ИП от 03.10.2018 </div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Исполнительная документация:</div>
+                            <div class="value">Акт органа, осуществляющего контрольные функции от 21.06.2019 № 4505 </div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Исполнительная документация:</div>
+                            <div class="value">Взыскание налогов и сборов, включая пени: 1000.00 руб. Исполнительский сбор: 1000.00 руб. </div>
+                        </div>
+
+
+
+                        <!-- <div class="accordion__body"></div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item active">
+                <div class="accordion-body--title--purple">База водителей</div>
+
+                <div class="accordion-body--mod-bd-drivers">
+                    <div class="mod__column">
+                        <div class="mod__column--rows">ФИО:</div>
+                        <div class="mod__column--rows">Рейтинг:</div>
+                        <div class="mod__column--rows">Телефон:</div>
+                        <div class="mod__column--rows">Фотоконтроль: </div>
+
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">Долгополов Иван Дмитриевич</div>
+                        <div class="mod__column2--rows">3.411</div>
+                        <div class="mod__column2--rows">+7 ******** 90</div>
+                        <div class="mod__column2--rows"><label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                        </label>
+                        </div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--rows">Транспортное средство:</div>
+                        <div class="mod__column--rows">Гос. номер:</div>
+                        <div class="mod__column--rows">Парк:</div>
+                        <div class="mod__column--rows">Отзыв:</div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">Pegout 407</div>
+                        <div class="mod__column2--rows">Г*****85</div>
+                        <div class="mod__column2--rows">KaPark. Москва</div>
+                        <div class="mod__column2--rows">Lorem ipsum dolor sit amet.</div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--rows">Дата приёма: </div>
+                        <div class="mod__column--rows">Дата увольнения: </div>
+                        <div class="mod__column--rows">Долг пред парком: </div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">11.12.1980</div>
+                        <div class="mod__column2--rows">11.12.1980</div>
+                        <div class="mod__column2--rows">Отсутствует</div>
+                    </div>
+                </div>
+                <hr class="bd-drivers">
+                <div class="accordion-body--mod-bd-drivers">
+                    <div class="mod__column">
+                        <div class="mod__column--rows">ФИО:</div>
+                        <div class="mod__column--rows">Рейтинг:</div>
+                        <div class="mod__column--rows">Телефон:</div>
+                        <div class="mod__column--rows">Фотоконтроль: </div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">Долгополов Иван Дмитриевич</div>
+                        <div class="mod__column2--rows">3.411</div>
+                        <div class="mod__column2--rows">+7 ******** 90</div>
+                        <div class="mod__column2--rows xx"><label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                        </label>
+                        </div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--rows">Транспортное средство:</div>
+                        <div class="mod__column--rows">Гос. номер:</div>
+                        <div class="mod__column--rows">Парк:</div>
+                        <div class="mod__column--rows">Отзыв:</div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">Pegout 407</div>
+                        <div class="mod__column2--rows">Г*****85</div>
+                        <div class="mod__column2--rows">KaPark. Москва</div>
+                        <div class="mod__column2--rows">Lorem ipsum dolor sit amet.</div>
+                    </div>
+                    <div class="mod__column">
+                        <div class="mod__column--rows">Дата приёма: </div>
+                        <div class="mod__column--rows">Дата увольнения: </div>
+                        <div class="mod__column--rows">Долг пред парком: </div>
+                    </div>
+                    <div class="mod__column2">
+                        <div class="mod__column2--rows">11.12.1980</div>
+                        <div class="mod__column2--rows">11.12.1980</div>
+                        <div class="mod__column2--rows">Отсутствует</div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+
+
+
+
+            <!-- <div class="accordion__body"></div> -->
+        </div>
+        <div class="popup-overlay ">
+            <div class="popup " id="popup21">
+                <span></span>
+                <div class="popup__title">Вывести с баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                    <select>
+                        <option value=""></option>
+                        <option value="">Карта</option>
+                        <option value="">счёт</option>
+                    </select>
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Списать</a>
+                </div>
+            </div>
+            <div class="popup " id="popup20">
+                <span></span>
+                <div class="popup__title">Пополнить баланс <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Пополнить</a>
+                </div>
+            </div>
+            <div class="popup " id="popup2">
+                <span></span>
+                <div class="popup__title">Изменение баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+                    <div class="buttons">
+                        <a href="" class="write_off active">Списать</a>
+                        <a href="" class="replenish ">Пополнить</a>
+                    </div>
+                    <input type="text" placeholder="Сумма" class="ss">
+                    <input type="text" placeholder="Комментарий">
+                </div>
+                <div class="popup__checkbox active">
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                    </label>
+                    <div class="checkbox-text">Выплатить</div>
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">Выполнить</a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </main>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+    <script src="/assets/js/datepicker.min.js "></script>
+    <script src="/assets/js/header__main__width.js"></script>
+    <script src="/assets/js/popups.js"></script>
+    <script src="/assets/js/driver_check.js"></script>
+    <script src="/assets/js/input_mask_numb.js"></script>
+    <script src="/assets/js/input_date_mask.js"></script>
+</body>
+
+</html>

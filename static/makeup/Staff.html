@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/datepicker.css">
+    <link rel="stylesheet" href="/assets/css/chartist.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="shortcut icon" type="image/ico" href="/assets/img/favicon.ico" />
+    <title>TAXYS</title>
+
+
+</head>
+
+<body>
+    <header class="header " id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <div class="nav__img"><img src="/assets/img/logo-big.svg" alt="">
+                </div>
+                <div class="nav__title">Taxys</div>
+            </div>
+            <ul class="menu">
+                <li class="menu__link active">
+                    <img src="/assets/img/stat.svg" alt="#">
+                    <a href="statistic.html">
+                        <div class="menu__text">Статистика</div>
+                    </a>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/finance.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Финансы</div>
+                    </a>
+                    <ul class="sub-menu ">
+                        <li>
+                            <a href="Travel.html" class="sub-menu__link">Поездки</a>
+                        </li>
+                        <li>
+                            <a href="Suspicioustrips.html" class="sub-menu__link">Подозрительные поездки</a>
+                        </li>
+                        <li>
+                            <a href="ManualpaymentsApplications.html" class="sub-menu__link">Ручные выплаты</a>
+                        </li>
+                        <li>
+                            <a href="Automaticpayments.html" class="sub-menu__link">Автоматические выплаты</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/user.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Водители</div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="DriverApplications.html" class="sub-menu__link">Заявки водителей</a>
+                        </li>
+                        <li>
+                            <a href="Listofdrivers.html" class="sub-menu__link">Список водителей</a>
+                        </li>
+                        <li>
+                            <a href="Drivercheck.html" class="sub-menu__link">Проверить водителя</a>
+                        </li>
+                        <li>
+                            <a href="BlackList.html" class="sub-menu__link">Черный список</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/car.svg" alt="#">
+                    <a href="Rentacarfree.html">
+                        <div class="menu__text">Аренда</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/alert-circle.svg" alt="#">
+                    <a href="Penalties.html">
+                        <div class="menu__text">Штрафы</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/smartphone.svg" alt="#">
+                    <a href="28.html">
+                        <div class="menu__text">Приложение</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/user.svg" alt="#">
+                    <a href="Partners.html">
+                        <div class="menu__text">Партнёры</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/settings.svg" alt="#">
+                    <a href="Profile.html">
+                        <div class="menu__text">Настройки</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <div class="mob-menus ">
+        <a href="" class="mob-menu__spana"><span class="mob-menu__span"></span></a>
+        <ul class="mob-menu">
+            <li class="mob-menu-link">
+                <a href="statistic.html">Статистика</a>
+            </li>
+            <li class="mob-menu-link sub__link">Финансы
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="Travel.html">Поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Suspicioustrips.html">Подозрительные поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="ManualpaymentsApplications.html">Ручные выплаты</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Automaticpayments.html">Автоматические выплаты</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link sub__link">Водители
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="DriverApplications.html">Заявки водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Listofdrivers.html">Список водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Drivercheck.html">Проверить водителя</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="BlackList.html">Черный список</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Rentacarfree.html">Аренда</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Penalties.html">Штрафы</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="28.html">Приложение</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Partners.html">Партнёры</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Profile.html">Настройки</a>
+            </li>
+        </ul>
+    </div>
+    <main class="main lock-padding" id="main">
+        <div class="toolbar">
+            <div class="search">
+                <img src="/assets/img/search.svg" alt="">
+                <input type="search" placeholder="Поиск...">
+            </div>
+            <div class="taxsys">
+
+                <div class="taxsys__title">Taxsys:</div>
+                <a href="#popup21" class="popup-link"><img src="/assets/img/minus-circle.svg" alt=""></a>
+                <div class="taxsys__value">1 000 859 ₽</div>
+                <a href="#popup20" class="popup-link"><img src="/assets/img/plus-circle.svg" alt=""></a>
+            </div>
+            <div class="qiwi">
+                <div class="qiwi__title">QIWI:</div>
+                <div class="qiwi__value">3 000 859 ₽</div>
+            </div>
+            <div class="not-mess">
+                <div class="not-mess__notification">
+                    <a href="Notifications.html"><img src="/assets/img/notification_bell.svg" alt="" class="bell">
+                        <img src="/assets/img/Ellipse2.svg" alt="" class="point active"></a>
+                </div>
+                <span></span>
+                <div class="not-mess__message">
+                    <a href="ChatRooms.html"><img src="/assets/img/Message.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="lk">
+                <img src="/assets/img/stroke.svg" alt="">
+                <div class="lk__user"><a href="Profile.html">Транзит момент</a></div>
+                <span></span>
+                <div class="lk__exit"><a href="">Выход</a></div>
+            </div>
+        </div>
+        <div class="sort__items">
+            <div class="item__sort1">
+                <div class="item__row1">
+                    <div class="item__subtitle">Брендированное приложение
+                    </div>
+                    <div class="item__img"><img src="/assets/img/check-square.svg" alt=""></div>
+                </div>
+                <div class="item__row2">Аренда</div>
+                <div class="item__row3">
+                    <div class="item__value">7 000 ₽</div>
+                    <div class="item__button">
+                        <a href="25.html">ОПЛАТИТЬ</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item__sort2">
+                <div class="item__row1">
+                    <div class="item__subtitle">Брендированное приложение
+                    </div>
+                    <div class="item__img"><img src="/assets/img/check-square.svg" alt=""></div>
+                </div>
+                <div class="item__row2">Покупка</div>
+                <div class="item__row3">
+                    <div class="item__value">200 000 ₽</div>
+                    <div class="item__button">
+                        <a href="24.html">купить</a>
+                    </div>
+                </div>
+            </div>
+            <div class="item__sort3">
+                <div class="item__row1">
+                    <div class="item__subtitle">Проверка водителя
+                    </div>
+                    <div class="item__img"><img src="/assets/img/driver_check.svg" alt=""></div>
+                </div>
+                <div class="item__row2">20 ₽ </div>
+                <div class="item__row3">
+                    <div class="item__value">отчет</div>
+                    <div class="item__radio-button">
+                        <label class="checkbox">
+                            <input type="checkbox" >
+                            <span class="box"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item__sort4">
+                <div class="item__row1">
+                    <div class="item__subtitle">Автораспознование документов
+                    </div>
+                    <div class="item__img"><img src="/assets/img/blankplus.svg" alt=""></div>
+                </div>
+                <div class="item__row2">10 ₽</div>
+                <div class="item__row3">
+                    <div class="item__value">документ</div>
+                    <div class="item__radio-button">
+                        <label class="checkbox">
+                            <input type="checkbox" >
+                            <span class="box"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item__sort5">
+                <div class="item__row1">
+                    <div class="item__subtitle">Плата за приложение Списание с водителя
+                    </div>
+                    <div class="item__img"><img src="/assets/img/rub.svg" alt=""></div>
+                </div>
+                <div class="item__row2">5 ₽ <span>/ в сутки </span></div>
+                <div class="item__row3">
+                    <div class="item__value">с первого заказ</div>
+                    <div class="item__radio-button">
+                        <label class="checkbox">
+                            <input type="checkbox" >
+                            <span class="box"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-menu">
+            <a href="Profile.html" class="settings-menu__item ">Профиль</a>
+            <a href="Controlrooms.html" class="settings-menu__item ">Диспетчерские</a>
+            <a href="Payoutgroups.html" class="settings-menu__item">Группы выплат</a>
+            <a href="Antifraud.html" class="settings-menu__item">Антифрод</a>
+            <a href="Paymentsystems.html" class="settings-menu__item">Платежные системы</a>
+            <a href="Staff.html" class="settings-menu__item active">Персонал</a>
+        </div>
+
+        <div class="sort2">
+            <div class="sort2__title">
+                <a href=""></a>
+                <div class="title__text ml20">
+                    Персонал
+                </div>
+            </div>
+            <div class="sort2__buttons">
+
+                <a href="#popup12" class="attach-driver plus-btn popup-link">Добавить сотрудника 
+                </a>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <div class="accordion__item  ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column71">
+                        <div class="accordion-header__text2 ">Мельников Максим Юрьевич</div>
+                    </div>
+                    <div class="accordion-header__column72">
+                        <div class="accordion-header__text2 ">+7 900 800 90 08</div>
+                    </div>
+                    <div class="accordion-header__column73">
+                        <div class="accordion-header__text2 ">Баланс: 200 000 ₽</div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+
+                </div>
+                <div class="accordion-body-mod">
+                    <div class="sub-personal">
+                        <div class="personal__column1">
+                            <div class="items1">
+                                <div class="item1">Серия/номар паспорта:</div>
+                                <div class="item2">45 15 555 889</div>
+                            </div>
+                        </div>
+                        <div class="personal__column2">
+                            <div class="items2">
+                                <div class="item1">ИНН:</div>
+                                <div class="item2">5513 490490</div>
+                            </div>
+                        </div>
+                        <div class="personal__column3">
+                            <div class="items3">
+                                <div class="item1">Номер карты:</div>
+                                <div class="item2 purple">4*** **** **** 3564</div>
+                            </div>
+                        </div>
+                        <a href="#popup23" class="popup-link"><img src="/assets/img/edit2.svg" alt=""></a>
+                    </div>
+                    <hr>
+                    <div class="sup-personal">
+                        <div class="personal__column11">
+                            <div class="items">
+                                <div class="item1">Среднее время ответа:</div>
+                                <div class="item2">2:34 мин</div>
+                            </div>
+                        </div>
+                        <div class="personal__column12">
+                            <div class="items">
+                                <div class="item1">Закрыто задач:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column13">
+                            <div class="items">
+                                <div class="item1">Задач с просрочкой:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column14">
+                            <div class="items">
+                                <div class="item1">Задач без ответа: </div>
+                                <div class="item2">0</div>
+                            </div>
+                        </div>
+                        <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item  ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column71">
+                        <div class="accordion-header__text2 ">Мельников Максим Юрьевич</div>
+                    </div>
+                    <div class="accordion-header__column72">
+                        <div class="accordion-header__text2 ">+7 900 800 90 08</div>
+                    </div>
+                    <div class="accordion-header__column73">
+                        <div class="accordion-header__text2 ">Баланс: 200 000 ₽</div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+
+                </div>
+                <div class="accordion-body-mod">
+                    <div class="sub-personal">
+                        <div class="personal__column1">
+                            <div class="items1">
+                                <div class="item1">Серия/номар паспорта:</div>
+                                <div class="item2">45 15 555 889</div>
+                            </div>
+                        </div>
+                        <div class="personal__column2">
+                            <div class="items2">
+                                <div class="item1">ИНН:</div>
+                                <div class="item2">5513 490490</div>
+                            </div>
+                        </div>
+                        <div class="personal__column3">
+                            <div class="items3">
+                                <div class="item1">Номер карты:</div>
+                                <div class="item2 purple">4*** **** **** 3564</div>
+                            </div>
+                        </div>
+                        <a href="#popup23" class="popup-link"><img src="/assets/img/edit2.svg" alt=""></a>
+                    </div>
+                    <hr>
+                    <div class="sup-personal">
+                        <div class="personal__column11">
+                            <div class="items">
+                                <div class="item1">Среднее время ответа:</div>
+                                <div class="item2">2:34 мин</div>
+                            </div>
+                        </div>
+                        <div class="personal__column12">
+                            <div class="items">
+                                <div class="item1">Закрыто задач:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column13">
+                            <div class="items">
+                                <div class="item1">Задач с просрочкой:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column14">
+                            <div class="items">
+                                <div class="item1">Задач без ответа: </div>
+                                <div class="item2">0</div>
+                            </div>
+                        </div>
+                        <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item  ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column71">
+                        <div class="accordion-header__text2 ">Мельников Максим Юрьевич</div>
+                    </div>
+                    <div class="accordion-header__column72">
+                        <div class="accordion-header__text2 ">+7 900 800 90 08</div>
+                    </div>
+                    <div class="accordion-header__column73">
+                        <div class="accordion-header__text2 ">Баланс: 200 000 ₽</div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+
+                </div>
+                <div class="accordion-body-mod">
+                    <div class="sub-personal">
+                        <div class="personal__column1">
+                            <div class="items1">
+                                <div class="item1">Серия/номар паспорта:</div>
+                                <div class="item2">45 15 555 889</div>
+                            </div>
+                        </div>
+                        <div class="personal__column2">
+                            <div class="items2">
+                                <div class="item1">ИНН:</div>
+                                <div class="item2">5513 490490</div>
+                            </div>
+                        </div>
+                        <div class="personal__column3">
+                            <div class="items3">
+                                <div class="item1">Номер карты:</div>
+                                <div class="item2 purple">4*** **** **** 3564</div>
+                            </div>
+                        </div>
+                        <a href="#popup23" class="popup-link"><img src="/assets/img/edit2.svg" alt=""></a>
+                    </div>
+                    <hr>
+                    <div class="sup-personal">
+                        <div class="personal__column11">
+                            <div class="items">
+                                <div class="item1">Среднее время ответа:</div>
+                                <div class="item2">2:34 мин</div>
+                            </div>
+                        </div>
+                        <div class="personal__column12">
+                            <div class="items">
+                                <div class="item1">Закрыто задач:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column13">
+                            <div class="items">
+                                <div class="item1">Задач с просрочкой:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column14">
+                            <div class="items">
+                                <div class="item1">Задач без ответа: </div>
+                                <div class="item2">0</div>
+                            </div>
+                        </div>
+                        <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion__item  ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column71">
+                        <div class="accordion-header__text2 ">Мельников Максим Юрьевич</div>
+                    </div>
+                    <div class="accordion-header__column72">
+                        <div class="accordion-header__text2 ">+7 900 800 90 08</div>
+                    </div>
+                    <div class="accordion-header__column73">
+                        <div class="accordion-header__text2 ">Баланс: 200 000 ₽</div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+
+                </div>
+                <div class="accordion-body-mod">
+                    <div class="sub-personal">
+                        <div class="personal__column1">
+                            <div class="items1">
+                                <div class="item1">Серия/номар паспорта:</div>
+                                <div class="item2">45 15 555 889</div>
+                            </div>
+                        </div>
+                        <div class="personal__column2">
+                            <div class="items2">
+                                <div class="item1">ИНН:</div>
+                                <div class="item2">5513 490490</div>
+                            </div>
+                        </div>
+                        <div class="personal__column3">
+                            <div class="items3">
+                                <div class="item1">Номер карты:</div>
+                                <div class="item2 purple">4*** **** **** 3564</div>
+                            </div>
+                        </div>
+                        <a href="#popup23" class="popup-link"><img src="/assets/img/edit2.svg" alt=""></a>
+                    </div>
+                    <hr>
+                    <div class="sup-personal">
+                        <div class="personal__column11">
+                            <div class="items">
+                                <div class="item1">Среднее время ответа:</div>
+                                <div class="item2">2:34 мин</div>
+                            </div>
+                        </div>
+                        <div class="personal__column12">
+                            <div class="items">
+                                <div class="item1">Закрыто задач:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column13">
+                            <div class="items">
+                                <div class="item1">Задач с просрочкой:</div>
+                                <div class="item2">30</div>
+                            </div>
+                        </div>
+                        <div class="personal__column14">
+                            <div class="items">
+                                <div class="item1">Задач без ответа: </div>
+                                <div class="item2">0</div>
+                            </div>
+                        </div>
+                        <a href=""><img src="/assets/img/trash-2.svg" alt=""></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="popup-overlay">
+            <div class="popup" id="popup12">
+                <span></span>
+                <div class="popup__title">Добавить сотрудника<img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body-mod">
+                    <div class="body__row2">
+                        <div class="body__rows"> <input type="text" placeholder="Фио">
+                            <div class="text1"></div>
+                        </div>
+                        <div class="body__rows"> <input type="text" placeholder="Телефон" class="ss">
+                            <div class="text1"></div>
+                        </div>
+                    </div>
+                    <div class="body__row3">
+                        <div class="row3__title">
+                            <div class="title__row3-text">Дополнительные данные:</div>
+                            <div class="title__row3-btn ">
+                                <a href="" class="popup__add-btn active">добавить</a>
+                            </div>
+                        </div>
+                        <div class="inputs">
+                            <input type="text" placeholder="Серия / номер паспорта" class="ss" maxlength="10">
+                            <input type="text" placeholder="ИНН" class="ss">
+                            <input type="text" placeholder="Номер карты" class="ss"></div>
+                    </div>
+                    <div class="body__row3">
+                        <div class="row3__title">
+                            <div class="title__row3-text">Условия работы:</div>
+                            <div class="title__row3-btn">
+                                <a href="" class="add-ysl active">добавить</a>
+                            </div>
+                        </div>
+                        <div class="time-work">
+                            <div class="time-work__title">Режим работы:</div>
+                            <div class="time-work__text">с</div>
+                            <input type="text" placeholder="08:00">
+                            <div class="time-work__text">по</div>
+                            <input type="text" placeholder="20:00">
+                        </div>
+                    </div>
+                    <div class="body__row2">
+                        <div class="body__rows"> <input type="text" placeholder="Ставка зарплаты" class="ss">
+                            <div class="text1">₽ </div>
+                        </div>
+                        <div class="body__rows"> <input type="text" placeholder="Штраф за прогул" class="ss">
+                            <div class="text1">₽ </div>
+                        </div>
+                    </div>
+                    <div class="body__row3">
+                        <div class="time-work active">
+                            <div class="time-work__title">Штраф за ответ дольше:</div>
+                            <div class="time-work__text"></div>
+                            <input type="text" placeholder="30" class="ss">
+                            <div class="time-work__text">мин</div>
+                            <div class="time-work__text">Штраф</div>
+                            <input type="text" placeholder="2000" class="ss">
+                            <div class="time-work__text">₽ </div>
+                        </div>
+                    </div>
+                    <div class="body__checked">
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Расчетный день</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Выплачивать</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                    </div>
+                    <div class="body__checked">
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Аванс расчет</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Выплата аванса</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">добавить</a>
+                </div>
+            </div>
+            <div class="popup " id="popup21">
+                <span></span>
+                <div class="popup__title">Вывести с баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                    <select>
+                        <option value=""></option>
+                        <option value="">Карта</option>
+                        <option value="">счёт</option>
+                    </select>
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Списать</a>
+                </div>
+            </div>
+            <div class="popup " id="popup20">
+                <span></span>
+                <div class="popup__title">Пополнить баланс <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Пополнить</a>
+                </div>
+            </div>
+            <div class="popup " id="popup2">
+                <span></span>
+                <div class="popup__title">Изменение баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+                    <div class="buttons">
+                        <a href="" class="write_off active">Списать</a>
+                        <a href="" class="replenish ">Пополнить</a>
+                    </div>
+                    <input type="text" placeholder="Сумма" class="ss">
+                    <input type="text" placeholder="Комментарий">
+                </div>
+                <div class="popup__checkbox active">
+                    <label class="checkbox">
+                            <input type="checkbox" checked>
+                            <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                        </label>
+                    <div class="checkbox-text">Выплатить</div>
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">Выполнить</a>
+                </div>
+            </div>
+            <div class="popup" id="popup23">
+                <span></span>
+                <div class="popup__title">Добавить сотрудника<img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body-mod">
+                    <div class="body__row2">
+
+                        <div class="body__rows"> <input type="text" placeholder="Телефон" class="ss" maxlength="11">
+                            <div class="text1"></div>
+                        </div>
+                    </div>
+                    <div class="body__row3">
+                        <div class="row3__title">
+                            <div class="title__row3-text">Дополнительные данные:</div>
+                            <div class="title__row3-btn ">
+                                <a href="" class="popup__add-btn ">добавить</a>
+                            </div>
+                        </div>
+                        <div class="inputs active">
+                            <input type="text" placeholder="Номер карты" class="numb__of__card ss"></div>
+                    </div>
+                    <div class="body__row3">
+                        <div class="row3__title">
+                            <div class="title__row3-text">Условия работы:</div>
+
+                        </div>
+                        <div class="time-work active">
+                            <div class="time-work__title">Режим работы:</div>
+                            <div class="time-work__text">с</div>
+                            <input type="text" placeholder="08:00">
+                            <div class="time-work__text">по</div>
+                            <input type="text" placeholder="20:00">
+                        </div>
+                    </div>
+                    <div class="body__row2">
+                        <div class="body__rows"> <input type="text" placeholder="Ставка зарплаты" class="ss">
+                            <div class="text1">₽ </div>
+                        </div>
+                        <div class="body__rows"> <input type="text" placeholder="Штраф за прогул" class="ss">
+                            <div class="text1">₽ </div>
+                        </div>
+                    </div>
+                    <div class="body__row3">
+                        <div class="time-work active">
+                            <div class="time-work__title">Штраф за ответ дольше:</div>
+                            <div class="time-work__text"></div>
+                            <input type="text" placeholder="30" class="ss">
+                            <div class="time-work__text">мин</div>
+                            <div class="time-work__text">Штраф</div>
+                            <input type="text" placeholder="2000" class="ss">
+                            <div class="time-work__text">₽ </div>
+                        </div>
+                    </div>
+                    <div class="body__checked">
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Расчетный день</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Выплачивать</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                    </div>
+                    <div class="body__checked">
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Аванс расчет</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                        <div class="body__row5">
+                            <select required>
+                        <option value="" hidden disabled selected>Выплата аванса</option>
+                        <option >1</option>
+                        <option >2</option>
+                        <option >3</option>
+                        <option >4</option>
+                        <option >5</option>
+                        <option >6</option>
+                        <option >7</option>  
+                        <option >8</option>  
+                        <option >9</option>  
+                        <option >10</option>  
+                        <option >11</option>  
+                        <option >12</option>  
+                        <option >13</option>  
+                        <option >14</option>  
+                        <option >15</option>  
+                        <option >16</option>  
+                        <option >17</option>  
+                        <option >18</option>  
+                        <option >19</option>  
+                        <option >20</option> 
+                        <option >21</option>
+                        <option >22</option> 
+                        <option >23</option>  
+                        <option >24</option> 
+                        <option >25</option> 
+                        <option >26</option>  
+                        <option >27</option>  
+                        <option >28</option>  
+                        <option >29</option>  
+                        <option >30</option> 
+                        <option >31</option> 
+                    </select>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">Редактировать</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer ">
+            <a href=" " class="show_more ">Показать ещё</a>
+            <div class="pagination ">
+                <a href=" "><img src="/assets/img/strelka-l.svg " alt=" "></a>
+                <span>16  /  1500</span>
+                <a href=" "><img src="/assets/img/strelka-r.svg " alt=" "></a>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js "></script>
+        <script src="/assets/js/datepicker.min.js "></script>
+        <script src="/assets/js/header__main__width.js"></script>
+        <script src="/assets/js/popups.js"></script>
+        <script src="/assets/js/accordion__item.js"></script>
+        <script src="/assets/js/popup12.js"></script>
+        <script src="/assets/js/input_mask_numb.js"></script>
+    </main>
+
+
+</body>
+
+</html>

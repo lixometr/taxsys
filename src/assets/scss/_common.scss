@@ -1,0 +1,26 @@
+@import "_utils";
+@import "./components/button";
+@import "./components/toast";
+html,
+body {
+    font-size: 10px;
+    font-family: $main_font;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+}
+.h2,
+h2 {
+    @include fz($fz_lg);
+}
+
+.h3,
+h3 {
+    @include fz($fz_ml);
+}
+
+a {
+    color: $purple;
+}
+

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
-    "strict": true,
+    // "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
     "moduleResolution": "node",
@@ -27,14 +27,18 @@
       "scripthost"
     ]
   },
+  "noImplicitAny": false,
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
+    "src/**/*.svg",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+    "tests/**/*.tsx",
+    "src/types/custom.d.ts",
+    "src/layout/default.vu"  ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  
 }

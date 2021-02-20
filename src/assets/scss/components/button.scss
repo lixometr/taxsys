@@ -1,0 +1,84 @@
+.btn {
+    border-radius: 20px;
+    padding: 1.2rem 4rem;
+    text-transform: uppercase;
+    transition: $transition;
+    color: $grey_1;
+    font-size: $fz_xs;
+    font-weight: $regular;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    font-family: $main_font;
+    outline: none;
+    svg {
+        fill: currentColor;
+    }
+
+    &:hover, &:focus {
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    }
+    &:active , &.active {
+        box-shadow: none;
+    }
+    &-orange {
+        background: $orange;
+    }
+
+    &-purple-grad {
+        background: $blue_grad;
+        color: $white;
+        font-weight: $bold;
+    }
+
+    &-orange-grad {
+        background: $red_orange_grad;
+        color: $white;
+        font-weight: $bold;
+    }
+
+    &-red {
+        background: $red;
+        color: $white;
+    }
+
+    &-green {
+        background: $green;
+    }
+
+    &-stroke-orange {
+        background: transparent;
+        border: 1px solid $orange;
+
+    }
+
+    &-stroke-purple {
+        color: $violet;
+        border: 1px solid rgba(143, 138, 255, 0.25);
+        &:hover {
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+            
+        }
+
+        &.active,
+        &:active {
+            color: $white;
+            background: $grey;
+            box-shadow: none;
+        }
+    }
+
+    &-sm {
+        font-size: $fz_sm;
+        padding: 0.4rem 1.2rem;
+        font-weight: $regular;
+        border-radius: 1.3rem;
+    }
+
+    &-xs {
+        font-size: $fz_xxs;
+        padding: 0.8rem 2rem;
+    }
+
+}

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/css/datepicker.css">
+    <link rel="stylesheet" href="/assets/css/chartist.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="shortcut icon" type="image/ico" href="/assets/img/favicon.ico" />
+    <title>TAXYS</title>
+
+
+</head>
+
+<body>
+    <header class="header " id="header">
+        <nav class="nav">
+            <div class="nav__logo">
+                <div class="nav__img"><img src="/assets/img/logo-big.svg" alt="">
+                </div>
+                <div class="nav__title">Taxys</div>
+            </div>
+            <ul class="menu">
+                <li class="menu__link active">
+                    <img src="/assets/img/stat.svg" alt="#">
+                    <a href="statistic.html">
+                        <div class="menu__text">Статистика</div>
+                    </a>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/finance.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Финансы</div>
+                    </a>
+                    <ul class="sub-menu ">
+                        <li>
+                            <a href="Travel.html" class="sub-menu__link">Поездки</a>
+                        </li>
+                        <li>
+                            <a href="Suspicioustrips.html" class="sub-menu__link">Подозрительные поездки</a>
+                        </li>
+                        <li>
+                            <a href="ManualpaymentsApplications.html" class="sub-menu__link">Ручные выплаты</a>
+                        </li>
+                        <li>
+                            <a href="Automaticpayments.html" class="sub-menu__link">Автоматические выплаты</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link sub__link ">
+                    <img src="/assets/img/user.svg" alt="">
+                    <a href="#">
+                        <div class="menu__text">Водители</div>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="DriverApplications.html" class="sub-menu__link">Заявки водителей</a>
+                        </li>
+                        <li>
+                            <a href="Listofdrivers.html" class="sub-menu__link">Список водителей</a>
+                        </li>
+                        <li>
+                            <a href="Drivercheck.html" class="sub-menu__link">Проверить водителя</a>
+                        </li>
+                        <li>
+                            <a href="BlackList.html" class="sub-menu__link">Черный список</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/car.svg" alt="#">
+                    <a href="Rentacarfree.html">
+                        <div class="menu__text">Аренда</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/alert-circle.svg" alt="#">
+                    <a href="Penalties.html">
+                        <div class="menu__text">Штрафы</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/smartphone.svg" alt="#">
+                    <a href="28.html">
+                        <div class="menu__text">Приложение</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/user.svg" alt="#">
+                    <a href="Partners.html">
+                        <div class="menu__text">Партнёры</div>
+                    </a>
+                </li>
+                <li class="menu__link">
+                    <img src="/assets/img/settings.svg" alt="#">
+                    <a href="Profile.html">
+                        <div class="menu__text">Настройки</div>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <div class="mob-menus ">
+        <a href="" class="mob-menu__spana"><span class="mob-menu__span"></span></a>
+        <ul class="mob-menu">
+            <li class="mob-menu-link">
+                <a href="statistic.html">Статистика</a>
+            </li>
+            <li class="mob-menu-link sub__link">Финансы
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="Travel.html">Поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Suspicioustrips.html">Подозрительные поездки</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="ManualpaymentsApplications.html">Ручные выплаты</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Automaticpayments.html">Автоматические выплаты</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link sub__link">Водители
+                <ul class="sub-mob-menu">
+                    <li class="sub-mob-menu-link">
+                        <a href="DriverApplications.html">Заявки водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Listofdrivers.html">Список водителей</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="Drivercheck.html">Проверить водителя</a>
+                    </li>
+                    <li class="sub-mob-menu-link">
+                        <a href="BlackList.html">Черный список</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Rentacarfree.html">Аренда</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Penalties.html">Штрафы</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="28.html">Приложение</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Partners.html">Партнёры</a>
+            </li>
+            <li class="mob-menu-link">
+                <a href="Profile.html">Настройки</a>
+            </li>
+        </ul>
+    </div>
+    <main class="main lock-padding" id="main">
+        <div class="toolbar">
+            <div class="search">
+                <img src="/assets/img/search.svg" alt="">
+                <input type="search" placeholder="Поиск...">
+            </div>
+            <div class="taxsys">
+
+                <div class="taxsys__title">Taxsys:</div>
+                <a href="#popup21" class="popup-link"><img src="/assets/img/minus-circle.svg" alt=""></a>
+                <div class="taxsys__value">1 000 859 ₽</div>
+                <a href="#popup20" class="popup-link"><img src="/assets/img/plus-circle.svg" alt=""></a>
+            </div>
+            <div class="qiwi">
+                <div class="qiwi__title">QIWI:</div>
+                <div class="qiwi__value">3 000 859 ₽</div>
+            </div>
+            <div class="not-mess">
+                <div class="not-mess__notification">
+                    <a href="Notifications.html"><img src="/assets/img/notification_bell.svg" alt="" class="bell"><img src="/assets/img/Ellipse2.svg" alt="" class="point active"></a>
+                </div>
+                <span></span>
+                <div class="not-mess__message">
+                    <a href="ChatRooms.html"><img src="/assets/img/Message.svg" alt=""></a>
+                </div>
+            </div>
+            <div class="lk">
+                <img src="/assets/img/stroke.svg" alt="">
+                <div class="lk__user"><a href="Profile.html">Транзит момент</a></div>
+                <span></span>
+                <div class="lk__exit"><a href="">Выход</a></div>
+            </div>
+        </div>
+        <div class="sort">
+            <div class="sort__date">
+                <img src="/assets/img/calendar.svg" alt="">
+                <div class="sort__period">Период</div>
+                <input type="text" data-range="true" data-multiple-dates-separator=" &mdash; " class="datepicker-here" placeholder="14.06.2019 &mdash; 14.06.2019" />
+            </div>
+            <div class="sort__agreg mr50">
+                <div class="agreg"><a href="">Яндекс</a></div>
+                <div class="agreg"><a href="">Gett</a></div>
+                <div class="agreg"><a href="">Ситимобил</a></div>
+                <div class="agreg active"><a href="">Все</a></div>
+            </div>
+        </div>
+        <div class="accordion">
+            <div class="accordion__title">
+                <div>Поездки</div>
+                <a href="" class="acc-header__btn">Выгрузить реестр <img src="/assets/img/download.svg" alt=""></a>
+            </div>
+            <div class="accordion__item ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__number">123456789</div>
+                        <div class="accordion-header__datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__cost">1277.50 ₽</div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__agreg"><span><img src="/assets/img/yandex.svg" alt="">Яндекс.Такси</span></div>
+                        <div class="accordion-header__payment"><span><img src="/assets/img/credit-card.svg" alt="">Оплата картой</span></div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1">
+                        <div class="row">
+                            <div class="text">Номер заказа:</div>
+                            <div class="value">11382657311</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес подачи:</div>
+                            <div class="value">ул. Ленина, д. 15, корп. 2</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес назначения:</div>
+                            <div class="value">ул. Маркса, д. 24/8</div>
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-body__column column__accordion3">
+                        <div class="column__text">Комиссия агрегатора: </div>
+                        <div class="column__text">Комиссия парка: </div>
+                        <div class="column__text">Начислено водителю:</div>
+                        <div class="column__text">Наличные: </div>
+                        <div class="column__text">Доплаты: </div>
+                    </div>
+                    <div class="accordion-body__column column__accordion4">
+                        <div class="column__com-agreg">229.3 ₽</div>
+                        <div class="column__com-park">33.2 ₽</div>
+                        <div class="column__accrued">885.9 ₽</div>
+                        <div class="column__nal">350.0 ₽</div>
+                        <div class="column__srcharge">200.0 ₽</div>
+                    </div>
+                    <div class="accordion-body__column column__accordion5">
+                        <div class="column__row">
+                            <div class="column__text text--column3">Время: </div>
+                            <div class="column__time text--column3">1 час 23 мин</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Расстояние:</div>
+                            <div class="column__distance text--column3">26,3 км</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Cтоимость км:</div>
+                            <div class="column__cost-km text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Стоимость мин:</div>
+                            <div class="column__cost-time text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Чаевые: </div>
+                            <div class="column__tip text--column3">200.00 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+            <div class="accordion__item ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__number">123456789</div>
+                        <div class="accordion-header__datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__cost">1277.50 ₽</div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__agreg"><span><img src="/assets/img/yandex.svg" alt="">Яндекс.Такси</span></div>
+                        <div class="accordion-header__payment"><span><img src="/assets/img/dollar.svg" alt="">Наличные</span></div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1">
+                        <div class="row">
+                            <div class="text">Номер заказа:</div>
+                            <div class="value">11382657311</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес подачи:</div>
+                            <div class="value">ул. Ленина, д. 15, корп. 2</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес назначения:</div>
+                            <div class="value">ул. Маркса, д. 24/8</div>
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-body__column column__accordion3">
+                        <div class="column__text">Комиссия агрегатора: </div>
+                        <div class="column__text">Комиссия парка: </div>
+                        <div class="column__text">Начислено водителю:</div>
+                        <div class="column__text">Наличные: </div>
+                        <div class="column__text">Доплаты: </div>
+                    </div>
+                    <div class="accordion-body__column column__accordion4">
+                        <div class="column__com-agreg">229.3 ₽</div>
+                        <div class="column__com-park">33.2 ₽</div>
+                        <div class="column__accrued">885.9 ₽</div>
+                        <div class="column__nal">350.0 ₽</div>
+                        <div class="column__srcharge">200.0 ₽</div>
+                    </div>
+                    <div class="accordion-body__column column__accordion5">
+                        <div class="column__row">
+                            <div class="column__text text--column3">Время: </div>
+                            <div class="column__time text--column3">1 час 23 мин</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Расстояние:</div>
+                            <div class="column__distance text--column3">26,3 км</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Cтоимость км:</div>
+                            <div class="column__cost-km text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Стоимость мин:</div>
+                            <div class="column__cost-time text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Чаевые: </div>
+                            <div class="column__tip text--column3">200.00 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+            <div class="accordion__item ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__number">123456789</div>
+                        <div class="accordion-header__datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__cost">1277.50 ₽</div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__agreg"><span><img src="/assets/img/citymobil.svg" alt="">Ситимобил</span></div>
+                        <div class="accordion-header__payment"><span><img src="/assets/img/credit-card.svg" alt="">Оплата картой</span></div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1">
+                        <div class="row">
+                            <div class="text">Номер заказа:</div>
+                            <div class="value">11382657311</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес подачи:</div>
+                            <div class="value">ул. Ленина, д. 15, корп. 2</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес назначения:</div>
+                            <div class="value">ул. Маркса, д. 24/8</div>
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-body__column column__accordion3">
+                        <div class="column__text">Комиссия агрегатора: </div>
+                        <div class="column__text">Комиссия парка: </div>
+                        <div class="column__text">Начислено водителю:</div>
+                        <div class="column__text">Наличные: </div>
+                        <div class="column__text">Доплаты: </div>
+                    </div>
+                    <div class="accordion-body__column column__accordion4">
+                        <div class="column__com-agreg">229.3 ₽</div>
+                        <div class="column__com-park">33.2 ₽</div>
+                        <div class="column__accrued">885.9 ₽</div>
+                        <div class="column__nal">350.0 ₽</div>
+                        <div class="column__srcharge">200.0 ₽</div>
+                    </div>
+                    <div class="accordion-body__column column__accordion5">
+                        <div class="column__row">
+                            <div class="column__text text--column3">Время: </div>
+                            <div class="column__time text--column3">1 час 23 мин</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Расстояние:</div>
+                            <div class="column__distance text--column3">26,3 км</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Cтоимость км:</div>
+                            <div class="column__cost-km text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Стоимость мин:</div>
+                            <div class="column__cost-time text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Чаевые: </div>
+                            <div class="column__tip text--column3">200.00 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+            <div class="accordion__item ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__number">123456789</div>
+                        <div class="accordion-header__datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__cost">1277.50 ₽</div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__agreg"><span><img src="/assets/img/gett.svg" alt="">Gett</span></div>
+                        <div class="accordion-header__payment"><span><img src="/assets/img/credit-card.svg" alt="">Оплата картой</span></div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1">
+                        <div class="row">
+                            <div class="text">Номер заказа:</div>
+                            <div class="value">11382657311</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес подачи:</div>
+                            <div class="value">ул. Ленина, д. 15, корп. 2</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес назначения:</div>
+                            <div class="value">ул. Маркса, д. 24/8</div>
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-body__column column__accordion3">
+                        <div class="column__text">Комиссия агрегатора: </div>
+                        <div class="column__text">Комиссия парка: </div>
+                        <div class="column__text">Начислено водителю:</div>
+                        <div class="column__text">Наличные: </div>
+                        <div class="column__text">Доплаты: </div>
+                    </div>
+                    <div class="accordion-body__column column__accordion4">
+                        <div class="column__com-agreg">229.3 ₽</div>
+                        <div class="column__com-park">33.2 ₽</div>
+                        <div class="column__accrued">885.9 ₽</div>
+                        <div class="column__nal">350.0 ₽</div>
+                        <div class="column__srcharge">200.0 ₽</div>
+                    </div>
+                    <div class="accordion-body__column column__accordion5">
+                        <div class="column__row">
+                            <div class="column__text text--column3">Время: </div>
+                            <div class="column__time text--column3">1 час 23 мин</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Расстояние:</div>
+                            <div class="column__distance text--column3">26,3 км</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Cтоимость км:</div>
+                            <div class="column__cost-km text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Стоимость мин:</div>
+                            <div class="column__cost-time text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Чаевые: </div>
+                            <div class="column__tip text--column3">200.00 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+
+            <div class="accordion__item ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__number">123456789</div>
+                        <div class="accordion-header__datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__cost">1277.50 ₽</div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__agreg"><span><img src="/assets/img/gett.svg" alt="">Gett</span></div>
+                        <div class="accordion-header__payment"><span><img src="/assets/img/credit-card.svg" alt="">Оплата картой</span></div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1">
+                        <div class="row">
+                            <div class="text">Номер заказа:</div>
+                            <div class="value">11382657311</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес подачи:</div>
+                            <div class="value">ул. Ленина, д. 15, корп. 2</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес назначения:</div>
+                            <div class="value">ул. Маркса, д. 24/8</div>
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-body__column column__accordion3">
+                        <div class="column__text">Комиссия агрегатора: </div>
+                        <div class="column__text">Комиссия парка: </div>
+                        <div class="column__text">Начислено водителю:</div>
+                        <div class="column__text">Наличные: </div>
+                        <div class="column__text">Доплаты: </div>
+                    </div>
+                    <div class="accordion-body__column column__accordion4">
+                        <div class="column__com-agreg">229.3 ₽</div>
+                        <div class="column__com-park">33.2 ₽</div>
+                        <div class="column__accrued">885.9 ₽</div>
+                        <div class="column__nal">350.0 ₽</div>
+                        <div class="column__srcharge">200.0 ₽</div>
+                    </div>
+                    <div class="accordion-body__column column__accordion5">
+                        <div class="column__row">
+                            <div class="column__text text--column3">Время: </div>
+                            <div class="column__time text--column3">1 час 23 мин</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Расстояние:</div>
+                            <div class="column__distance text--column3">26,3 км</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Cтоимость км:</div>
+                            <div class="column__cost-km text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Стоимость мин:</div>
+                            <div class="column__cost-time text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Чаевые: </div>
+                            <div class="column__tip text--column3">200.00 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+            <div class="accordion__item ">
+                <div class="accordion-header">
+                    <div class="accordion-header__column1">
+                        <div class="accordion-header__number">123456789</div>
+                        <div class="accordion-header__datetime">12:15 | 22.10.2019</div>
+                    </div>
+                    <div class="accordion-header__column2">
+                        <div class="accordion-header__fio"><a href="DriverData.html">Иванов Тимофей Петрович</a></div>
+                        <div class="accordion-header__cost">1277.50 ₽</div>
+                    </div>
+                    <div class="accordion-header__column3">
+                        <div class="accordion-header__agreg"><span><img src="/assets/img/gett.svg" alt="">Gett</span></div>
+                        <div class="accordion-header__payment"><span><img src="/assets/img/credit-card.svg" alt="">Оплата картой</span></div>
+                        <div class="arrow"><img src="/assets/img/strelka-r.svg" alt="" class="strelka"></div>
+                    </div>
+                </div>
+                <div class="accordion-body">
+                    <div class="accordion-body__column column__accordion1">
+                        <div class="row">
+                            <div class="text">Номер заказа:</div>
+                            <div class="value">11382657311</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес подачи:</div>
+                            <div class="value">ул. Ленина, д. 15, корп. 2</div>
+                        </div>
+                        <div class="row">
+                            <div class="text">Адрес назначения:</div>
+                            <div class="value">ул. Маркса, д. 24/8</div>
+                        </div>
+
+                    </div>
+
+                    <div class="accordion-body__column column__accordion3">
+                        <div class="column__text">Комиссия агрегатора: </div>
+                        <div class="column__text">Комиссия парка: </div>
+                        <div class="column__text">Начислено водителю:</div>
+                        <div class="column__text">Наличные: </div>
+                        <div class="column__text">Доплаты: </div>
+                    </div>
+                    <div class="accordion-body__column column__accordion4">
+                        <div class="column__com-agreg">229.3 ₽</div>
+                        <div class="column__com-park">33.2 ₽</div>
+                        <div class="column__accrued">885.9 ₽</div>
+                        <div class="column__nal">350.0 ₽</div>
+                        <div class="column__srcharge">200.0 ₽</div>
+                    </div>
+                    <div class="accordion-body__column column__accordion5">
+                        <div class="column__row">
+                            <div class="column__text text--column3">Время: </div>
+                            <div class="column__time text--column3">1 час 23 мин</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Расстояние:</div>
+                            <div class="column__distance text--column3">26,3 км</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Cтоимость км:</div>
+                            <div class="column__cost-km text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Стоимость мин:</div>
+                            <div class="column__cost-time text--column3">60 ₽</div>
+                        </div>
+                        <div class="column__row">
+                            <div class="column__text text--column3">Чаевые: </div>
+                            <div class="column__tip text--column3">200.00 ₽</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="accordion__body"></div> -->
+            </div>
+        </div>
+        <div class="popup-overlay ">
+            <div class="popup " id="popup21">
+                <span></span>
+                <div class="popup__title">Вывести с баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                    <select>
+                        <option value=""></option>
+                        <option value="">Карта</option>
+                        <option value="">счёт</option>
+                    </select>
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Списать</a>
+                </div>
+            </div>
+            <div class="popup " id="popup20">
+                <span></span>
+                <div class="popup__title">Пополнить баланс <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+
+                    <input type="text" placeholder="Сумма" class="ss">
+
+                </div>
+
+                <div class="popup-button">
+                    <a href="" class="close-popup">Пополнить</a>
+                </div>
+            </div>
+            <div class="popup " id="popup2">
+                <span></span>
+                <div class="popup__title">Изменение баланса <img src="/assets/img/x.svg" alt="" class="close-popup"></div>
+                <div class="popup__body">
+                    <div class="buttons">
+                        <a href="" class="write_off active">Списать</a>
+                        <a href="" class="replenish ">Пополнить</a>
+                    </div>
+                    <input type="text" placeholder="Сумма" class="ss">
+                    <input type="text" placeholder="Комментарий">
+                </div>
+                <div class="popup__checkbox active">
+                    <label class="checkbox">
+                        <input type="checkbox" checked>
+                        <span class="box"><img src="/assets/img/Vector.svg" alt=""></span>
+                    </label>
+                    <div class="checkbox-text">Выплатить</div>
+                </div>
+                <div class="popup-button">
+                    <a href="" class="close-popup">Выполнить</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <a href="" class="show_more">Показать ещё</a>
+            <div class="pagination">
+                <a href=""><img src="/assets/img/strelka-l.svg" alt=""></a>
+                <span>16  /  1500</span>
+                <a href=""><img src="/assets/img/strelka-r.svg" alt=""></a>
+            </div>
+
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="/assets/js/datepicker.min.js"></script>
+        <script src="/assets/js/header__main__width.js"></script>
+        <script src="/assets/js/accordion__item.js"></script>
+        <script src="/assets/js/popups.js"></script>
+
+    </main>
+
+
+</body>
+
+</html>
