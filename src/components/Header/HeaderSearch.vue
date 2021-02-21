@@ -53,6 +53,7 @@ export default class HeaderSearch extends Vue {}
     padding-left: 5rem;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    padding-right: 1rem;
     outline: none;
     border: none;
     font-size: $fz_sm;

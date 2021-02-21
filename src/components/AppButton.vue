@@ -1,5 +1,5 @@
 <template>
-  <button :type="type" class="btn" :style="btnStyles" :class="btnClass">
+  <button :type="type" class="btn" :style="btnStyles" :class="btnClass" v-on="$listeners">
     <slot />
   </button>
 </template>
@@ -21,22 +21,23 @@ export default class AppButton extends Vue {
   @Prop(String) color: BtnColor;
   @Prop(String) size: BtnSize;
   @Prop(String) width: string;
-  @Prop(String) type: string
+  @Prop(String) type: string;
+  @Prop(Boolean) active: boolean;
   get btnClass() {
     let type = "btn";
     if (this.stroke) {
       type += `-stroke`;
     }
     type += `-${this.color}`;
-    if(this.size) {
-        type += ` btn-${this.size}`
+    if (this.size) {
+      type += ` btn-${this.size}`;
     }
-    return type;
+    return { [type]: true, active: this.active };
   }
   get btnStyles() {
     return {
-      width: this.width
-    }
+      width: this.width,
+    };
   }
 }
 </script>

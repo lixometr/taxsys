@@ -52,7 +52,7 @@ import "yup-phone";
         phone: useField(process.env.NODE_ENV === 'development' ? "+79660108888" : '', [
           yup.string().phone("7", true, "Введите корректный номер телефона"),
         ]),
-        password: useField(process.env.NODE_ENV === 'production' ? "123456" : '', [yup.string().required("Введите пароль")]),
+        password: useField(process.env.NODE_ENV === 'development' ? "123456" : '', [yup.string().required("Введите пароль")]),
       },
 
       watchAfterSubmit: true,

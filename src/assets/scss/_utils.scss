@@ -1,48 +1,123 @@
 .color-purple {
-    color: $purple;
+  color: $purple;
 }
+
 .color-grey-1 {
   color: $grey_1;
 }
+
 .color-grey-2 {
   color: $grey_2;
 }
+
 .color-grey-3 {
   color: $grey_3;
 }
+
 .font-lg {
   font-size: $fz_lg;
 }
+
 .font-md {
   font-size: $fz_md;
 }
+
 .font-sm {
   font-size: $fz_sm;
 }
+
 .font-xs {
   font-size: $fz_xs;
 }
-.bold {
-    font-weight: $bold;
-}
-.cursor-pointer {
-    cursor: pointer;
-}
-.flex {
-    display: flex;
+
+.font-0 {
+  font-size: 0;
 }
 
-$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100); 
-$sides: (top, bottom, left, right); 
+.bold {
+  font-weight: $bold;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.row-no-gutter {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.text-no-wrap {
+  white-space: nowrap;
+}
+
+$spaceamounts: (5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 75, 100);
+$sides: (top, bottom, left, right);
+$bps: (lg, md, sm, xs);
 
 @each $space in $spaceamounts {
   @each $side in $sides {
     .m#{str-slice($side, 0, 1)}-#{$space} {
       margin-#{$side}: #{$space/10}rem !important;
     }
-  
+
     .p#{str-slice($side, 0, 1)}-#{$space} {
       padding-#{$side}: #{$space/10}rem !important;
     }
+  }
+}
+
+
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+.mb-auto {
+  margin-bottom: auto;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.shrink-0 {
+  flex-shrink: 0;
+}
+
+.md-hidden {
+  @include md {
+    display: none!important;
+  }
+}
+.md-show{
+  display: none!important;
+  @include md {
+    display: block!important;
+  }
+}
+
+.sm-hidden {
+  @include sm {
+    display: none!important;
+  }
+}
+
+.sm-show {
+  display: none!important;
+  @include sm {
+    display: block!important;
   }
 }

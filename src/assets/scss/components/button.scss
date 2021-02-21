@@ -1,6 +1,6 @@
 .btn {
     border-radius: 20px;
-    padding: 1.2rem 4rem;
+    padding: 1rem 4rem;
     text-transform: uppercase;
     transition: $transition;
     color: $grey_1;
@@ -12,16 +12,20 @@
     text-align: center;
     font-family: $main_font;
     outline: none;
+
     svg {
         fill: currentColor;
     }
 
-    &:hover, &:focus {
+    &:hover {
         box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
     }
-    &:active , &.active {
+
+    &:active,
+    &.active {
         box-shadow: none;
     }
+
     &-orange {
         background: $orange;
     }
@@ -55,10 +59,12 @@
 
     &-stroke-purple {
         color: $violet;
+        background: transparent;
         border: 1px solid rgba(143, 138, 255, 0.25);
+
         &:hover {
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
-            
+
         }
 
         &.active,

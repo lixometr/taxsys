@@ -1,28 +1,16 @@
 <template>
   <div class="app-accardion" :class="{ open: opened }">
     <div class="app-accardion__header accardion-header" @click.prevent="toggle">
-      <div class="app-accardion__header-row app-accardion__row">
-        <div
-          class="app-accardion__col app-accardion__header-col"
-          v-for="num in headerColsCnt"
-          :key="num"
-        >
-          <slot :name="'h-col-' + num"></slot>
-        </div>
+      <div class="app-accardion__header-row app-accardion__row row row-no-gutter">
+        <slot name="header" />
       </div>
       <div class="app-accardion__arrow" v-if="showArrow">
         <svgArrowRight />
       </div>
     </div>
     <div class="app-accardion__content accardion-content" v-if="opened">
-      <div class="app-accardion__content-row app-accardion__row">
-        <div
-          class="app-accardion__col app-accardion__content-col"
-          v-for="num in contentColsCnt"
-          :key="num"
-        >
-          <slot :name="'col-' + num"></slot>
-        </div>
+      <div class="app-accardion__content-row app-accardion__row row row-no-gutter">
+        <slot />
       </div>
     </div>
   </div>
@@ -40,17 +28,22 @@ interface ILabel {
   components: {
     svgArrowRight,
   },
-  setup(props) {
+  setup(props, { emit }) {
     const opened = ref(!!props.opened);
     const open = () => {
       opened.value = true;
+      emit("update:isOpen", opened.value);
     };
     const close = () => {
       opened.value = false;
+      emit("update:isOpen", opened.value);
     };
     const toggle = () => {
-      console.log(opened.value);
-      opened.value = !opened.value;
+      if (opened.value) {
+        close();
+      } else {
+        open();
+      }
     };
     return {
       open,
@@ -63,27 +56,6 @@ interface ILabel {
 export default class AppAccardion extends Vue {
   @Prop(Boolean) isOpen: boolean;
   @Prop({ type: Boolean, default: true }) showArrow: boolean;
-
-  get headerColsCnt() {
-    const items = [];
-    let idx = 1;
-    let item = this.$slots[`h-col-${idx}`];
-    while (item) {
-      items.push(item);
-      item = this.$slots[`h-col-${++idx}`];
-    }
-    return items.length;
-  }
-  get contentColsCnt() {
-    const items = [];
-    let idx = 1;
-    let item = this.$slots[`col-${idx}`];
-    while (item) {
-      items.push(item);
-      item = this.$slots[`col-${++idx}`];
-    }
-    return items.length;
-  }
 }
 </script>
 
@@ -93,35 +65,35 @@ export default class AppAccardion extends Vue {
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   position: relative;
-  padding: 2.5rem 0;
+  overflow: auto;
+  max-width: 100%;
+  .col {
+    padding: 0 1.8rem;
+  }
   &__header {
-    padding-right: 2rem;
+    padding: 2.5rem 4rem 2.5rem 2.5rem;
     position: relative;
     cursor: pointer;
-  
   }
   &__arrow {
     position: absolute;
-    right: 15px;
+    right: 20px;
     top: 50%;
     transform: translateY(-50%);
     transform-origin: center center;
     font-size: 0;
     svg {
-        transition: $transition;
+      transition: $transition;
     }
   }
   &__content {
-      padding-top: 2rem;
-       padding-right: 2rem;
+    padding: 1rem 4rem 2.5rem 2.5rem;
   }
   &__row {
     display: flex;
+    flex-wrap: wrap;
   }
-  &__col {
-    flex: 1;
-    padding: 0 1.8rem;
-  }
+
   &.open {
     .app-accardion__arrow {
       svg {

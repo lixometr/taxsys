@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    "@typescript-eslint/ban-ts-ignore": 'off',
     "@typescript-eslint/member-delimiter-style": ["error", {
       multiline: {
         delimiter: 'none',    // 'none' or 'semi' or 'comma'

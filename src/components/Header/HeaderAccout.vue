@@ -5,7 +5,7 @@
         <svgUser />
       </div>
       <div class="header-account__user-name">
-        {{ userName }}
+        <span class="md-hidden"> {{ userName }}</span>
       </div>
     </router-link>
     <a href="#" class="header-account__exit" @click.prevent="exit">Выход</a>
@@ -31,7 +31,7 @@ import { UserModule } from "@/store/modules/user";
 })
 export default class HeaderAccount extends Vue {
   get userName() {
-    return UserModule.user?.name;
+    return UserModule.user?.username;
   }
 }
 </script>
@@ -44,23 +44,41 @@ export default class HeaderAccount extends Vue {
   font-weight: 500;
   font-size: $fz_xs;
   flex-shrink: 0;
+  @include md {
+    color: $white;
+    margin-left: auto;
+  }
+  a {
+    @include md {
+      color: $white;
+    }
+  }
   &__icon {
     font-size: 0;
+    @include md {
+    }
   }
   &__user {
     display: flex;
     align-items: center;
+
     &::after {
-        content: "";
-        display: block;
-        background: $purple;
-        width: 1px;
-        margin: 0 12px;
-        height: 15px;
+      content: "";
+      display: block;
+      background: $purple;
+      width: 1px;
+      margin: 0 12px;
+      height: 15px;
+      @include md {
+        background: $white;
+      }
     }
     &-name {
       text-transform: uppercase;
       margin-left: 12px;
+      @include md {
+        margin-left: 0;
+      }
     }
   }
 }

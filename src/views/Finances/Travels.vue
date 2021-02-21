@@ -1,42 +1,103 @@
 <template>
-  <div class="page-travels">
+  <div class="page-travels flex-layout">
     <page-title>
       <h2>Поездки</h2>
     </page-title>
-    <app-accardion class="color-grey-2">
-      <template v-slot:h-col-1> <div class="font-md">123456789</div></template>
-      <template v-slot:h-col-2>
-        <div class="font-md">12:15 | 22.10.2019</div></template
-      >
-      <template v-slot:h-col-3>
-        <div class="font-md">Иванов Тимофей Петрович</div></template
-      >
-      <template v-slot:h-col-4> <div class="font-md">1277.50 ₽</div></template>
-      <template v-slot:col-1>
-        <div class="mb-10">Номер заказа:</div>
-        <div class="mb-10">Адрес подачи:</div>
-        <div class="mb-10">Адрес назначения:</div>
+    <page-filters :calendar.sync="date" @update:calendar="date = $event">
+      <template v-slot:filters>
+        <aggregator-filters v-model="agregator" />
       </template>
-      <template v-slot:col-2>
-        <div class="mb-10">11382657311</div>
-        <div class="mb-10">ул. Ленина, д. 15, корп. 2</div>
-        <div class="mb-10">ул. Маркса, д. 24/8</div>
-      </template>
-      <template v-slot:col-3> col2 32 </template>
-      <template v-slot:col-4> col2 32 </template>
-    </app-accardion>
+    </page-filters>
+    <div class="travels-items flex-1">
+      <travels-item v-for="item in items" :key="item.id" :item="item" />
+      <app-pagination
+        class="mt-auto"
+        :nowPage="page"
+        :totalPages="totalPages"
+        @next="nextPage"
+        @prev="prevPage"
+        @showMore="nextPage"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import PageTitle from "../../components/Page/PageTitle.vue";
+import TravelsItem from "@/components/Travels/TravelsItem.vue";
+import AggregatorFilters from "@/components/Travels/AggregatorFilters.vue";
+import PageFilters from "@/components/Page/PageFilters.vue";
+import PageTitle from "@/components/Page/PageTitle.vue";
+import usePagination from "@/compositions/usePagination";
 import { Component, Vue } from "vue-property-decorator";
-
+import { computed, reactive, ref, watch } from "@vue/composition-api";
+import { useApiGetTravels } from "@/api/travel";
+import useGlobalLoading from "@/compositions/useGlobalLoading";
 @Component({
-  components: { PageTitle },
+  setup() {
+    const agregator = ref("all");
+    const date = reactive({
+      start: new Date(),
+      end: new Date(),
+    });
+    const {
+      onChange: onPageChange,
+      setPage,
+      page,
+      nextPage,
+      prevPage,
+      setTotalPages,
+      totalPages
+    } = usePagination();
+    const gLoading = useGlobalLoading();
+
+    const { exec: fetchItems, result } = useApiGetTravels({
+      toast: { error: (err) => "Ошибка при запросе данных" },
+    });
+    const toFetch = computed(() => ({
+      dateFrom: date.start,
+      dateTo: date.end,
+      page: page.value,
+      agregator: agregator.value,
+    }));
+    gLoading.show();
+    fetchItems(toFetch.value).then(() => {
+      gLoading.hide()
+      setPage(result.value.current_page)
+      setTotalPages(result.value.last_page)
+    });
+  
+    watch(toFetch, () => {
+      console.log("changed toFetch");
+      fetchItems(toFetch.value);
+    });
+    const items = ref([]);
+    watch(result, (data) => {
+      items.value = data.data;
+      
+    });
+    return {
+      agregator,
+      date,
+      page,
+      nextPage,
+      prevPage,
+      items,
+      totalPages
+    };
+  },
+  components: { PageTitle, PageFilters, AggregatorFilters, TravelsItem },
 })
 export default class Travels extends Vue {}
 </script>
 
 <style lang="scss">
+.page-travels {
+  height: 100%;
+  display: flex;
+  .travels-items {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+}
 </style>

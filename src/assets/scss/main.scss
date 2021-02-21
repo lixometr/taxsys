@@ -1,2 +1,10 @@
+$grid-breakpoints: (
+        xs: 0,
+        sm: $bp_xs,
+        md: $bp_sm,
+        lg: $bp_md,
+        xl: $bp_lg
+);
+@import "bootstrap-4-grid/scss/grid";
 @import "_reset";
 @import "_common";

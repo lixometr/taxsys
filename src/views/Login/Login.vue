@@ -34,5 +34,6 @@ export default class Login extends Vue {
   background: $blue_grad;
   min-height: 100vh;
   padding-top: 10rem;
+  padding-bottom: 10rem;
 }
 </style>

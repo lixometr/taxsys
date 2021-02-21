@@ -1,8 +1,8 @@
 <template>
-  <div class="logo">
+  <div class="logo" :class="{'show-text': showText}">
     <svgLogo />
     <transition mode="out-in" name="logo-text">
-      <span class="logo-text" v-if="showText">TAXIS</span>
+      <span class="logo-text" >TAXIS</span>
     </transition>
   </div>
 </template>
@@ -32,10 +32,14 @@ export default class Logo extends Vue {
   }
   > span {
     margin-left: 10px;
+    display: none;
+    @include md {
+      display: block!important;
+    }
   }
   &.show-text {
     span {
-      display: none;
+      display: inline-block;
     }
   }
 }

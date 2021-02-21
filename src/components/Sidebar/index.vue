@@ -56,6 +56,11 @@ export default class AppSidebar extends Vue {
 
 <style lang="scss">
 .sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  left: 0;
   background: $purple;
   height: 100%;
   transition: $transition;
@@ -65,8 +70,18 @@ export default class AppSidebar extends Vue {
   align-items: center;
   padding-top: 3rem;
   overflow: auto;
-  position: relative;
   max-height: 100vh;
+  z-index: 500;
+  @include md {
+    display: none;
+  }
+  &.sidebar--mob {
+    display: flex;
+    transform: translateX(-100%);
+    &.open {
+      transform: translateX(0);
+    }
+  }
   &__logo {
     padding-left: 2rem;
     width: 100%;

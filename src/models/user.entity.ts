@@ -1,3 +1,4 @@
 export class UserEntity {
-    name: string
+    id: number
+    username: string
 }

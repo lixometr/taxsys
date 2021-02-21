@@ -3,12 +3,10 @@ import store from "@/store";
 import { useApiGetUser, useApiLogin } from "@/api/auth";
 import useCookie from "@/compositions/useCookie";
 import { UserEntity } from "@/models/user.entity";
-const TOKEN_KEY = 'token'
+import { UserToken } from "@/types/constants";
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule {
-  user: UserEntity | null = {
-    name: 'Test user'
-  }
+  user: UserEntity | null = null
   token: string | null = null
   get isAuth() {
     return !!this.token
@@ -25,23 +23,24 @@ class User extends VuexModule {
   setTokenWithCookie({ token, expiresIn }: { token: string, expiresIn: number }) {
     this.setToken(token)
     const cookie = useCookie()
-    cookie.set('token', token, expiresIn)
+    cookie.set(UserToken, token, expiresIn)
   }
   @Action
   initToken() {
     const cookie = useCookie()
-    const token = cookie.get(TOKEN_KEY)
+    const token = cookie.get(UserToken)
     this.setToken(token)
   }
   @Action
   async init() {
     this.initToken()
+    await this.fetchUser()
   }
   @Action
   async fetchUser() {
     const getUser = useApiGetUser({ toast: { error: err => err.message } })
     await getUser.exec()
-    if (!getUser.error) {
+    if (!getUser.error.value) {
       this.setUser(getUser.result.value)
     }
     return getUser
