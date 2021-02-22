@@ -1,7 +1,9 @@
 <template>
   <div class="app-accardion" :class="{ open: opened }">
     <div class="app-accardion__header accardion-header" @click.prevent="toggle">
-      <div class="app-accardion__header-row app-accardion__row row row-no-gutter">
+      <div
+        class="app-accardion__header-row app-accardion__row row row-no-gutter"
+      >
         <slot name="header" />
       </div>
       <div class="app-accardion__arrow" v-if="showArrow">
@@ -9,7 +11,9 @@
       </div>
     </div>
     <div class="app-accardion__content accardion-content" v-if="opened">
-      <div class="app-accardion__content-row app-accardion__row row row-no-gutter">
+      <div
+        class="app-accardion__content-row app-accardion__row row row-no-gutter"
+      >
         <slot />
       </div>
     </div>
@@ -71,7 +75,8 @@ export default class AppAccardion extends Vue {
     padding: 0 1.8rem;
   }
   &__header {
-    padding: 2.5rem 4rem 2.5rem 2.5rem;
+    padding: 0 4rem 2rem 1rem;
+   
     position: relative;
     cursor: pointer;
   }
@@ -87,7 +92,9 @@ export default class AppAccardion extends Vue {
     }
   }
   &__content {
-    padding: 1rem 4rem 2.5rem 2.5rem;
+    padding: 0 4rem 2rem 1rem;
+    
+
   }
   &__row {
     display: flex;

@@ -47,7 +47,6 @@ export default class SidebarMenuItem extends Vue {
 
   onLinkClick(e: MouseEvent) {
     if (this.hasChildren) {
-      console.log(1);
       e.preventDefault();
       return;
     }

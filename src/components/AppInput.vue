@@ -7,7 +7,7 @@
       v-bind="_inputAttrs"
       v-on="_inputListeners"
     />
-    <div class="app-input__errors" v-if="hasErrors">
+    <div class="app-input__errors" >
       <div class="app-input__error" v-for="(error, idx) in errors" :key="idx">
         {{ error }}
       </div>
@@ -55,7 +55,6 @@ export default class AppInput extends Vue {
 
 <style lang="scss">
 .app-input {
-  padding-bottom: 30px;
   &__el {
     border: none;
     border-bottom: 1px solid $purple;
@@ -72,10 +71,11 @@ export default class AppInput extends Vue {
   }
   &__errors {
     color: $red;
-    position: absolute;
+    min-height: 30px;
   }
   &__error {
-    margin-top: 6px;
+    padding-top: 6px;
+  
   }
   &.error {
     .app-input__el {

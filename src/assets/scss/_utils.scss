@@ -45,7 +45,9 @@
 .flex {
   display: flex;
 }
-
+.offset-bottom {
+  margin-bottom: 1.5rem;
+}
 .row-no-gutter {
   margin-left: 0 !important;
   margin-right: 0 !important;

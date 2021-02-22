@@ -20,7 +20,6 @@ import { ref, toRefs, watch } from "@vue/composition-api";
     const { calendar } = toRefs(props);
     const date = ref(calendar.value);
     watch(date, () => {
-      console.log(date.value)
       emit("update:calendar", date.value);
     });
     return { date };

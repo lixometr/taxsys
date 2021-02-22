@@ -72,6 +72,9 @@ export default class PageFiltersCalendar extends Vue {
     bottom: 0;
     transform: translateY(100%);
     z-index: 20;
+    @include sm {
+      left: 0;
+    }
   }
 }
 </style>

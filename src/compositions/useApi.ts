@@ -54,7 +54,7 @@ export default function useApi<T, R extends any>(
     if (options.toast) {
         const defaultSerializers = {
             success: (data) => data,
-            error: (err) => err.message
+            error: (err: AxiosError) => err.message
         }
         let messageSerializers = defaultSerializers
         if (typeof options.toast === 'object') {
@@ -72,7 +72,7 @@ export default function useApi<T, R extends any>(
 
             }
         })
-        watch(result, (value: any) => {
+        watch(result, (value: R) => {
             const toast = useToast()
             if (value) {
                 if (typeof options.toast === 'object' && options.toast.success

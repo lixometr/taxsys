@@ -82,6 +82,11 @@ export default class AppPagination extends Vue {
   align-items: center;
   background: $white;
   box-shadow: 15px 10px 50px rgba(0, 0, 0, 0.4);
+  user-select: none;
+  @include sm {
+    flex-direction: column;
+    align-items: center;
+  }
   &.full {
     margin-left: -20px;
     margin-right: -20px;
@@ -91,11 +96,25 @@ export default class AppPagination extends Vue {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    user-select: none;
+    @include sm {
+      order: 1;
+      position: relative;
+      left: 0;
+      transform: none;
+      margin-bottom: 1.5rem;
+      display: none;
+
+    }
   }
   &-pages {
     margin-left: auto;
     display: flex;
     align-items: center;
+    @include sm {
+      order: 2;
+      margin-left: 0;
+    }
   }
   &__arrow {
     cursor: pointer;

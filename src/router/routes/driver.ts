@@ -10,7 +10,7 @@ const routes: Array<RouteConfig> = [
         children: [
             {
                 name: "DriverCheck",
-                path: 'chick',
+                path: 'check',
                 component: () => import("@/views/Driver/Check.vue")
             }
         ]

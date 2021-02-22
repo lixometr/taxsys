@@ -3,9 +3,11 @@ import { UserModule } from "@/store/modules/user";
 export default function addListeners() {
     const socket = useSocket()
     socket.private(`notify.${UserModule.user?.id}`)
-        .listen('*', (e) => {
+        .listen('.testim', (e) => {
             console.log(e);
         });
-    socket.join('notifications')
-    socket.join('laravel_database_notifications')
+    socket.channel('notifications')
+        .listen('.testim', (e: any) => {
+            console.log(e)
+        })
 }

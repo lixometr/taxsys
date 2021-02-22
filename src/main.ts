@@ -17,6 +17,9 @@ import "@/libs/vue-calendar"
 import "@/libs/vue-click-outside"
 import "@/libs/vue-moment"
 import "@/libs/vue-meta"
+import "@/libs/date-filter"
+import "@/libs/locale-yup"
+
 import "@/libs/global-components"
 
 import "@/libs/vue-socket"

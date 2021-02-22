@@ -3,7 +3,7 @@
     <page-title>
       <h2>Поездки</h2>
     </page-title>
-    <page-filters :calendar.sync="date" @update:calendar="date = $event">
+    <page-filters :calendar.sync="date">
       <template v-slot:filters>
         <aggregator-filters v-model="agregator" />
       </template>
@@ -32,10 +32,15 @@ import { Component, Vue } from "vue-property-decorator";
 import { computed, reactive, ref, watch } from "@vue/composition-api";
 import { useApiGetTravels } from "@/api/travel";
 import useGlobalLoading from "@/compositions/useGlobalLoading";
+import useRouter from "@/compositions/useRouter";
 @Component({
+  metaInfo: {
+    title: "Поездки",
+  },
   setup() {
+    const router = useRouter();
     const agregator = ref("all");
-    const date = reactive({
+    const date = ref({
       start: new Date(),
       end: new Date(),
     });
@@ -46,34 +51,35 @@ import useGlobalLoading from "@/compositions/useGlobalLoading";
       nextPage,
       prevPage,
       setTotalPages,
-      totalPages
-    } = usePagination();
-    const gLoading = useGlobalLoading();
+      totalPages,
+    } = usePagination({ nowPage: +router.currentRoute.query.page });
+    const toFetch = computed(() => ({
+      dateFrom: date.value.start,
+      dateTo: date.value.end,
+      page: page.value,
+      agregator: agregator.value,
+    }));
 
     const { exec: fetchItems, result } = useApiGetTravels({
       toast: { error: (err) => "Ошибка при запросе данных" },
     });
-    const toFetch = computed(() => ({
-      dateFrom: date.start,
-      dateTo: date.end,
-      page: page.value,
-      agregator: agregator.value,
-    }));
+    const gLoading = useGlobalLoading();
     gLoading.show();
     fetchItems(toFetch.value).then(() => {
-      gLoading.hide()
-      setPage(result.value.current_page)
-      setTotalPages(result.value.last_page)
+      gLoading.hide();
+      setPage(result.value.current_page);
+      setTotalPages(result.value.last_page);
     });
-  
     watch(toFetch, () => {
-      console.log("changed toFetch");
+      window.scrollTo(0, 0);
       fetchItems(toFetch.value);
+    });
+    onPageChange(() => {
+      router.push({ query: { page: page.value.toString() } });
     });
     const items = ref([]);
     watch(result, (data) => {
       items.value = data.data;
-      
     });
     return {
       agregator,
@@ -82,7 +88,7 @@ import useGlobalLoading from "@/compositions/useGlobalLoading";
       nextPage,
       prevPage,
       items,
-      totalPages
+      totalPages,
     };
   },
   components: { PageTitle, PageFilters, AggregatorFilters, TravelsItem },

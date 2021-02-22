@@ -46,7 +46,8 @@ const menuItems: IMenuItems[] = [
                 name: 'Список водителей'
             },
             {
-                name: 'Проверить водителя'
+                name: 'Проверить водителя',
+                routeName: 'DriverCheck'
             },
             {
                 name: 'Черный список'

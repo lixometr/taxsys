@@ -22,8 +22,8 @@ export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
         plainValues[key] = field.value
         plainErrors[key] = field.errors
     })
-    const values = reactive<{[key: string]: any}>(plainValues)
-    const errors: any = reactive<{[key: string]: Array<string>}>(plainErrors)
+    const values = reactive<{ [key: string]: any }>(plainValues)
+    const errors: any = reactive<{ [key: string]: Array<string> }>(plainErrors)
 
     const validate = async () => {
         const resolvers = Object.keys(fields).map(key => {
@@ -44,6 +44,15 @@ export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
         }
     }
 
+    const serialize = () => {
+        const keys = Object.keys(values)
+        const toSend: any = {}
+        keys.map(key => {
+            toSend[key] = values[key]
+        })
+        return toSend
+    }
+
     watch(errors, (newErrors: any) => {
         const boolArray = Object.keys(newErrors).map(key => {
             const currentErrors = newErrors[key]
@@ -60,5 +69,5 @@ export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
     })
 
 
-    return { values, errors, isValid, handleSubmit, validate }
+    return { values, errors, isValid, handleSubmit, validate, serialize }
 }
