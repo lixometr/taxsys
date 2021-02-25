@@ -1,3 +1,3 @@
 export default function useSocket() {
-    return window.Echo
+    return { socket: window.Echo }
 }

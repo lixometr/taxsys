@@ -38,7 +38,14 @@ module.exports = {
             .loader('babel-loader')
             .end()
             .use('vue-svg-loader')
-            .loader('vue-svg-loader');
+            .loader('vue-svg-loader')
+            .options({
+                svgo: {
+                    plugins: [
+                        { prefixIds: true },
+                    ]
+                }
+            })
 
         const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
         types.forEach(type => addStyleResource(config.module.rule('scss').oneOf(type)))

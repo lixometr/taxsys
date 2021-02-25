@@ -1,12 +1,12 @@
 <template>
   <aside
     class="sidebar"
-    :class="{ open: isHover }"
+    :class="{ open: isOpen }"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
   >
     <router-link class="sidebar__logo" :to="{ name: 'Home' }">
-      <logo :showText="isHover" />
+      <logo :showText="isOpen" />
     </router-link>
     <sidebar-menu />
     <div class="sidebar__settings">
@@ -26,6 +26,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import SidebarItems from "./menu-items";
 import Logo from "@/components/Logo/Logo.vue";
 import { ref } from "@vue/composition-api";
+import useSidebar from "./useSidebar";
 @Component({
   components: {
     Logo,
@@ -34,18 +35,18 @@ import { ref } from "@vue/composition-api";
   },
   setup() {
     const items = SidebarItems;
-    const isHover = ref(false);
+    const {open, close, isOpen} = useSidebar()
     const onMouseEnter = (e: MouseEvent) => {
-      isHover.value = true;
+     open()
     };
     const onMouseLeave = (e: MouseEvent) => {
-      isHover.value = false;
+      close()
     };
     return {
       items,
       onMouseEnter,
       onMouseLeave,
-      isHover,
+      isOpen
     };
   },
 })

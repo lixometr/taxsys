@@ -1,5 +1,5 @@
 .btn {
-    border-radius: 20px;
+    border-radius: 100px;
     padding: 1rem 4rem;
     text-transform: uppercase;
     transition: $transition;
@@ -7,7 +7,9 @@
     font-size: $fz_xs;
     font-weight: $regular;
     border: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     text-align: center;
     font-family: $main_font;
@@ -26,6 +28,14 @@
         box-shadow: none;
     }
 
+    &.no-hover {
+        cursor: default;
+
+        &:hover {
+            box-shadow: none !important;
+        }
+    }
+
     &-orange {
         background: $orange;
     }
@@ -34,6 +44,11 @@
         background: $blue_grad;
         color: $white;
         font-weight: $bold;
+    }
+
+    &-grey {
+        background: $grey;
+        color: $white
     }
 
     &-orange-grad {
@@ -47,8 +62,20 @@
         color: $white;
     }
 
+    &-stroke-red {
+        background: transparent;
+        color: $red;
+        border: 1px solid $red;
+    }
+
     &-green {
         background: $green;
+    }
+
+    &-stroke-green {
+        background: transparent;
+        border: 1px solid $green;
+        color: $green;
     }
 
     &-stroke-orange {
@@ -64,7 +91,6 @@
 
         &:hover {
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
-
         }
 
         &.active,
@@ -79,7 +105,7 @@
         font-size: $fz_sm;
         padding: 0.4rem 1.2rem;
         font-weight: $regular;
-        border-radius: 1.3rem;
+        border-radius: 100px;
     }
 
     &-xs {

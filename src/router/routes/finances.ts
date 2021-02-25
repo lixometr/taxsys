@@ -9,14 +9,24 @@ const routes: Array<RouteConfig> = [
         },
         children: [
             {
-                name: "FinancesTravels",
+                name: "Travels",
                 path: 'travels',
                 component: () => import('@/views/Finances/Travels.vue')
             },
             {
-                name: "FinancesSuspiciousTravels",
+                name: "SuspiciousTravels",
                 path: 'suspicious-travels',
                 component: () => import('@/views/Finances/SuspiciousTravels.vue')
+            },
+            {
+                name: "ManualPayments",
+                path: 'manual-payments',
+                component: () => import('@/views/Finances/ManualPayments.vue')
+            },
+            {
+                name: "AutomaticPayments",
+                path: 'automatic-payments',
+                component: () => import('@/views/Finances/AutomaticPayments.vue')
             },
         ]
     },

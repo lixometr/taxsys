@@ -16,6 +16,7 @@
         class="menu-item__child"
         v-for="(child, index) in children"
         :key="index"
+        @click.native="clickChild"
       >
         {{ child.name }}
       </router-link>
@@ -24,7 +25,10 @@
 </template>
 
 <script lang="ts">
+import { watch } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { nextTick } from "vue/types/umd";
+import useSidebar from "./useSidebar";
 
 @Component({
   setup() {
@@ -44,11 +48,17 @@ export default class SidebarMenuItem extends Vue {
   get hasChildren() {
     return this.children?.length > 0;
   }
-
+  clickChild(e: MouseEvent) {
+    const { close } = useSidebar();
+    close();
+  }
   onLinkClick(e: MouseEvent) {
     if (this.hasChildren) {
       e.preventDefault();
       return;
+    } else {
+      const { close } = useSidebar();
+      close();
     }
   }
 }

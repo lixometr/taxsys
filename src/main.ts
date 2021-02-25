@@ -19,17 +19,21 @@ import "@/libs/vue-moment"
 import "@/libs/vue-meta"
 import "@/libs/date-filter"
 import "@/libs/locale-yup"
+import "@/libs/vue-select"
 
 import "@/libs/global-components"
 
 import "@/libs/vue-socket"
 
-import '@/libs/before-load'
+import beforeLoad from '@/libs/before-load'
 
 
 Vue.config.productionTip = false
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+beforeLoad().then(() => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+})
+

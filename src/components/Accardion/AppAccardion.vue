@@ -1,6 +1,6 @@
 <template>
   <div class="app-accardion" :class="{ open: opened }">
-    <div class="app-accardion__header accardion-header" @click.prevent="toggle">
+    <div class="app-accardion__header accardion-header" :class="headerClass" @click.prevent="toggle">
       <div
         class="app-accardion__header-row app-accardion__row row row-no-gutter"
       >
@@ -10,7 +10,7 @@
         <svgArrowRight />
       </div>
     </div>
-    <div class="app-accardion__content accardion-content" v-if="opened">
+    <div class="app-accardion__content accardion-content" :class="contentClass" v-if="opened">
       <div
         class="app-accardion__content-row app-accardion__row row row-no-gutter"
       >
@@ -60,6 +60,8 @@ interface ILabel {
 export default class AppAccardion extends Vue {
   @Prop(Boolean) isOpen: boolean;
   @Prop({ type: Boolean, default: true }) showArrow: boolean;
+  @Prop() headerClass: any
+  @Prop() contentClass: any
 }
 </script>
 
@@ -75,7 +77,7 @@ export default class AppAccardion extends Vue {
     padding: 0 1.8rem;
   }
   &__header {
-    padding: 0 4rem 2rem 1rem;
+    padding: 0 4rem 3rem 1rem;
    
     position: relative;
     cursor: pointer;

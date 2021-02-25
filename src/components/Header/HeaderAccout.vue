@@ -1,6 +1,6 @@
 <template>
   <div class="header-account">
-    <router-link :to="{ name: 'Profile' }" class="header-account__user">
+    <router-link :to="{ name: 'SettingsProfile' }" class="header-account__user">
       <div class="header-account__icon">
         <svgUser />
       </div>

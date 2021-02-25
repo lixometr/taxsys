@@ -6,5 +6,6 @@ $grid-breakpoints: (
         xl: $bp_lg
 );
 @import "bootstrap-4-grid/scss/grid";
+@import "vue-select/src/scss/vue-select.scss";
 @import "_reset";
 @import "_common";

@@ -1,17 +1,33 @@
 <template>
-  <div class="home">1</div>
+  <div class="home">
+    1
+    <app-select
+      :options="['QIWI', 'MANDARIN']"
+      placeholder="Платёжная система"
+      v-model="test"
+      :searchable="true"
+      :closeOnSelect="true"
+    />
+
+    {{ test }}
+  </div>
 </template>
 
 <script lang="ts">
-import useSocket from "@/compositions/useSocket";
+import AppSelect from "../../components/AppSelect.vue";
 import { Component, Vue } from "vue-property-decorator";
 @Component({
+  components: { AppSelect },
   setup() {
-  
-    return {};
+    return;
   },
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  test = "";
+  mounted() {
+    console.log(10);
+  }
+}
 </script>
 
 <style >

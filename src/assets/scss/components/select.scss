@@ -1,0 +1,40 @@
+.custom-select {
+    font-family: $main_font;
+    font-size: $fz_md;
+
+    .vs__dropdown-toggle {
+        border: none;
+        border-bottom: 1px solid rgba(90, 19, 167, 0.35);
+        border-radius: 0;
+        padding-bottom: 1rem;
+    }
+    .vs__selected {
+        color: #000;
+        margin-left: 0;
+        padding-left: 0;
+    }
+    .vs__search {
+        font-family: inherit;
+        padding-left: 0;
+        &::placeholder {
+            color: $grey-3;
+        }
+    }
+    .vs__dropdown-menu {
+        background: $white;
+        border: 1px solid rgba(90, 19, 167, 0.35);
+        padding: 10px 25px;
+    }
+    .vs__dropdown-option {
+        color: $grey_3;
+        padding: 13px 0;
+        border-bottom: 1px solid  rgba(90, 19, 167, 0.35);;
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+    .vs__dropdown-option--highlight {
+        background: transparent;
+        color: $purple;
+    }
+}

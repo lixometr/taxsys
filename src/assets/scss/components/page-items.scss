@@ -1,0 +1,12 @@
+.page-items {
+    &__item {
+
+        .app-accardion__content {
+            .app-accardion-col {
+                >div {
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}

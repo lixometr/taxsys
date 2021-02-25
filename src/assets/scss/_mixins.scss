@@ -3,18 +3,27 @@
         @content;
     }
 }
+
 @mixin md {
     @media screen and (max-width: $bp_md) {
         @content;
     }
 }
+
 @mixin sm {
     @media screen and (max-width: $bp_sm) {
         @content;
     }
 }
+
 @mixin xs {
     @media screen and (max-width: $bp_xs) {
+        @content;
+    }
+}
+
+@mixin media($bp) {
+    @media screen and (max-width: $bp) {
         @content;
     }
 }

@@ -1,8 +1,12 @@
 <template>
   <div class="page-filters">
     <div class="page-filters__row">
-      <page-filters-calendar class="page-filters__calendar" v-model="date" v-if="showCalendar" />
-      <div class="page-filters__items">
+      <page-filters-calendar
+        class="page-filters__calendar"
+        v-model="date"
+        v-if="showCalendar"
+      />
+      <div class="page-filters__items" v-if="$slots.filters">
         <slot name="filters" />
       </div>
     </div>
@@ -45,12 +49,13 @@ export default class PageFilters extends Vue {
     @include md {
       flex-direction: column;
       align-items: stretch;
-
     }
   }
   &__calendar {
+  }
+  &__items {
     @include md {
-      margin-bottom: 2rem;
+      margin-top: 2rem;
     }
   }
 }

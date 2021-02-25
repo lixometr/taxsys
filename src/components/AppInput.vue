@@ -1,13 +1,21 @@
 <template>
   <div class="app-input" :class="{ error: hasErrors }">
-    <input
-      class="app-input__el"
-      ref="el"
-      :type="type"
-      v-bind="_inputAttrs"
-      v-on="_inputListeners"
-    />
-    <div class="app-input__errors" >
+    <div class="app-input__inner">
+      <div class="app-input__prefix" v-if="prefix">
+        <slot name="prefix">{{ prefix }}</slot>
+      </div>
+      <input
+        class="app-input__el"
+        ref="el"
+        :type="type"
+        v-bind="_inputAttrs"
+        v-on="_inputListeners"
+      />
+      <div class="app-input__sufix" v-if="sufix">
+        <slot name="sufix">{{ sufix }}</slot>
+      </div>
+    </div>
+    <div class="app-input__errors">
       <div class="app-input__error" v-for="(error, idx) in errors" :key="idx">
         {{ error }}
       </div>
@@ -25,6 +33,8 @@ export default class AppInput extends Vue {
   @Prop({ type: Array, default: () => [] }) errors: string[];
   @Prop(String) value: string;
   @Prop(String) type: string;
+  @Prop(String) sufix: string;
+  @Prop(String) prefix: string;
 
   get _inputAttrs() {
     const attrs = Object.assign(
@@ -55,18 +65,20 @@ export default class AppInput extends Vue {
 
 <style lang="scss">
 .app-input {
+  position: relative;
   &__el {
     border: none;
-    border-bottom: 1px solid $purple;
     padding: 1.2rem 0;
     font-size: $fz_md;
-    color: $grey_3;
     background: transparent;
     outline: none;
     display: block;
     width: 100%;
+    &::placeholder {
+      color: $grey_3;
+    }
     &:focus {
-      border-bottom: 1px solid darken($purple, 10%);
+      // border-bottom: 1px solid darken($purple, 10%);
     }
   }
   &__errors {
@@ -75,11 +87,21 @@ export default class AppInput extends Vue {
   }
   &__error {
     padding-top: 6px;
-  
+  }
+  &__inner {
+    display: flex;
+    border-bottom: 1px solid rgba($purple, 0.35);
+    align-items: center;
+  }
+  &__sufix {
+    padding-left: 5px;
+  }
+  &__prefix {
+    padding-right: 5px;
   }
   &.error {
-    .app-input__el {
-        border-color: $red;
+    .app-input__inner {
+      border-color: $red;
     }
   }
 }

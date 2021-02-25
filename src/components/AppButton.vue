@@ -23,6 +23,7 @@ export default class AppButton extends Vue {
   @Prop(String) width: string;
   @Prop(String) type: string;
   @Prop(Boolean) active: boolean;
+  @Prop(Boolean) noHover: boolean
   get btnClass() {
     let type = "btn";
     if (this.stroke) {
@@ -32,7 +33,8 @@ export default class AppButton extends Vue {
     if (this.size) {
       type += ` btn-${this.size}`;
     }
-    return { [type]: true, active: this.active };
+    
+    return { [type]: true, active: this.active, 'no-hover': this.noHover };
   }
   get btnStyles() {
     return {

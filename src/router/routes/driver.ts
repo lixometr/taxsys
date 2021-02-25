@@ -12,6 +12,16 @@ const routes: Array<RouteConfig> = [
                 name: "DriverCheck",
                 path: 'check',
                 component: () => import("@/views/Driver/Check.vue")
+            },
+            {
+                name: "DriverCheckInfo",
+                path: 'check/:id',
+                component: () => import("@/views/Driver/CheckInfo.vue")
+            },
+            {
+                name: "DriverInfo",
+                path: ':id',
+                component: () => import("@/views/Driver/DriverInfo.vue")
             }
         ]
     },

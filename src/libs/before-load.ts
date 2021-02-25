@@ -4,10 +4,10 @@ import addListeners from "@/helpers/socket.listeners"
 const gLoading = useGlobalLoading()
 gLoading.show();
 
-(async function () {
+export default async function () {
     await UserModule.init()
     addListeners()
 
     gLoading.hide()
-    
-})()
+
+}

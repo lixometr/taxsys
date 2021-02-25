@@ -1,7 +1,8 @@
 <template>
   <div class="sidebar-mob">
-    <app-sidebar class="sidebar--mob" :class="{open: isOpen}"/>
-    <div class="sidebar-mob__overlay" v-if="isOpen" @click="close"></div>
+    <app-sidebar class="sidebar--mob" />
+    <div class="sidebar-mob__overlay" v-if="isOpen" @click="close">
+    </div>
   </div>
 </template>
 

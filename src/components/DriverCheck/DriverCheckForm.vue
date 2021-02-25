@@ -73,7 +73,10 @@
           color="purple-grad driver-check-form__btn"
           >ПРОВЕРИТЬ</app-button
         >
-        <svgInfo class="cursor-pointer" />
+        <div class="driver-check-form__info-wrapper">
+          <svgInfo class="cursor-pointer" @mouseenter="showInfo = true" @mouseleave="showInfo = false"/>
+          <div class="driver-check-form__info" v-if="showInfo">234324234243</div>
+        </div>
       </div>
     </form>
   </div>
@@ -81,11 +84,11 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { useApiDriverCheck } from "@/api/driver";
+import { useApiDriverCheck } from "@/api/driver-check";
 import useForm from "@/compositions/validators/useForm";
 import useField from "@/compositions/validators/useField";
 import * as yup from "yup";
-import { computed } from "@vue/composition-api";
+import { computed, ref } from "@vue/composition-api";
 import svgInfo from "@/assets/icons/info.svg";
 @Component({
   setup(props, { emit }) {
@@ -115,9 +118,11 @@ import svgInfo from "@/assets/icons/info.svg";
     const onSubmit = form.handleSubmit(async () => {
       await sendForm(form.serialize());
     });
+    const showInfo = ref(false)
     return {
       form,
       onSubmit,
+      showInfo
     };
   },
   components: {
@@ -131,6 +136,12 @@ export default class DriverCheckFrom extends Vue {}
 .driver-check-form {
   max-width: 800px;
   margin: 0 auto;
+  .row {
+    margin-bottom: 3rem;
+    @include sm {
+      margin-bottom: 0;
+    }
+  }
   &__btn-wrapper {
     margin-top: 7rem;
     @include sm {
@@ -138,7 +149,19 @@ export default class DriverCheckFrom extends Vue {}
     }
   }
   &__btn {
+    padding: 1.2rem 6rem;
     margin-right: 10px;
+    @include xs {
+      padding: 0.8rem 4rem;
+    }
+  }
+  &__info-wrapper {
+    position: relative;
+    margin-left: 10px;
+    
+  }
+  &__info {
+    position: absolute;
   }
 }
 </style>

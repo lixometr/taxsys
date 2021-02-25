@@ -19,19 +19,19 @@ const menuItems: IMenuItems[] = [
         children: [
             {
                 name: "Поездки",
-                routeName: 'FinancesTravels'
+                routeName: 'Travels'
             },
             {
                 name: "Подозрительные поездки",
-                routeName: 'FinancesSuspiciousTravels'
+                routeName: 'SuspiciousTravels'
             },
             {
                 name: "Ручные выплаты",
-                // routeName: 'FincancesManualPayments'
+                routeName: 'ManualPayments'
             },
             {
                 name: 'Автоматические выплаты',
-                // routeName: "FincancesAutomatedPayments"
+                routeName: "AutomaticPayments"
             }
         ]
     },

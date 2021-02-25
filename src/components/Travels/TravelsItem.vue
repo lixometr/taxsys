@@ -1,21 +1,24 @@
 <template>
-  <div class="travels-item">
-    <app-accardion class="color-grey-2 mb-15 font-md">
+  <div class="travels-item page-items__item">
+    <app-accardion
+      class="color-grey-2 mb-15 font-md"
+      contentClass="font-sm color-grey-3"
+    >
       <template v-slot:header>
-        <app-accardion-col :class="responsiveCol">{{
+        <app-accardion-col :class="responsiveHeader">{{
           item.id
         }}</app-accardion-col>
-        <app-accardion-col :class="responsiveCol" class="color-grey-3"
-          >{{item.created_at | dateTime}}</app-accardion-col
-        >
-        <app-accardion-col :class="responsiveCol"
+        <app-accardion-col :class="responsiveHeader" class="color-grey-3">{{
+          item.created_at | dateTime
+        }}</app-accardion-col>
+        <app-accardion-col :class="responsiveHeader"
           >{{ item.driver.name }} {{ item.driver.lastname }}
           {{ item.driver.surname }}</app-accardion-col
         >
-        <app-accardion-col :class="responsiveCol"
+        <app-accardion-col :class="responsiveHeader"
           >{{ item.Price }} {{ currency }}</app-accardion-col
         >
-        <app-accardion-col :class="responsiveCol">
+        <app-accardion-col :class="responsiveHeader">
           <app-badge class="shrink-0">
             <img
               :src="AgregatorType[item.Agreg].icon"
@@ -25,7 +28,7 @@
             {{ AgregatorType.yandex.name }}
           </app-badge>
         </app-accardion-col>
-        <app-accardion-col :class="responsiveCol">
+        <app-accardion-col :class="responsiveHeader">
           <app-badge class="shrink-0">
             <component
               width="24"
@@ -60,14 +63,14 @@
         </app-accardion-col>
 
         <app-accardion-col :class="responsiveContent">
-          <div class="row" v-if="item.com_agreg">
+          <div class="row" v-if="fees.agreg_fee">
             <div class="col-6">Комиссия агрегатора:</div>
-            <div class="col-6">{{ item.com_agreg }} {{ currency }}</div>
+            <div class="col-6">{{ fees.agreg_fee }} {{ currency }}</div>
           </div>
 
-          <div class="row" v-if="item.com_park">
+          <div class="row" v-if="fees.park_fee">
             <div class="col-6">Комиссия парка:</div>
-            <div class="col-6">{{ item.com_park }} {{ currency }}</div>
+            <div class="col-6">{{ fees.park_fee }} {{ currency }}</div>
           </div>
 
           <div class="row" v-if="item.ChargedDriver">
@@ -75,20 +78,24 @@
             <div class="col-6">{{ item.ChargedDriver }} ₽</div>
           </div>
 
-          <div class="row" v-if="item.PaymentType !== PaymentName.cash">
+          <div class="row" v-if="item.PaymentType !== PaymentName.cash && noCashInfo">
             <div class="col-6">Безнал:</div>
             <div class="col-6">{{ noCashInfo }} {{ currency }}</div>
           </div>
 
-          <div class="row" v-if="item.surcharges">
+          <div class="row" v-if="fees.bonus">
             <div class="col-6">Доплаты:</div>
-            <div class="col-6">{{ item.surcharges }}</div>
+            <div class="col-6">{{ fees.bonus }} {{ currency }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
-          <div class="row" v-if="item.timeTrip">
+          <div class="row" v-if="timeTrip">
             <div class="col-6">Время:</div>
-            <div class="col-6">{{ item.timeTrip }}</div>
+            <div class="col-6">
+              <span v-if="timeTrip.days">{{ timeTrip.days }} д</span>
+              <span v-if="timeTrip.hours"> {{ timeTrip.hours }} ч</span>
+              <span v-if="timeTrip.min"> {{ timeTrip.min }} мин</span>
+            </div>
           </div>
 
           <div class="row" v-if="item.distance">
@@ -107,8 +114,8 @@
           </div>
 
           <div class="row">
-            <div class="col-6" v-if="item.tip">Чаевые:</div>
-            <div class="col-6" v-if="item.tip">{{ item.tip }}</div>
+            <div class="col-6" v-if="fees.tips">Чаевые:</div>
+            <div class="col-6" v-if="fees.tips">{{ fees.tips }}</div>
           </div>
         </app-accardion-col>
       </template>
@@ -125,14 +132,18 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component({
   setup() {
     const getPaymentType = (name: string) => {
-      return PaymentType[name] || {
-        name: 'Неизвестно'
-      };
+      return (
+        PaymentType[name] || {
+          name: "Неизвестно",
+        }
+      );
     };
     const getAgregType = (name: string) => {
-      return AgregatorType[name] || {
-        name: 'Неизвестно'
-      };
+      return (
+        AgregatorType[name] || {
+          name: "Неизвестно",
+        }
+      );
     };
     const store = useStore();
     const currency = computed(() => {
@@ -151,16 +162,16 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class TravelsItem extends Vue {
   @Prop(Object) item: any;
-  get responsiveCol() {
-    return " col-sm-6 col-md-4 col-xl-2";
+  get responsiveHeader() {
+    return "col-sm-6 col-md-4 col-xl-2";
   }
 
   get responsiveContent() {
-    return "travels-item__content-col col-12 col-xl-4";
+    return "col-12 col-xl-4";
   }
 
   get distanceKm() {
-    return this.item.distance / 1000
+    return this.item.distance / 1000;
   }
 
   get orderIdLink() {
@@ -177,8 +188,26 @@ export default class TravelsItem extends Vue {
     }
     return this.item.id;
   }
+  get fees() {
+    return this.item.fees || {};
+  }
+  get timeTrip() {
+    const seconds = this.item.timeTrip
+    const date = this.$moment.duration(seconds, 'seconds');
+    const min = date.minutes();
+    const hours = date.hours();
+    const days = date.days();
+    return {
+      min,
+      hours,
+      days,
+    };
+  }
   get noCashInfo() {
-    return this.item.Price - this.item.com_agreg - this.item.com_park;
+    const result = this.item.Price + parseFloat(this.fees.agreg_fee) + parseFloat(this.fees.park_fee);
+    if (isNaN(result) || result === Infinity) return false;
+
+    return result.toFixed(2);
   }
   get costPerKm() {
     const result = this.item.Price / this.distanceKm;
@@ -187,7 +216,7 @@ export default class TravelsItem extends Vue {
     return norm;
   }
   get costPerMin() {
-    let result = this.item.Price / this.item.timeTrip;
+    let result = this.item.Price / (this.item.timeTrip / 60);
     if (isNaN(result) || result === Infinity) return false;
     const norm = result.toFixed(2);
 
@@ -197,13 +226,4 @@ export default class TravelsItem extends Vue {
 </script>
 
 <style lang="scss">
-.travels-item {
-  &__content-col {
-    color: $grey_3;
-    font-size: $fz_sm;
-    > div {
-      margin-bottom: 15px;
-    }
-  }
-}
 </style>

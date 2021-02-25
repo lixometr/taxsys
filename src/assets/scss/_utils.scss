@@ -22,6 +22,10 @@
   font-size: $fz_md;
 }
 
+.font-ml {
+  font-size: $fz_ml;
+}
+
 .font-sm {
   font-size: $fz_sm;
 }
@@ -45,9 +49,11 @@
 .flex {
   display: flex;
 }
+
 .offset-bottom {
   margin-bottom: 1.5rem;
 }
+
 .row-no-gutter {
   margin-left: 0 !important;
   margin-right: 0 !important;
@@ -101,25 +107,28 @@ $bps: (lg, md, sm, xs);
 
 .md-hidden {
   @include md {
-    display: none!important;
+    display: none !important;
   }
 }
-.md-show{
-  display: none!important;
+
+.md-show {
+  display: none !important;
+
   @include md {
-    display: block!important;
+    display: block !important;
   }
 }
 
 .sm-hidden {
   @include sm {
-    display: none!important;
+    display: none !important;
   }
 }
 
 .sm-show {
-  display: none!important;
+  display: none !important;
+
   @include sm {
-    display: block!important;
+    display: block !important;
   }
 }

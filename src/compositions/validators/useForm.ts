@@ -38,6 +38,7 @@ export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
             isSubmit.value = true
             await validate()
             if (!isValid.value) return
+            if(isSubmiting.value) return
             isSubmiting.value = true
             await cb(...params)
             isSubmiting.value = false
