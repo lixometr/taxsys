@@ -26,6 +26,7 @@ import svgArrow from "@/assets/icons/select_arrow.svg";
 })
 export default class AppSelect extends Vue {
   @Prop(String) label: string;
+  @Prop(String) selectLabel: string;
   @Prop({ type: Array, default: () => [] }) errors: string[];
   get hasErrors() {
     return this.errors.length > 0;
@@ -34,8 +35,9 @@ export default class AppSelect extends Vue {
     const defaultOptions = {
       clearable: false,
       placeholder: this.label,
+      label: this.selectLabel
     };
-    return Object.assign({}, this.$attrs, defaultOptions);
+    return Object.assign({}, defaultOptions, this.$attrs );
   }
 }
 </script>

@@ -2,8 +2,10 @@
   <div class="auth-form">
     <div class="auth-form__image"></div>
     <div class="auth-form__form-wrapper">
-      <div class="auth-form__title h2">
-        {{ title }}
+      <div class="auth-form__title h2" v-if="title || $slots.title">
+        <slot name="title">
+          {{ title }}
+        </slot>
       </div>
       <div class="auth-form__form">
         <slot />
@@ -38,14 +40,18 @@ export default class extends Vue {
     color: $purple;
     font-weight: 600;
     @include sm {
-        text-align: center;
+      text-align: center;
     }
   }
   &__image {
     background: url(~@/assets/img/login_image.jpg) left center no-repeat;
+    background-size: cover;
     width: 380px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    @include lg {
+      width: 250px;
+    }
     @include md {
       display: none;
     }

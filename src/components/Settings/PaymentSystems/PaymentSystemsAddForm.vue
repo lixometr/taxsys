@@ -10,7 +10,7 @@
         label="Платежная система"
         :options="paymentSystemItems"
         :errors="errors.paymentSystem"
-        :reduce="item => item.value"
+        :reduce="(item) => item.value"
         :searchable="false"
       />
       <app-input
@@ -40,10 +40,13 @@ import AppSelect from "../../AppSelect.vue";
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
 import { Component, Vue } from "vue-property-decorator";
+import { useApiCreatePaymentSystem } from "@/api/paysystem";
 import * as yup from "yup";
+import { errorHandler } from "@/helpers/error-handler";
+import { PaymentSystemInfo } from "@/types/payment-system.enum";
 @Component({
   components: { AppSelect },
-  setup() {
+  setup(props, { emit }) {
     const { values, handleSubmit, errors, serialize } = useForm({
       fields: {
         paymentSystem: useField("", [yup.string().required()]),
@@ -52,25 +55,35 @@ import * as yup from "yup";
       },
       watchAfterSubmit: true,
     });
-    const onSubmit = handleSubmit(() => {
+    const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
-      console.log(toSend);
+      const { exec: create, error } = useApiCreatePaymentSystem({
+        toast: {
+          success: () => "Платежная система добавлена!",
+          error: errorHandler(),
+        },
+      });
+      await create({
+        loginApi: toSend.login,
+        passwordApi: toSend.password,
+        name: toSend.paymentSystem,
+      });
+      if (error.value) {
+        return;
+      }
+
+      emit("send");
     });
-    const paymentSystemItems = [
-      {
-        label: 'Qiwi',
-        value: 'qiwi'
-      },
-      {
-        label: 'MANDARIN',
-        value: 'mandarin'
-      },
-    ]
+
+    const paymentSystemItems = Object.keys(PaymentSystemInfo).map((key) => ({
+      label: PaymentSystemInfo[key].name,
+      value: key,
+    }));
     return {
       onSubmit,
       values,
       errors,
-      paymentSystemItems
+      paymentSystemItems,
     };
   },
 })

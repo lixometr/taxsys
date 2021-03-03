@@ -1,5 +1,5 @@
 <template>
-  <div class="page-login">
+  <div class="page-login auth-page">
    <div class="login-form-wrapper">
      <auth-form title="Личный кабинет">
        <login-form />
@@ -31,9 +31,7 @@ export default class Login extends Vue {
 
 <style lang="scss">
 .page-login {
-  background: $blue_grad;
-  min-height: 100vh;
-  padding-top: 10rem;
-  padding-bottom: 10rem;
+  
+ 
 }
 </style>

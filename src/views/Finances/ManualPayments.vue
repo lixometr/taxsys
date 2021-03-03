@@ -9,7 +9,15 @@
       </template>
     </page-filters>
     <div class="travels-items flex flex-column flex-1">
-      <manual-payments-item v-for="item in items" :key="item.id" :item="item" />
+      <manual-payments-item
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+        :showActions="entity === 'orders'"
+        @accept="accept(item)"
+        @decline="decline(item)"
+        @remove="remove(item)"
+      />
       <app-pagination
         class="mt-auto"
         :nowPage="page"
@@ -29,8 +37,14 @@ import PageFilters from "@/components/Page/PageFilters.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { computed, reactive, ref, watch } from "@vue/composition-api";
-import { useApiManualPayments } from "@/api/payments";
+import {
+  useApiManualPayments,
+  useApiPaymentAccept,
+  useApiPaymentDecline,
+  useApiPaymentDelete,
+} from "@/api/payments";
 import useItemsPage from "@/compositions/useItemsPage";
+import { errorHandler } from "@/helpers/error-handler";
 @Component({
   metaInfo: {
     title: "Ручные выплаты",
@@ -49,7 +63,8 @@ import useItemsPage from "@/compositions/useItemsPage";
       showMore,
       totalPages,
       init,
-      items
+      items,
+      refreshItems,
     } = useItemsPage({
       api: useApiManualPayments,
     });
@@ -57,10 +72,37 @@ import useItemsPage from "@/compositions/useItemsPage";
       dateFrom: date.value.start,
       dateTo: date.value.end,
       page: page.value,
+      isPaid: entity.value === "payments",
     }));
-    init({fetchData: toFetch});
-    
+    init({ fetchData: toFetch });
+    const accept = async (item) => {
+      const { exec, error } = useApiPaymentAccept({
+        toast: { success: () => "Платеж принят", error: errorHandler() },
+      });
+      await exec({ id: item.id });
+      if (error.value) return;
+      await refreshItems();
+    };
+    const decline = async (item) => {
+      const { exec, error } = useApiPaymentDecline({
+        toast: { success: () => "Платеж отклонен", error: errorHandler() },
+      });
+      await exec({ id: item.id });
+      if (error.value) return;
+      await refreshItems();
+    };
+    const remove = async (item) => {
+      const { exec, error } = useApiPaymentDelete({
+        toast: { success: () => "Платеж удален", error: errorHandler() },
+      });
+      await exec({ id: item.id });
+      if (error.value) return;
+      await refreshItems();
+    };
     return {
+      accept,
+      decline,
+      remove,
       entity,
       date,
       page,

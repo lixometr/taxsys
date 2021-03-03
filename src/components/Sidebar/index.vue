@@ -1,6 +1,6 @@
 <template>
   <aside
-    class="sidebar"
+    class="sidebar scrollbar"
     :class="{ open: isOpen }"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"

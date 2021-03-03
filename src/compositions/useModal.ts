@@ -7,8 +7,8 @@ class ModalApi {
     constructor() {
         this.event = useEvent()
     }
-    open({ component }) {
-        this.event.emit('modal-open', { component })
+    open(opts) {
+        this.event.emit('modal-open', opts)
     }
     close(name: string) {
         this.event.emit('modal-close', name)

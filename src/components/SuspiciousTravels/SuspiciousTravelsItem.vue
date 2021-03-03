@@ -12,8 +12,8 @@
           item.created_at | dateTime
         }}</app-accardion-col>
         <app-accardion-col :class="responsiveCol"
-          >{{ item.driver.name }} {{ item.driver.lastname }}
-          {{ item.driver.surname }}</app-accardion-col
+          >{{ item.driver.name }} {{ item.driver.middle_name }}
+          {{ item.driver.last_name }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveCol"
           >{{ item.Price }} {{ currency }}</app-accardion-col

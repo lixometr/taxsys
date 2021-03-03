@@ -13,8 +13,8 @@
           item.created_at | dateTime
         }}</app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
-          >{{ item.driver.name }} {{ item.driver.lastname }}
-          {{ item.driver.surname }}</app-accardion-col
+          >{{ item.driver.name }} {{ item.driver.middle_name }}
+          {{ item.driver.last_name }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader"
           >{{ item.amount }} {{ currency }}</app-accardion-col
@@ -29,10 +29,10 @@
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
           <app-button
-            :noHover="true"
             color="green"
             :stroke="true"
             class="manual-payments-item__btn"
+            @click="showInfo"
             >Оплачен</app-button
           >
         </app-accardion-col>
@@ -40,8 +40,32 @@
       <template #default>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
-            <div class="col">Способ оплаты: (QIWI)</div>
-            <div class="col">1548 8579 5896 6587</div>
+            <div class="col d-flex align-items-center">
+              Способ оплаты:
+              <span class="payment-badge ml-10 shrink-0">
+                <app-icon :src="paymentLogo" width="30"
+              /></span>
+            </div>
+            <div class="col color-grey-2">{{ item.card.number }}</div>
+          </div>
+          <div class="row" v-if="showActions">
+            <div class="col">
+              <app-button
+                class="manual-payments-item__action-btn"
+                :stroke="true"
+                color="orange"
+                @click="decline"
+                >Отказать</app-button
+              >
+            </div>
+            <div class="col">
+              <app-button
+                color="orange"
+                @click="accept"
+                class="manual-payments-item__action-btn"
+                >оплатить</app-button
+              >
+            </div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
@@ -74,18 +98,34 @@
           </div>
         </app-accardion-col>
       </template>
+      <template #actions>
+        <div class="app-accardion__action" @click="remove">
+          <action-icon-delete />
+        </div>
+      </template>
     </app-accardion>
   </div>
 </template>
 
 <script lang="ts">
+import ActionIconDelete from '../ActionIcons/ActionIconDelete.vue'
+import useModal from "@/compositions/useModal";
 import useStore from "@/compositions/useStore";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
-import { PaymentType, PaymentName } from "@/types/payment-type.enum";
+import { ModalName } from "@/types/modal.enum";
+import {
+  PaymentType,
+  PaymentName,
+  PaymentAgregatorById,
+  PaymentAgregator,
+} from "@/types/payment-type.enum";
 import { computed } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 @Component({
-  setup() {
+  components: { ActionIconDelete
+  },
+  setup(props, { emit }) {
+    const { item } = props;
     const getPaymentType = (name: string) => {
       return (
         PaymentType[name] || {
@@ -104,7 +144,23 @@ import { Component, Prop, Vue } from "vue-property-decorator";
     const currency = computed(() => {
       return store.getters.currency;
     });
-
+    const accept = () => {
+      emit("accept");
+    };
+    const decline = () => {
+      emit("decline");
+    };
+    const remove = () => {
+      emit("remove");
+    };
+    const showInfo = () => {
+      const { showByName } = useModal();
+      showByName(ModalName.paymentInfo, {
+        props: {
+          item,
+        },
+      });
+    };
     return {
       AgregatorType,
       PaymentType,
@@ -112,11 +168,16 @@ import { Component, Prop, Vue } from "vue-property-decorator";
       getPaymentType,
       getAgregType,
       currency,
+      accept,
+      decline,
+      showInfo,
+      remove,
     };
   },
 })
 export default class ManualPaymentsItem extends Vue {
   @Prop(Object) item: any;
+  @Prop(Boolean) showActions: boolean;
   get responsiveHeader() {
     return "col-sm-6 col-md-4 col-xl-2";
   }
@@ -124,7 +185,15 @@ export default class ManualPaymentsItem extends Vue {
   get responsiveContent() {
     return "col-12 col-xl-4";
   }
-   get commision() {
+  get paymentLogo() {
+    // this.item.payment
+    const agregatorName = PaymentAgregatorById[this.item.type];
+    if (agregatorName === PaymentAgregator.qiwi) {
+      return require("@/assets/img/qiwi_logo.png");
+    }
+    return require("@/assets/icons/credit-card.svg");
+  }
+  get commision() {
     return this.item.group?.commision?.commision || 0;
   }
   get sumWithCommision() {
@@ -138,6 +207,16 @@ export default class ManualPaymentsItem extends Vue {
   &__btn-driver {
     padding: 1.1rem 2rem;
     text-transform: none;
+  }
+  &__action-btn {
+    &:first-child {
+      @include xs {
+        margin: 1rem 0;
+      }
+    }
+  }
+  .app-accardion__actions {
+    justify-content: flex-end;
   }
 }
 </style>

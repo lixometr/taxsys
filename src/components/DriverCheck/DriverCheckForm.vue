@@ -24,7 +24,7 @@
           />
         </div>
         <div class="col-md-3">
-          <v-date-picker v-model="form.values.dateOfBirth">
+          <!-- <v-date-picker v-model="form.values.dateOfBirth">
             <template v-slot="{ inputValue, inputEvents }">
               <app-input
                 :value="inputValue"
@@ -33,7 +33,12 @@
                 v-on="inputEvents"
               />
             </template>
-          </v-date-picker>
+          </v-date-picker> -->
+          <app-date-picker
+            v-model="form.values.dateOfBirth"
+            label="Дата рождения"
+            :errors="form.errors.dateOfBirth"
+          ></app-date-picker>
         </div>
       </div>
       <div class="row">
@@ -52,7 +57,7 @@
           />
         </div>
         <div class="col-md-4">
-          <v-date-picker v-model="form.values.dateDriverLicense">
+          <!-- <v-date-picker v-model="form.values.dateDriverLicense">
             <template v-slot="{ inputValue, inputEvents }">
               <app-input
                 :value="inputValue"
@@ -61,7 +66,12 @@
                 v-on="inputEvents"
               />
             </template>
-          </v-date-picker>
+          </v-date-picker> -->
+          <app-date-picker
+            v-model="form.values.dateDriverLicense"
+            label="Дата выдачи В.У."
+             :errors="form.errors.dateDriverLicense"
+          ></app-date-picker>
         </div>
       </div>
       <div
@@ -74,8 +84,25 @@
           >ПРОВЕРИТЬ</app-button
         >
         <div class="driver-check-form__info-wrapper">
-          <svgInfo class="cursor-pointer" @mouseenter="showInfo = true" @mouseleave="showInfo = false"/>
-          <div class="driver-check-form__info" v-if="showInfo">234324234243</div>
+          <svgInfo
+            class="cursor-pointer"
+            @mouseenter="showInfo = true"
+            @mouseleave="showInfo = false"
+          />
+          <transition name="fade">
+            <app-tooltip
+              class="driver-check-form__info"
+              v-if="showInfo"
+              :position="'left'"
+            >
+              Услуга проверка водителя является платной и составляет 20 рублей
+              за одну проверку.
+              <p class="mt-5 mb-5">Оплата списывается с баланса TaxSys.</p>
+              Информация носит исключительно справочный характер. Заказывая
+              данную услугу вы полностью и безоговорочно соглашаетесь с условием
+              оферты.
+            </app-tooltip>
+          </transition>
         </div>
       </div>
     </form>
@@ -83,6 +110,8 @@
 </template>
 
 <script lang="ts">
+import AppDatePicker from "@/components/AppDatePicker.vue";
+import AppTooltip from "../AppTooltip.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { useApiDriverCheck } from "@/api/driver-check";
 import useForm from "@/compositions/validators/useForm";
@@ -118,15 +147,17 @@ import svgInfo from "@/assets/icons/info.svg";
     const onSubmit = form.handleSubmit(async () => {
       await sendForm(form.serialize());
     });
-    const showInfo = ref(false)
+    const showInfo = ref(false);
     return {
       form,
       onSubmit,
-      showInfo
+      showInfo,
     };
   },
   components: {
     svgInfo,
+    AppTooltip,
+    AppDatePicker,
   },
 })
 export default class DriverCheckFrom extends Vue {}
@@ -158,10 +189,31 @@ export default class DriverCheckFrom extends Vue {}
   &__info-wrapper {
     position: relative;
     margin-left: 10px;
-    
   }
   &__info {
     position: absolute;
+    font-size: $fz_xs;
+    color: $grey_2;
+    min-width: 300px;
+    top: -10px;
+    left: 50px;
+    z-index: 10;
+    &::before {
+      top: 10px !important;
+      transform: rotate(45deg) translateY(0) !important;
+    }
+    @include md {
+      top: 40px;
+      right: 0;
+      left: auto;
+      &::before {
+        display: none;
+      }
+    }
+    @include xs {
+      right: -50px;
+      width: 90%;
+    }
   }
 }
 </style>

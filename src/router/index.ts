@@ -7,6 +7,7 @@ import finances from './routes/finances'
 import user from './routes/user'
 import settings from './routes/settings'
 import driver from "./routes/driver"
+import rent from './routes/rent'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -21,6 +22,7 @@ const routes: Array<RouteConfig> = [
   ...user,
   ...settings,
   ...driver,
+  ...rent,
   {
     path: '*',
     name: "PageNotFound",
@@ -36,10 +38,13 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
+const noAuthList = [
+  'Login',
+  'Register'
+]
 router.beforeEach((to, from, next) => {
   // return next()
-  if (to.name !== 'Login' && !UserModule.isAuth) next({ name: 'Login' })
+  if (!noAuthList.includes(to.name) && !UserModule.isAuth) next({ name: 'Login' })
   else next()
 })
 

@@ -1,7 +1,9 @@
 .color-purple {
   color: $purple;
 }
-
+.color-violet {
+  color: $violet;
+}
 .color-grey-1 {
   color: $grey_1;
 }
@@ -13,7 +15,9 @@
 .color-grey-3 {
   color: $grey_3;
 }
-
+.color-green {
+  color: $green;
+}
 .font-lg {
   font-size: $fz_lg;
 }
@@ -40,6 +44,10 @@
 
 .bold {
   font-weight: $bold;
+}
+
+.font-500 {
+  font-weight: 500;
 }
 
 .cursor-pointer {

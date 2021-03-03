@@ -10,6 +10,7 @@ import AppBadge from "@/components/AppBadge.vue"
 import AppChooser from "@/components/AppChooser.vue"
 import AppSwitcher from "@/components/AppSwitcher.vue"
 import AppStatus from "@/components/AppStatus.vue"
+import AppIcon from "@/components/AppIcon.vue"
 
 Vue.component('default-layout', LayoutDefault)
 Vue.component('empty-layout', LayoutEmpty)
@@ -22,3 +23,4 @@ Vue.component('app-pagination', AppPagination)
 Vue.component('app-chooser', AppChooser)
 Vue.component('app-switcher', AppSwitcher)
 Vue.component('app-status', AppStatus)
+Vue.component('app-icon', AppIcon)

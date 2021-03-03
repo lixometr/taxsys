@@ -4,13 +4,13 @@
       <div class="row align-items-center">
         <div class="col-lg-3">
           <div class="payment-systems-item__logo payment-badge">
-            <img src="@/assets/img/qiwi_logo.png" alt="qiwi" />
+            <img :src="paymentSystemLogo" alt="" />
           </div>
         </div>
         <div class="col-lg-7">
           <div class="font-ml payment-systems-item__balance">
             <div class="color-grey-2">Баланс:</div>
-            <div class="color-grey-1">32 000 ₽</div>
+            <div class="color-grey-1">{{ item.balans }} {{ currency }}</div>
           </div>
         </div>
         <div class="col-lg-2 payment-systems-item__remove">
@@ -22,8 +22,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import svgTrash from "@/assets/icons/trash.svg";
+import { PaymentSystemEntity } from "@/models/payment-system.entity";
+import { PaymentSystemInfo } from "@/types/payment-system.enum";
 @Component({
   setup(props, { emit }) {
     const remove = () => {
@@ -37,7 +39,19 @@ import svgTrash from "@/assets/icons/trash.svg";
     svgTrash,
   },
 })
-export default class PaymentSystemsItem extends Vue {}
+export default class PaymentSystemsItem extends Vue {
+  @Prop({ type: Object, default: () => ({}) }) item: PaymentSystemEntity;
+  get currency() {
+    return this.$store.getters.currency;
+  }
+  get paymentSystemLogo() {
+    const agregatorInfo = PaymentSystemInfo[this.item.name];
+    if (agregatorInfo) {
+      return agregatorInfo.icon;
+    }
+    return require("@/assets/img/qiwi_logo.png");
+  }
+}
 </script>
 
 <style lang="scss">

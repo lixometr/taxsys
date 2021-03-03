@@ -6,12 +6,21 @@ interface UseFormParams {
     fields: {
         [key: string]: UseFieldModel
     },
-    watchAfterSubmit?: boolean
+    watchAfterSubmit?: boolean,
+    rename?: {
+        [key: string]: string
+    },
 }
 interface UseFormErrors {
     [key: string]: Ref<string[]>
 }
-export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
+export default function useForm(params: UseFormParams) {
+    const defaultValues: UseFormParams = {
+        watchAfterSubmit: true,
+        fields: {},
+        rename: {}
+    }
+    const { fields, watchAfterSubmit, rename } = Object.assign({}, defaultValues, params)
     let plainValues = {}
     let plainErrors = {}
     const isValid = ref(false)
@@ -38,7 +47,7 @@ export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
             isSubmit.value = true
             await validate()
             if (!isValid.value) return
-            if(isSubmiting.value) return
+            if (isSubmiting.value) return
             isSubmiting.value = true
             await cb(...params)
             isSubmiting.value = false
@@ -49,7 +58,9 @@ export default function useForm({ fields, watchAfterSubmit }: UseFormParams) {
         const keys = Object.keys(values)
         const toSend: any = {}
         keys.map(key => {
-            toSend[key] = values[key]
+            let currentKey = rename[key]
+            if (!currentKey) currentKey = key
+            toSend[currentKey] = values[key]
         })
         return toSend
     }

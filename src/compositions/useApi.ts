@@ -3,6 +3,7 @@ import useAxios from '@/compositions/useAxios'
 import { AxiosError, AxiosRequestConfig } from "axios";
 import useGlobalLoading from "./useGlobalLoading";
 import useToast from "./useToast";
+import { errorHandler } from "@/helpers/error-handler";
 export interface ToastMessages {
     error?: (err: any) => string
     success?: (result: any) => string
@@ -31,7 +32,7 @@ export default function useApi<T, R extends any>(
             return valueResponse;
         } catch (e) {
             if (e.isAxiosError == true) {
-                error.value = e.response
+                error.value = e
             } else {
                 console.log('strange error ', e)
                 error.value = e
@@ -54,7 +55,7 @@ export default function useApi<T, R extends any>(
     if (options.toast) {
         const defaultSerializers = {
             success: (data) => data,
-            error: (err: AxiosError) => err.message
+            error: errorHandler()
         }
         let messageSerializers = defaultSerializers
         if (typeof options.toast === 'object') {

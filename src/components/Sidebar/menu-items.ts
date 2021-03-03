@@ -56,7 +56,8 @@ const menuItems: IMenuItems[] = [
     },
     {
         name: 'Аренда',
-        img: require('@/assets/icons/car.svg')
+        img: require('@/assets/icons/car.svg'),
+        routeName: 'Rent'
     },
     {
         name: "Штрафы",

@@ -9,9 +9,12 @@ export const AgregatorType = {
         name: 'Яндекс.Такси'
     },
     [AgregName.gett]: {
-        name: "Gett"
+        name: "Gett",
+        icon: require('@/assets/img/gett_logo.jpg')
     },
     [AgregName.citymobil]: {
-        name: "Ситимоби"
+        name: "Ситимоби",
+        icon: require('@/assets/img/city_logo.jpg')
+
     }
 }

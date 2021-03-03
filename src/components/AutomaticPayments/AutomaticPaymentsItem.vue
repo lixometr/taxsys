@@ -12,8 +12,8 @@
           item.created_at | dateTime
         }}</app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
-          >{{ item.driver.name }} {{ item.driver.lastname }}
-          {{ item.driver.surname }}</app-accardion-col
+          >{{ item.driver.name }} {{ item.driver.middle_name }}
+          {{ item.driver.last_name }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader"
           >{{ item.amount }} {{ currency }}</app-accardion-col
@@ -103,13 +103,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
         }
       );
     };
-    const getAgregType = (name: string) => {
-      return (
-        AgregatorType[name] || {
-          name: "Неизвестно",
-        }
-      );
-    };
+    
     const store = useStore();
     const currency = computed(() => {
       return store.getters.currency;
@@ -120,7 +114,6 @@ import { Component, Prop, Vue } from "vue-property-decorator";
       PaymentType,
       PaymentName,
       getPaymentType,
-      getAgregType,
       currency,
     };
   },

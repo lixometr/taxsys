@@ -8,17 +8,26 @@
       <h2 class="modal-title">Платежная система</h2>
     </template>
     <template>
-      <payment-systems-add-form @send="onSent" />
+      <payment-systems-add-form @send="onSend" />
     </template>
   </modal-content>
 </template>
 
 <script lang="ts">
-import ModalContent from './ModalContent.vue'
+import ModalContent from "./ModalContent.vue";
 import PaymentSystemsAddForm from "../Settings/PaymentSystems/PaymentSystemsAddForm.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
+  setup(props, { emit }) {
+    const onSend = () => {
+      emit("send");
+      emit('close')
+    };
+    return {
+      onSend,
+    };
+  },
   components: { PaymentSystemsAddForm, ModalContent },
 })
 export default class PaymentSystemsAddModal extends Vue {}

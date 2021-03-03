@@ -16,7 +16,7 @@ const defaultOptions: UseFieldOptions = {
 }
 
 type UseFieldValidators = Array<Function | BaseSchema>
-export default function useField(defaultValue = '', validators: UseFieldValidators, options?: UseFieldOptions): UseFieldModel {
+export default function useField(defaultValue: string | boolean | number | object = '', validators: UseFieldValidators, options?: UseFieldOptions): UseFieldModel {
     options = Object.assign({}, defaultOptions, options)
     const value = ref(defaultValue)
     const errors: Ref<Array<string>> = ref([])

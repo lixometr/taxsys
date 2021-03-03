@@ -8,6 +8,8 @@
 @import "./components/modal";
 @import "./components/payment-badge";
 @import "./components/select";
+@import "./components/scroll";
+
 html,
 body {
     font-size: 10px;
@@ -15,9 +17,11 @@ body {
     box-sizing: border-box;
     overflow-x: hidden;
 }
+
 body {
     min-height: 100vh;
 }
+
 .h2,
 h2 {
     @include fz($fz_lg);
@@ -37,6 +41,10 @@ a {
     margin-bottom: 23px;
 }
 
+b {
+    font-weight: $bold;
+}
+
 .col {
     flex: 1;
 }
@@ -48,3 +56,43 @@ a {
     justify-content: flex-start;
 }
 
+.car-number {
+    display: flex;
+    border: 1px solid #333333;
+    box-sizing: border-box;
+    border-radius: 5px;
+
+    &-num {
+        padding: 4px;
+        font-weight: 500;
+    }
+
+    &-code {
+        padding: 4px;
+        border-left: 1px solid #333333;
+    }
+}
+
+.action-icon {
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+        box-shadow: none;
+    }
+}
+
+.auth-page {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+    background: $blue_grad;
+    min-height: 100vh;
+}

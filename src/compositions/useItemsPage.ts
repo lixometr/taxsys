@@ -45,6 +45,9 @@ export default function useItemsPage(props: UseItemsPageProps) {
         });
     }
 
+    const refreshItems = async () => {
+        await fetchItems(toFetch.value);
+    }
 
     const items = ref([]);
     watch(result, (data: any) => {
@@ -62,6 +65,8 @@ export default function useItemsPage(props: UseItemsPageProps) {
         showMore,
         items,
         totalPages,
+        fetchItems,
+        refreshItems,
         init
     };
 }

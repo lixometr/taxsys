@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-content" :class="{scrollable}">
+  <div class="modal-content" :class="{scrollable, scrollbar: scrollable}">
     <div class="modal-header" v-if="$slots.header">
       <slot name="header" />
     </div>

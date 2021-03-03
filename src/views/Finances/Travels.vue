@@ -1,5 +1,5 @@
 <template>
-  <div class="page-travels flex-layout flex-1 page-items">
+  <div class="page-travels  page-items">
     <page-title>
       <h2>Поездки</h2>
     </page-title>

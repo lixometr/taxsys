@@ -1,7 +1,7 @@
 <template>
   <div class="settings-topbar">
     <div
-      class="settings-topbar__row row justify-content-center algin-items-stretch"
+      class="settings-topbar__row row  algin-items-stretch"
     >
       <div class="col">
         <settings-top-bar-rent />
@@ -45,8 +45,15 @@ export default class SettingsTopBar extends Vue {}
 <style lang="scss">
 .settings-topbar {
   &__row {
+    justify-content: center;
     @include media(1400px) {
       justify-content: center;
+    }
+    @include md {
+      flex-wrap: nowrap;
+      overflow: auto;
+      justify-content: flex-start;
+      margin-bottom: 1rem;
     }
     > .col {
       @include media(1400px) {
@@ -55,12 +62,12 @@ export default class SettingsTopBar extends Vue {}
         margin: 1rem;
       }
       @include md {
-          max-width: none;
+        max-width: none;
+        margin: 0;
       }
     }
   }
   &-switcher.app-switcher {
-    background: #aa7add;
     background: #884ac9;
     .app-switcher__handler {
       background: #aa7add;

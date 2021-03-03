@@ -1,7 +1,7 @@
 <template>
   <transition :name="modalTransition">
     <div class="modal-wrapper" v-if="isOpen" :class="modalClass">
-      <components
+      <component
         :is="activeModal"
         v-bind="cProps"
         v-on="cListeners"
@@ -18,7 +18,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { ref } from "@vue/composition-api";
 // import svgClose from "@/assets/icons/close.svg";
 @Component({
-  setup() {
+  setup(props, {emit}) {
     const isOpen = ref(false);
     const activeName = ref("");
     const cProps = ref({});

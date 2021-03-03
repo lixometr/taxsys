@@ -17,8 +17,9 @@
     </page-title>
     <div class="settings-payment-systems__items">
       <payment-systems-item
-        v-for="item in 5"
-        :key="item"
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
         class="mb-20"
         @remove="removeItem(item)"
       />
@@ -33,20 +34,51 @@ import { Component, Vue } from "vue-property-decorator";
 import svgPlus from "@/assets/icons/plus.svg";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
+import {
+  useApiDeletePaymentSystem,
+  useApiGetPaymentSystems,
+} from "@/api/paysystem";
+import { computed } from "@vue/composition-api";
+import { errorHandler } from "@/helpers/error-handler";
+import useGlobalLoading from "@/compositions/useGlobalLoading";
 
 @Component({
   setup() {
-    const {showByName} = useModal()
+    const { showByName } = useModal();
+    const { exec: fetchItems, result } = useApiGetPaymentSystems({
+      toast: { error: errorHandler() },
+    });
+    const { exec: deleteItem } = useApiDeletePaymentSystem({
+      toast: {
+        success: () => "Платежная система удалена!",
+        error: errorHandler(),
+      },
+    });
+    const gLoading = useGlobalLoading();
+    gLoading.show();
+    fetchItems().then(() => gLoading.hide());
     const addSystem = () => {
-      showByName(ModalName.paymentSystemsAdd)
+      showByName(ModalName.paymentSystemsAdd, {
+        on: {
+          send: () => {
+            fetchItems();
+          },
+        },
+      });
       return;
     };
-    const removeItem = (item) => {
+
+    const removeItem = async (item) => {
+      await deleteItem({ id: item.id });
+      await fetchItems();
       return;
     };
+
+    const items = computed(() => result.value);
     return {
       addSystem,
-      removeItem
+      removeItem,
+      items,
     };
   },
   components: { PageTitle, svgPlus, PaymentSystemsItem },

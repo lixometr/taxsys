@@ -26,3 +26,4 @@ export const PaymentAgregatorById = {
     1: PaymentAgregator.qiwi,
     0: PaymentAgregator.card
 }
+
