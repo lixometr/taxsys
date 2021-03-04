@@ -54,6 +54,10 @@ export default class RegisterDriverAgregator extends Vue {
   }
   &__icon {
     margin-right: 10px;
+    width: 30px;
+    img {
+      max-width: 100%;
+    }
   }
   &__name {
     margin-right: 10px;
