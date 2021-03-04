@@ -7,7 +7,7 @@
         v-on="cListeners"
         @close="close"
       />
-      <div class="modal-overlay" @click="close"></div>
+      <div class="modal-overlay" @click="overlayClick"></div>
     </div>
   </transition>
 </template>
@@ -18,7 +18,7 @@ import { Vue, Component } from "vue-property-decorator";
 import { ref } from "@vue/composition-api";
 // import svgClose from "@/assets/icons/close.svg";
 @Component({
-  setup(props, {emit}) {
+  setup(props, { emit }) {
     const isOpen = ref(false);
     const activeName = ref("");
     const cProps = ref({});
@@ -48,7 +48,10 @@ import { ref } from "@vue/composition-api";
     api.on("close", () => {
       close();
     });
-
+    const overlayClick = () => {
+      if (cProps.value._closeOnOverlay === false) return;
+      close();
+    };
     return {
       isOpen,
       open,
@@ -57,6 +60,7 @@ import { ref } from "@vue/composition-api";
       cProps,
       activeModal,
       modalTransition,
+      overlayClick,
     };
   },
   components: {

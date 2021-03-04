@@ -17,7 +17,7 @@ import { AgregName } from "@/types/agregator.enum";
 @Component({
   setup(props, { emit }) {
     const agregators = ref([AgregName.gett, AgregName.yandex, AgregName.citymobil])
-    const step = ref(2);
+    const step = ref(1);
     const goBack = () => {
       emit("back");
     };

@@ -33,7 +33,10 @@ export default (function () {
         const api = new ModalApi()
         const showByName = async (name: string, opts?: ModalShowProps): Promise<any> => {
             const component = await getComponentByName(name)
-            if (!component) return
+            if (!component) {
+                console.log('Modal not found')
+                return false
+            }
             if (!opts) opts = {}
             return api.open({ component: component.default, ...opts })
         }

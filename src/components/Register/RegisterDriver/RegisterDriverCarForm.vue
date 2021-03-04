@@ -8,7 +8,11 @@
       />
     </template>
     <template>
-      <form action="#" class="flex-1 h-100 flex-layout" @submit.prevent="onSubmit">
+      <form
+        action="#"
+        class="flex-1 h-100 flex-layout"
+        @submit.prevent="onSubmit"
+      >
         <form-schema class="row" :schema="formSchema"> </form-schema>
         <div class="register-driver-car-form__footer">
           <div class="register-driver-car-form__policy">
@@ -52,7 +56,6 @@ interface IProps {
   },
   setup(props: IProps, { emit }) {
     const { agregators } = toRefs<IProps>(props);
-    console.log(agregators)
     const formSchema = computed(() => {
       let mergedSchema = [...baseSchema];
       agregators.value.map((agregator: string) => {
@@ -75,13 +78,14 @@ interface IProps {
       });
       return mergedFields;
     });
+    const rename = {}
     let form = useForm({
       fields: formFields.value,
+      rename
     });
     const onSubmit = () => {
       const exec = form.handleSubmit(() => {
         const toSend = form.serialize();
-        console.log(toSend);
         emit("submit", toSend);
         return;
       });
@@ -90,6 +94,7 @@ interface IProps {
     watch(agregators, () => {
       form = useForm({
         fields: formFields.value,
+        rename
       });
     });
     const goBack = () => {
@@ -125,6 +130,11 @@ export default class RegisterDriverCarForm extends Vue {
       margin-top: 20px;
       order: 2;
       text-align: center;
+    }
+  }
+  .app-image-upload {
+    svg {
+      color: #6979f8;
     }
   }
 }

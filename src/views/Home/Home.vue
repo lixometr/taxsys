@@ -1,23 +1,11 @@
 <template>
-  <div class="home">
-    1
-    <app-select
-      :options="['QIWI', 'MANDARIN']"
-      placeholder="Платёжная система"
-      v-model="test"
-      :searchable="true"
-      :closeOnSelect="true"
-    />
-
-    {{ test }}
-  </div>
+  <div class="home">1</div>
 </template>
 
 <script lang="ts">
-import AppSelect from "../../components/AppSelect.vue";
 import { Component, Vue } from "vue-property-decorator";
 @Component({
-  components: { AppSelect },
+  components: {},
   setup() {
     return;
   },

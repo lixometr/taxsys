@@ -1,25 +1,25 @@
 <template>
-  <label class="app-upload">
+  <label class="app-image-upload">
     <input
       type="file"
       name="file"
-      class="app-upload__input"
+      class="app-image-upload__input"
       @change="onFileChange"
       accept="image/*"
     />
-    <div class="app-upload__inner">
-      <div class="app-upload__icon" v-if="!hasPreview">
+    <div class="app-image-upload__inner">
+      <div class="app-image-upload__icon" v-if="!hasPreview">
         <slot name="icon">
           <app-icon :src="icon" v-if="icon" />
         </slot>
       </div>
       <div
-        class="app-upload__preview"
+        class="app-image-upload__preview"
         v-else
         key="hasPreview"
         :style="{ backgroundImage: `url(${previewUrl})` }"
       ></div>
-      <div class="app-upload__label">
+      <div class="app-image-upload__label">
         <slot name="label">
           {{ label }}
         </slot>
@@ -67,7 +67,7 @@ export default class AppImageUplaod extends Vue {
 </script>
 
 <style lang="scss">
-.app-upload {
+.app-image-upload {
   display: block;
   &__inner {
     padding: 15px;

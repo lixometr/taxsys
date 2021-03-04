@@ -16,7 +16,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
   components: { RegisterStrategyChoose, RegisterDriver, RegisterPark },
   setup() {
-    const strategy = ref("driver");
+    const strategy = ref("");
     const resetStrategy = () => {
       strategy.value = ''
     }

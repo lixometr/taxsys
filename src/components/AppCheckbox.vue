@@ -41,7 +41,7 @@ export default class AppCheckbox extends Vue {
 
 <style lang="scss">
 .app-checkbox {
-  border: 1px solid $grey-1;
+  border: 2px solid #8F8AFF;
   border-radius: 50%;
   cursor: pointer;
   &__mark {

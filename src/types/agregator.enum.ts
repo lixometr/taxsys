@@ -5,7 +5,7 @@ export enum AgregName {
 }
 export const AgregatorType = {
     [AgregName.yandex]: {
-        icon: require('@/assets/img/yandex_taxy.jpg'),
+        icon: require('@/assets/img/yandex_taxy.png'),
         name: 'Яндекс.Такси'
     },
     [AgregName.gett]: {
