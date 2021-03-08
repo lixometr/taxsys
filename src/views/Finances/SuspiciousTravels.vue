@@ -1,13 +1,14 @@
 <template>
   <div class="suspicious-page-travels flex-layout flex-1 page-items">
-    <page-title>
-      <h2>Подозрительные поездки</h2>
-    </page-title>
     <page-filters :calendar.sync="date">
       <template v-slot:filters>
         <aggregator-filters v-model="agregator" />
       </template>
     </page-filters>
+    <page-title>
+      <h2>Подозрительные поездки</h2>
+    </page-title>
+
     <div class="suspicious-travels-items flex flex-column flex-1">
       <suspicious-travels-item
         v-for="item in items"
@@ -87,5 +88,4 @@ export default class SuspiciousTravels extends Vue {}
 </script>
 
 <style lang="scss">
-
 </style>

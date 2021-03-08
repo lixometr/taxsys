@@ -42,7 +42,7 @@
             <div class="col d-flex align-items-center">
               Способ оплаты:
               <span class="payment-badge ml-10 shrink-0">
-                <component :is="typeof paymentLogo === 'string' ? 'img' : paymentLogo" :src="typeof paymentLogo === 'string' ? paymentLogo : undefined" width="30" alt=""
+                <app-icon :src="paymentLogo" width="24" alt=""
               /></span>
             </div>
             <div class="col color-grey-2">{{ item.card.number }}</div>
@@ -83,6 +83,7 @@
 </template>
 
 <script lang="ts">
+import AppIcon from '../AppIcon.vue'
 import useStore from "@/compositions/useStore";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import {
@@ -95,6 +96,7 @@ import { computed } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
+  components: { AppIcon },
   setup() {
     const getPaymentType = (name: string) => {
       return (

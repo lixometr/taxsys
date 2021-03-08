@@ -32,6 +32,7 @@
 </template>
 
 <script lang="ts">
+import PageTitle from '../../components/Page/PageTitle.vue'
 import RentItem from '../../components/Rent/RentItem.vue'
 import RentFilters from "../../components/Rent/RentFilters.vue";
 import PageFilters from "../../components/Page/PageFilters.vue";
@@ -59,7 +60,7 @@ import { useApiGetRents } from "@/api/rent";
     // init({fetchData: toFetch})
     return { entity, createRent, page, nextPage, prevPage, totalPages, showMore, items };
   },
-  components: { PageFilters, RentFilters, svgPlus, RentItem },
+  components: { PageFilters, RentFilters, svgPlus, RentItem, PageTitle },
 })
 export default class Rent extends Vue {}
 </script>

@@ -82,7 +82,7 @@ export default class AppAccardion extends Vue {
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   position: relative;
-  overflow: auto;
+  // overflow: auto;
   max-width: 100%;
   .col {
     padding: 0 1.8rem;
@@ -92,6 +92,11 @@ export default class AppAccardion extends Vue {
 
     position: relative;
     cursor: pointer;
+    .app-accardion-col {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
     &.border {
       &::after {
         content: "";

@@ -4,12 +4,15 @@ import { useApiGetUser, useApiLogin } from "@/api/auth";
 import useCookie from "@/compositions/useCookie";
 import { UserEntity } from "@/models/user.entity";
 import { UserToken } from "@/types/constants";
+import { errorHandler } from "@/helpers/error-handler";
+import useRouter from "@/compositions/useRouter";
+import useToast from "@/compositions/useToast";
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule {
   user: UserEntity | null = null
   token: string | null = null
   get isAuth() {
-    return !!this.token
+    return !!this.token && this.user
   }
   @Mutation
   setUser(value: UserEntity) {
@@ -26,6 +29,12 @@ class User extends VuexModule {
     cookie.set(UserToken, token, expiresIn)
   }
   @Action
+  removeToken() {
+    const cookie = useCookie()
+    cookie.remove(UserToken)
+    this.setToken(null)
+  }
+  @Action
   initToken() {
     const cookie = useCookie()
     const token = cookie.get(UserToken)
@@ -34,14 +43,19 @@ class User extends VuexModule {
   @Action
   async init() {
     this.initToken()
-    await this.fetchUser()
+    if (this.token) {
+      await this.fetchUser()
+    }
   }
   @Action
   async fetchUser() {
-    const getUser = useApiGetUser({ toast: { error: err => err.message } })
+    const getUser = useApiGetUser({ toast: { error: errorHandler() } })
     await getUser.exec()
     if (!getUser.error.value) {
       this.setUser(getUser.result.value)
+    } else {
+      this.setUser(null)
+      this.removeToken()
     }
     return getUser
   }
@@ -65,7 +79,16 @@ class User extends VuexModule {
     }
     return login
   }
+  @Action
   async logout() {
+    this.removeToken()
+    this.setUser(null)
+    const router = useRouter()
+    router.push({ name: "Login" })
+    const { success } = useToast()
+    success({
+      message: 'Выход'
+    })
     return true
   }
 }

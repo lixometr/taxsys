@@ -1,13 +1,14 @@
 <template>
   <div class="page-manual-payments flex-layout flex-1 page-items">
-    <page-title>
-      <h2>Ручные выплаты</h2>
-    </page-title>
     <page-filters :calendar.sync="date">
       <template v-slot:filters>
         <manual-payments-filters v-model="entity" />
       </template>
     </page-filters>
+    <page-title>
+      <h2>Ручные выплаты</h2>
+    </page-title>
+
     <div class="travels-items flex flex-column flex-1">
       <manual-payments-item
         v-for="item in items"

@@ -19,10 +19,31 @@ const routes: Array<RouteConfig> = [
                 component: () => import("@/views/Driver/CheckInfo.vue")
             },
             {
+                name: "DriverList",
+                path: 'list',
+                component: () => import("@/views/Driver/DriverList.vue"),  
+            },
+            {
+                name: "DriverApplys",
+                path: 'applications',
+                component: () => import("@/views/Driver/DriverApplys.vue"),  
+            },
+            {
+                name: "DriverBlackList",
+                path: 'blacklist',
+                component: () => import("@/views/Driver/DriverBlackList.vue"),  
+            },
+            {
+                name: "AddDriver",
+                path: 'add',
+                component: () => import("@/views/Driver/AddDriver.vue"),
+            },
+            {
                 name: "DriverInfo",
                 path: ':id',
                 component: () => import("@/views/Driver/DriverInfo.vue")
-            }
+            },
+
         ]
     },
 

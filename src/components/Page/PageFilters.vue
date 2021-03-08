@@ -41,7 +41,7 @@ export default class PageFilters extends Vue {
   box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   padding: 1.6rem 2rem;
-  margin-bottom: 4rem;
+  margin-top: 3rem;
   &__row {
     display: flex;
     align-items: center;

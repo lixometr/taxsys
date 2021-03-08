@@ -1,12 +1,13 @@
 <template>
   <div
     class="app-checkbox"
-    :class="{ active: value }"
+    :class="{ active: value, [`checkbox-${variant}`]: true }"
     :style="{ width: size + 'px', height: size + 'px' }"
     @click="toggle"
   >
     <div class="app-checkbox__mark" v-if="value">
-      <svgCheckMark />
+      <svgCheckMark v-if="variant === Variants.default"/>
+      <svgStar :style="{transform: 'translateY(-1px)'}" v-if="variant === Variants.star"/>
     </div>
   </div>
 </template>
@@ -14,7 +15,12 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgCheckMark from "@/assets/icons/check_mark.svg";
+import svgStar from "@/assets/icons/star.svg";
 import { toRefs } from "@vue/composition-api";
+enum Variants {
+  default = "default",
+  star = "star",
+}
 @Component({
   setup(props: any, { emit }) {
     const { value } = toRefs(props);
@@ -23,10 +29,12 @@ import { toRefs } from "@vue/composition-api";
     };
     return {
       toggle,
+      Variants
     };
   },
   components: {
     svgCheckMark,
+    svgStar
   },
 })
 export default class AppCheckbox extends Vue {
@@ -36,6 +44,11 @@ export default class AppCheckbox extends Vue {
     default: 20,
   })
   size: number;
+  @Prop({
+    type: String,
+    default: Variants.default,
+  })
+  variant: Variants;
 }
 </script>
 

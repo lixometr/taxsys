@@ -1,28 +1,32 @@
 <template>
-  <div class="page-travels  page-items">
-    <page-title>
-      <h2>Поездки</h2>
-    </page-title>
-    <page-filters :calendar.sync="date">
-      <template v-slot:filters>
-        <aggregator-filters v-model="agregator" />
-      </template>
-    </page-filters>
-    <div class="travels-items flex flex-column flex-1">
-      <travels-item v-for="item in items" :key="item.id" :item="item" />
-      <app-pagination
-        class="mt-auto"
-        :nowPage="page"
-        :totalPages="totalPages"
-        @next="nextPage"
-        @prev="prevPage"
-        @showMore="showMore"
-      />
+  <div class="page-travels page-items flex-layout flex-1">
+    <div v-if="items.length" class="flex-layout flex-1">
+      <page-filters :calendar.sync="date">
+        <template v-slot:filters>
+          <aggregator-filters v-model="agregator" />
+        </template>
+      </page-filters>
+      <page-title>
+        <h2>Поездки</h2>
+      </page-title>
+      <div class="travels-items flex flex-column flex-1">
+        <travels-item v-for="item in items" :key="item.id" :item="item" />
+        <app-pagination
+          class="mt-auto"
+          :nowPage="page"
+          :totalPages="totalPages"
+          @next="nextPage"
+          @prev="prevPage"
+          @showMore="showMore"
+        />
+      </div>
     </div>
+    <travel-placeholder v-else/>
   </div>
 </template>
 
 <script lang="ts">
+import TravelPlaceholder from "../../components/Placeholders/TravelPlaceholder.vue";
 import TravelsItem from "@/components/Travels/TravelsItem.vue";
 import AggregatorFilters from "@/components/Travels/AggregatorFilters.vue";
 import PageFilters from "@/components/Page/PageFilters.vue";
@@ -49,7 +53,7 @@ import useItemsPage from "@/compositions/useItemsPage";
       showMore,
       items,
       totalPages,
-      init
+      init,
     } = useItemsPage({
       api: useApiGetTravels,
     });
@@ -59,7 +63,7 @@ import useItemsPage from "@/compositions/useItemsPage";
       page: page.value,
       agregator: agregator.value,
     }));
-    init({fetchData: toFetch});
+    init({ fetchData: toFetch });
 
     return {
       agregator,
@@ -72,11 +76,16 @@ import useItemsPage from "@/compositions/useItemsPage";
       totalPages,
     };
   },
-  components: { PageTitle, PageFilters, AggregatorFilters, TravelsItem },
+  components: {
+    PageTitle,
+    PageFilters,
+    AggregatorFilters,
+    TravelsItem,
+    TravelPlaceholder,
+  },
 })
 export default class Travels extends Vue {}
 </script>
 
 <style lang="scss">
-
 </style>

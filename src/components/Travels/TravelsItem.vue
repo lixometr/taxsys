@@ -20,19 +20,20 @@
         >
         <app-accardion-col :class="responsiveHeader">
           <app-badge class="shrink-0">
-            <img
+            <app-icon
               :src="AgregatorType[item.Agreg].icon"
               alt="yandex"
               class="mr-10"
+              width="24"
             />
             {{ AgregatorType.yandex.name }}
           </app-badge>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
           <app-badge class="shrink-0">
-            <component
+            <app-icon
               width="24"
-              :is="getPaymentType(item.PaymentType).icon"
+              :src="getPaymentType(item.PaymentType).icon"
               alt="cash"
               class="mr-10 shrink-0"
             />
@@ -65,12 +66,12 @@
         <app-accardion-col :class="responsiveContent">
           <div class="row" v-if="fees.agreg_fee">
             <div class="col-6">Комиссия агрегатора:</div>
-            <div class="col-6">{{ fees.agreg_fee }} {{ currency }}</div>
+            <div class="col-6">{{ agregComission }} {{ currency }}</div>
           </div>
 
           <div class="row" v-if="fees.park_fee">
             <div class="col-6">Комиссия парка:</div>
-            <div class="col-6">{{ fees.park_fee }} {{ currency }}</div>
+            <div class="col-6">{{ parkComission }} {{ currency }}</div>
           </div>
 
           <div class="row" v-if="item.ChargedDriver">
@@ -78,8 +79,11 @@
             <div class="col-6">{{ item.ChargedDriver }} ₽</div>
           </div>
 
-          <div class="row" v-if="item.PaymentType !== PaymentName.cash && noCashInfo">
-            <div class="col-6">Безнал:</div>
+          <div
+            class="row"
+            v-if="item.PaymentType !== PaymentName.cash && noCashInfo"
+          >
+            <div class="col-6">Начислено водителю:</div>
             <div class="col-6">{{ noCashInfo }} {{ currency }}</div>
           </div>
 
@@ -124,12 +128,16 @@
 </template>
 
 <script lang="ts">
+import AppIcon from "../AppIcon.vue";
 import useStore from "@/compositions/useStore";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import { PaymentType, PaymentName } from "@/types/payment-type.enum";
 import { computed } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import TravelsMixin from "./TravelsMixin.vue";
 @Component({
+  mixins: [TravelsMixin],
+  components: { AppIcon },
   setup() {
     const getPaymentType = (name: string) => {
       return (
@@ -188,40 +196,7 @@ export default class TravelsItem extends Vue {
     }
     return this.item.id;
   }
-  get fees() {
-    return this.item.fees || {};
-  }
-  get timeTrip() {
-    const seconds = this.item.timeTrip
-    const date = this.$moment.duration(seconds, 'seconds');
-    const min = date.minutes();
-    const hours = date.hours();
-    const days = date.days();
-    return {
-      min,
-      hours,
-      days,
-    };
-  }
-  get noCashInfo() {
-    const result = this.item.Price + parseFloat(this.fees.agreg_fee) + parseFloat(this.fees.park_fee);
-    if (isNaN(result) || result === Infinity) return false;
 
-    return result.toFixed(2);
-  }
-  get costPerKm() {
-    const result = this.item.Price / this.distanceKm;
-    if (isNaN(result) || result === Infinity) return false;
-    const norm = result.toFixed(2);
-    return norm;
-  }
-  get costPerMin() {
-    let result = this.item.Price / (this.item.timeTrip / 60);
-    if (isNaN(result) || result === Infinity) return false;
-    const norm = result.toFixed(2);
-
-    return norm;
-  }
 }
 </script>
 

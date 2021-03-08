@@ -10,11 +10,11 @@ export const AgregatorType = {
     },
     [AgregName.gett]: {
         name: "Gett",
-        icon: require('@/assets/img/gett_logo.jpg')
+        icon: require('@/assets/img/gett_logo.png')
     },
     [AgregName.citymobil]: {
         name: "Ситимоби",
-        icon: require('@/assets/img/city_logo.jpg')
+        icon: require('@/assets/img/city_logo.png')
 
     }
 }

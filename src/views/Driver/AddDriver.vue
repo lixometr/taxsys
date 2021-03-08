@@ -1,6 +1,6 @@
 <template>
-    <div class="page-driver-info">
-        Driver #{{$route.params.id}}
+    <div class="add-driver">
+
     </div>
 </template>
 
@@ -8,7 +8,7 @@
     import { Component, Vue } from 'vue-property-decorator';
 
     @Component
-    export default class DriverInfo extends Vue {
+    export default class AddDriver extends Vue {
         
     }
 </script>

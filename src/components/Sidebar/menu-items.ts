@@ -40,17 +40,20 @@ const menuItems: IMenuItems[] = [
         img: require('@/assets/icons/user_menu.svg'),
         children: [
             {
-                name: "Заявки водителей"
+                name: "Заявки водителей",
+                routeName: 'DriverApplys'
             },
             {
-                name: 'Список водителей'
+                name: 'Список водителей',
+                routeName: 'DriverList'
             },
             {
                 name: 'Проверить водителя',
                 routeName: 'DriverCheck'
             },
             {
-                name: 'Черный список'
+                name: 'Черный список',
+                routeName: 'DriverBlackList'
             }
         ]
     },

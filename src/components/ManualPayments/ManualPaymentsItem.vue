@@ -43,7 +43,7 @@
             <div class="col d-flex align-items-center">
               Способ оплаты:
               <span class="payment-badge ml-10 shrink-0">
-                <app-icon :src="paymentLogo" width="30"
+                <app-icon :src="paymentLogo" width="24"
               /></span>
             </div>
             <div class="col color-grey-2">{{ item.card.number }}</div>
@@ -119,13 +119,13 @@ import {
   PaymentAgregatorById,
   PaymentAgregator,
 } from "@/types/payment-type.enum";
-import { computed } from "@vue/composition-api";
+import { computed, toRefs } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 @Component({
   components: { ActionIconDelete
   },
   setup(props, { emit }) {
-    const { item } = props;
+    const { item } = toRefs(props);
     const getPaymentType = (name: string) => {
       return (
         PaymentType[name] || {
@@ -157,7 +157,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
       const { showByName } = useModal();
       showByName(ModalName.paymentInfo, {
         props: {
-          item,
+          item: item.value,
         },
       });
     };

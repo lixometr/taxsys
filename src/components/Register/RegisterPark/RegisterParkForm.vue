@@ -14,7 +14,7 @@
           <city-select
             v-model="item.field.value.value"
             v-bind="item.props"
-            :errors="item.errors"
+            :errors="item.field.errors.value"
             v-on="item.listeners"
           />
         </template>
@@ -39,8 +39,6 @@ import { Component, Vue } from "vue-property-decorator";
 import { useApiRegisterPark } from "@/api/register";
 import { fields } from "./register-park-fields";
 import { schema } from "./register-park-schema";
-import { useApiGetGeoIp } from "@/api/geoip";
-import { watch } from "@vue/composition-api";
 @Component({
   components: { FormSchema, AppSelect, AppDatePicker, CitySelect },
   setup() {
@@ -51,12 +49,7 @@ import { watch } from "@vue/composition-api";
         lastName: "last_name",
       },
     });
-    const { exec: getIpInfo, result } = useApiGetGeoIp();
-    getIpInfo();
-    watch(result, (newResult) => {
-      console.log("ip city", newResult);
-    });
-
+    
     const onSubmit = handleSubmit(async () => {
       const { exec: send, error } = useApiRegisterPark({});
       const toSend = serialize();
