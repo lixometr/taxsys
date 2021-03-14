@@ -35,7 +35,7 @@ import { ref } from "@vue/composition-api";
       cListeners.value = {};
       activeName.value = "";
     };
-    api.on("open", ({ component, name, transition, props, on }) => {
+    api.on("open", ({ component, name, transition, props = {}, on = {} }) => {
       cProps.value = props;
       cListeners.value = on;
       activeModal.value = component;

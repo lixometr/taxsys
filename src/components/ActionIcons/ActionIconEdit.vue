@@ -1,14 +1,15 @@
 <template>
-  <div class="action-icon-edit action-icon">
+  <action-icon class="action-icon-edit">
     <svgEdit />
-  </div>
+  </action-icon>
 </template>
 
 <script lang="ts">
+import ActionIcon from "./ActionIcon.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgEdit from "@/assets/icons/edit.svg";
 @Component({
-  components: { svgEdit },
+  components: { svgEdit, ActionIcon },
 })
 export default class ActionIconEdit extends Vue {}
 </script>

@@ -44,7 +44,7 @@ export const schema = [
     },
     {
       name: 'phone',
-      type: "app-input",
+      type: "phone-input",
       field: fields.phone,
       props: {
         label: "+7 999 999 99 99*",

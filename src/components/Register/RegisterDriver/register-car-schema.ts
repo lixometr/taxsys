@@ -78,7 +78,7 @@ const sLicense = {
 
     sort: 6
 }
-const sPhotoCtcFront =  {
+export const sPhotoCtcFront =  {
     type: 'app-image-upload',
     field: photoCtcFront,
     props: {
@@ -89,7 +89,7 @@ const sPhotoCtcFront =  {
 
     sort: 100
 }
-const sPhotoCtcBack =  {
+export const sPhotoCtcBack =  {
     type: 'app-image-upload',
     field: photoCtcBack,
     props: {
@@ -100,7 +100,7 @@ const sPhotoCtcBack =  {
 
     sort: 101
 }
-const sPhotoFront =  {
+export const sPhotoFront =  {
     type: 'app-image-upload',
     field: photoFront,
     props: {
@@ -111,7 +111,7 @@ const sPhotoFront =  {
 
     sort: 102
 }
-const sPhotoBack =  {
+export const sPhotoBack =  {
     type: 'app-image-upload',
     field: photoBack,
     props: {
@@ -125,11 +125,11 @@ const yandexSchema = [
     sNumberCtc,
     sVin
 ]
-const cityMobilSchema = [
+const gettSchema = [
     sLicense
 ]
 
-const gettSchema = [
+const cityMobilSchema = [
     sNumberCtc,
     sLicense,
     {

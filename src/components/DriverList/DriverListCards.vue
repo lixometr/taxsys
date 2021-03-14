@@ -36,6 +36,8 @@ import AppCheckbox from "../AppCheckbox.vue";
 import { toRefs } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgTrash from "@/assets/icons/trash.svg";
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
 interface Card {
   number: string;
 }
@@ -47,6 +49,8 @@ interface IProps {
   setup(props: IProps, { emit }) {
     const { value } = toRefs<IProps>(props);
     const addCard = () => {
+      const {showByName} = useModal()
+      showByName(ModalName.addCard)
       return;
     };
     const removeCard = (idx: number) => {

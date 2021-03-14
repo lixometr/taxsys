@@ -2,7 +2,9 @@
   <router-link
     :to="{ name: routeName }"
     class="sidebar-menu__item menu-item"
+    :event="hasChildren ? '' : 'click'"
     @click.native="onLinkClick"
+    active-class="active"
   >
     <span class="menu-item__self">
       <span class="menu-item__icon">
@@ -17,6 +19,7 @@
         v-for="(child, index) in children"
         :key="index"
         @click.native="clickChild"
+        active-class="active"
       >
         {{ child.name }}
       </router-link>

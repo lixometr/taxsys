@@ -1,13 +1,14 @@
 <template>
   <div class="app-checkbox-input">
     <div class="app-checkbox-input__inner">
-      <div class="app-checkbox-input__title" @click="toggle">{{ label }}</div>
       <app-checkbox
+        class="shrink-0"
         ref="appCheckbox"
         v-on="$listeners"
         v-model="inputModel"
         v-bind="$attrs"
       />
+      <div class="app-checkbox-input__title" @click="toggle">{{ label }}</div>
     </div>
     <div class="app-checkbox-input__errors">
       <div
@@ -63,8 +64,9 @@ export default class AppCheckboxInput extends Vue {
     align-items: center;
   }
   &__title {
-    margin-right: 10px;
+    margin-left: 10px;
     user-select: none;
+    color: $grey_1;
   }
   &__errors {
     color: $red;

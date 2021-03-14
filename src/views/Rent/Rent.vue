@@ -7,19 +7,17 @@
         </div>
       </template>
     </page-filters>
-    <page-title class="mb-30">
-      <div class="page-rent-title__row">
-        <div><h2>Аренда авто</h2></div>
-        <div>
-          <app-button color="orange" @click="createRent">
-            Добавить авто <svgPlus class="ml-10"
-          /></app-button>
-        </div>
+    <page-title class="mb-30" :between="true">
+      <div><h2>Аренда авто</h2></div>
+      <div>
+        <app-button color="orange" @click="createRent">
+          Добавить авто <svgPlus class="ml-10"
+        /></app-button>
       </div>
     </page-title>
-    <div class="page-rent__items  flex flex-column flex-1">
+    <div class="page-rent__items flex flex-column flex-1">
       <rent-item v-for="item in 5" :key="item" class="page-rent-item" />
-       <app-pagination
+      <app-pagination
         class="mt-auto"
         :nowPage="page"
         :totalPages="totalPages"
@@ -32,8 +30,8 @@
 </template>
 
 <script lang="ts">
-import PageTitle from '../../components/Page/PageTitle.vue'
-import RentItem from '../../components/Rent/RentItem.vue'
+import PageTitle from "../../components/Page/PageTitle.vue";
+import RentItem from "../../components/Rent/RentItem.vue";
 import RentFilters from "../../components/Rent/RentFilters.vue";
 import PageFilters from "../../components/Page/PageFilters.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -54,11 +52,20 @@ import { useApiGetRents } from "@/api/rent";
       prevPage,
       showMore,
       items,
-      init
+      init,
     } = useItemsPage({ api: useApiGetRents });
-    const toFetch = computed(() => ({entity: entity.value}))
+    const toFetch = computed(() => ({ entity: entity.value }));
     // init({fetchData: toFetch})
-    return { entity, createRent, page, nextPage, prevPage, totalPages, showMore, items };
+    return {
+      entity,
+      createRent,
+      page,
+      nextPage,
+      prevPage,
+      totalPages,
+      showMore,
+      items,
+    };
   },
   components: { PageFilters, RentFilters, svgPlus, RentItem, PageTitle },
 })
@@ -74,17 +81,12 @@ export default class Rent extends Vue {}
       justify-content: flex-end;
     }
   }
-  &-title {
-    &__row {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
+ 
   &-item {
-      margin-bottom: 3rem;
-      &:last-child {
-          margin-bottom: 0;
-      }
+    margin-bottom: 3rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

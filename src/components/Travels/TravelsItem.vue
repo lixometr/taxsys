@@ -182,20 +182,7 @@ export default class TravelsItem extends Vue {
     return this.item.distance / 1000;
   }
 
-  get orderIdLink() {
-    const orderIdYandex = this.item.OrderIDYandex;
-    const agregType = this.item.Agreg;
-    if (agregType === AgregName.yandex) {
-      return `https://lk.taximeter.yandex.ru/order/${orderIdYandex}`;
-    }
-    return "";
-  }
-  get orderId() {
-    if (this.item.Agreg === AgregName.yandex) {
-      return this.item.OrderIDYandex;
-    }
-    return this.item.id;
-  }
+
 
 }
 </script>

@@ -1,14 +1,15 @@
 <template>
-  <div class="action-icon-delete action-icon">
+  <action-icon class="action-icon-delete">
     <svgTrash />
-  </div>
+  </action-icon>
 </template>
 
 <script lang="ts">
+import ActionIcon from './ActionIcon.vue'
 import { Component, Vue } from "vue-property-decorator";
 import svgTrash from "@/assets/icons/trash.svg";
 @Component({
-  components: { svgTrash },
+  components: { svgTrash, ActionIcon },
 })
 export default class ActionIconDelete extends Vue {}
 </script>

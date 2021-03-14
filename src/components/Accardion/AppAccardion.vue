@@ -85,7 +85,7 @@ export default class AppAccardion extends Vue {
   // overflow: auto;
   max-width: 100%;
   .col {
-    padding: 0 1.8rem;
+    padding: 0 1.5rem;
   }
   &__header {
     padding: 0 4rem 3rem 1rem;

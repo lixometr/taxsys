@@ -1,7 +1,7 @@
 <template>
-  <div class="driver-list-filters">
+  <div class="driver-list-filters filter-btns">
     <app-button
-      class="driver-list-filters__btn"
+      class="filter-btns__btn"
       :active="item.key === value"
       :size="'sm'"
       color="purple"
@@ -43,17 +43,5 @@ export default class DriverListFilters extends Vue {
 </script>
 
 <style lang="scss">
-.driver-list-filters {
-  &__btn {
-    text-transform: none;
-    margin-right: 2rem;
-    @include sm {
-      margin-top: 1rem;
-    }
-    &:last-child {
-      margin-right: 0;
 
-    }
-  }
-}
 </style>

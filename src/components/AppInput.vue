@@ -1,5 +1,9 @@
 <template>
-  <div class="app-input" :class="{ error: hasErrors }">
+  <div
+    class="app-input"
+    :class="{ error: hasErrors, inline }"
+    :style="inputStyles"
+  >
     <div class="app-input__inner">
       <div class="app-input__prefix" v-if="prefix">
         <slot name="prefix">{{ prefix }}</slot>
@@ -15,7 +19,7 @@
         <slot name="sufix">{{ sufix }}</slot>
       </div>
     </div>
-    <div class="app-input__errors">
+    <div class="app-input__errors" v-if="showErrors">
       <div class="app-input__error" v-for="(error, idx) in errors" :key="idx">
         {{ error }}
       </div>
@@ -35,7 +39,10 @@ export default class AppInput extends Vue {
   @Prop(String) type: string;
   @Prop(String) sufix: string;
   @Prop(String) prefix: string;
-
+  @Prop({ type: Boolean, default: false })
+  inline: boolean;
+  @Prop(String) width: string;
+  @Prop({ type: Boolean, default: true }) showErrors: boolean;
   get _inputAttrs() {
     const attrs = Object.assign(
       {},
@@ -49,6 +56,11 @@ export default class AppInput extends Vue {
       input: this.onInput,
     });
     return listeners;
+  }
+  get inputStyles() {
+    return {
+      width: this.width,
+    };
   }
   get hasErrors() {
     return this.errors.length > 0;
@@ -66,6 +78,7 @@ export default class AppInput extends Vue {
 <style lang="scss">
 .app-input {
   position: relative;
+
   &__el {
     border: none;
     padding: 1.2rem 0;
@@ -98,6 +111,12 @@ export default class AppInput extends Vue {
   }
   &__prefix {
     padding-right: 5px;
+  }
+  &.inline {
+    display: inline-block;
+    .app-input__el {
+      display: inline-block;
+    }
   }
   &.error {
     .app-input__inner {

@@ -15,7 +15,7 @@ const menuItems: IMenuItems[] = [
     {
         name: 'Финансы',
         img: require('@/assets/icons/finances.svg'),
-        // routeName: "Finances",
+        routeName: "Finances",
         children: [
             {
                 name: "Поездки",
@@ -38,6 +38,7 @@ const menuItems: IMenuItems[] = [
     {
         name: "Водители",
         img: require('@/assets/icons/user_menu.svg'),
+        routeName: 'Driver',
         children: [
             {
                 name: "Заявки водителей",
@@ -64,11 +65,13 @@ const menuItems: IMenuItems[] = [
     },
     {
         name: "Штрафы",
-        img: require('@/assets/icons/fines.svg')
+        img: require('@/assets/icons/fines.svg'),
+        routeName: 'Fines'
     },
     {
         name: "Приложение",
-        img: require('@/assets/icons/smartphone.svg')
+        img: require('@/assets/icons/smartphone.svg'),
+        routeName: 'ApplicationsItems'
     },
    
    

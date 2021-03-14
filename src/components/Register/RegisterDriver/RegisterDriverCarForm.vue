@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import RegisterTitleBack from "../RegisterTitleBack.vue";
+import RegisterTitleBack from "../TitleBack.vue";
 import AuthForm from "../../Auth/AuthForm.vue";
 import AppCheckbox from "../../AppCheckbox.vue";
 import AppDatePicker from "../../AppDatePicker.vue";

@@ -45,7 +45,7 @@ export const baseSchema: FormSchemaItem[] = [
     },
     {
         name: 'phone',
-        type: "app-input",
+        type: "phone-input",
         field: phone,
         props: {
             label: "Телефон",

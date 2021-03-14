@@ -1,12 +1,13 @@
 <template>
   <div class="app-datepicker" :class="{ error: hasErrors }">
     <v-date-picker v-on="$listeners" v-bind="_attrs">
-      <template v-slot="{ inputValue,  togglePopover }">
+      <template v-slot="{ inputValue, inputEvents, togglePopover }">
         <app-input
           :value="inputValue"
           :label="label"
           :errors="errors"
           @click="togglePopover"
+          @input="inputEvents.input"
           
         />
       </template>

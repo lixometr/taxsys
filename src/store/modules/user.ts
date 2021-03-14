@@ -1,6 +1,6 @@
 import { Action, getModule, Module, Mutation, VuexModule } from "vuex-module-decorators";
 import store from "@/store";
-import { useApiGetUser, useApiLogin } from "@/api/auth";
+import { useApiGetUser, useApiLogin } from "@/api/login";
 import useCookie from "@/compositions/useCookie";
 import { UserEntity } from "@/models/user.entity";
 import { UserToken } from "@/types/constants";

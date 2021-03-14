@@ -7,6 +7,7 @@ const routes: Array<RouteConfig> = [
         component: {
             render(c) { return c('router-view') }
         },
+        redirect: '/finances/travels',
         children: [
             {
                 name: "Travels",

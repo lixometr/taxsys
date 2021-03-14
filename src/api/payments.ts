@@ -1,5 +1,6 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
 import useMoment from "@/compositions/useMoments";
+import { ApiDate } from "@/types/constants";
 
 
 export const useApiAutomaticPayments = (opts?: UseApiOptions) => useApi<{ dateFrom: Date, dateTo: Date, page: number,  }, PaginationResponse<any>>(
@@ -10,8 +11,8 @@ export const useApiAutomaticPayments = (opts?: UseApiOptions) => useApi<{ dateFr
             page
         },
         data: {
-            date_from: useMoment(dateFrom).format('YYYY-MM-DD'),
-            date_to: useMoment(dateTo).format('YYYY-MM-DD'),
+            date_from: useMoment(dateFrom).format(ApiDate),
+            date_to: useMoment(dateTo).format(ApiDate),
             type: 'momental',
         }
     }), opts)
@@ -24,8 +25,8 @@ export const useApiManualPayments = (opts?: UseApiOptions) => useApi<{ dateFrom:
             page
         },
         data: {
-            date_from: useMoment(dateFrom).format('YYYY-MM-DD'),
-            date_to: useMoment(dateTo).format('YYYY-MM-DD'),
+            date_from: useMoment(dateFrom).format(ApiDate),
+            date_to: useMoment(dateTo).format(ApiDate),
             type: 'approval',
             is_paid: isPaid
 

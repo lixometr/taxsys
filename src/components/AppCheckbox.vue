@@ -1,13 +1,20 @@
 <template>
   <div
     class="app-checkbox"
-    :class="{ active: value, [`checkbox-${variant}`]: true }"
+    :class="{
+      active: value,
+      [`checkbox-${variant}`]: true,
+      [`checkbox-${shape}`]: true,
+    }"
     :style="{ width: size + 'px', height: size + 'px' }"
     @click="toggle"
   >
     <div class="app-checkbox__mark" v-if="value">
-      <svgCheckMark v-if="variant === Variants.default"/>
-      <svgStar :style="{transform: 'translateY(-1px)'}" v-if="variant === Variants.star"/>
+      <svgCheckMark v-if="variant === Variants.default" />
+      <svgStar
+        :style="{ transform: 'translateY(-1px)' }"
+        v-if="variant === Variants.star"
+      />
     </div>
   </div>
 </template>
@@ -21,6 +28,10 @@ enum Variants {
   default = "default",
   star = "star",
 }
+enum Shape {
+  circle = "circle",
+  rect = "rect",
+}
 @Component({
   setup(props: any, { emit }) {
     const { value } = toRefs(props);
@@ -29,12 +40,12 @@ enum Variants {
     };
     return {
       toggle,
-      Variants
+      Variants,
     };
   },
   components: {
     svgCheckMark,
-    svgStar
+    svgStar,
   },
 })
 export default class AppCheckbox extends Vue {
@@ -49,6 +60,11 @@ export default class AppCheckbox extends Vue {
     default: Variants.default,
   })
   variant: Variants;
+  @Prop({
+    type: String,
+    default: Shape.circle,
+  })
+  shape: Shape;
 }
 </script>
 
@@ -77,6 +93,13 @@ export default class AppCheckbox extends Vue {
 
     .app-checkbox__mark {
       background: $purple;
+    }
+  }
+  &.checkbox-rect {
+    border-radius: 0;
+
+    .app-checkbox__mark {
+      border-radius: 0;
     }
   }
 }

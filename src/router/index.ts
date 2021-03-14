@@ -8,6 +8,9 @@ import user from './routes/user'
 import settings from './routes/settings'
 import driver from "./routes/driver"
 import rent from './routes/rent'
+import fines from './routes/fine'
+import rentApp from './routes/applications'
+import car from './routes/car'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -23,6 +26,9 @@ const routes: Array<RouteConfig> = [
   ...settings,
   ...driver,
   ...rent,
+  ...fines,
+  ...rentApp,
+  ...car,
   {
     path: '*',
     name: "PageNotFound",

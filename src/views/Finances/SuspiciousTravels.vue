@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import SuspiciousTravelsItem from "@/components/SuspiciousTravels/SuspiciousTravelsItem.vue";
-import AggregatorFilters from "@/components/Travels/AggregatorFilters.vue";
+import AggregatorFilters from "@/components/Travels/AgregatorFilters.vue";
 import PageFilters from "@/components/Page/PageFilters.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";

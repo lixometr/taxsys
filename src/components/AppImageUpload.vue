@@ -25,8 +25,8 @@
         </slot>
       </div>
     </div>
-    <div class="app-input__errors">
-      <div class="app-input__error" v-for="(error, idx) in errors" :key="idx">
+    <div class="app-image-upload__errors">
+      <div class="app-image-upload__error" v-for="(error, idx) in errors" :key="idx">
         {{ error }}
       </div>
     </div>

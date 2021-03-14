@@ -25,9 +25,13 @@
 import ProfileReqsCard from "./ProfileReqsCard.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgPlus from "@/assets/icons/strong_plus.svg";
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
 @Component({
   setup() {
     const addCard = () => {
+      const {showByName} = useModal()
+      showByName(ModalName.addCard)
       return;
     };
     return {

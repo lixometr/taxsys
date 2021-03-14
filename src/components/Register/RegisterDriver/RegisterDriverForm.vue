@@ -56,7 +56,7 @@
 </template>
 
 <script lang="ts">
-import RegisterTitleBack from "../RegisterTitleBack.vue";
+import RegisterTitleBack from "../TitleBack.vue";
 import AppCheckbox from "../../AppCheckbox.vue";
 import AppDatePicker from "../../AppDatePicker.vue";
 import CitySelect from "../../CitySelect.vue";

@@ -55,6 +55,9 @@ export default class AppChooser extends Vue {
     margin-left: -1px;
     text-align: center;
     flex: 1;
+    @include xs {
+      padding: 0.3rem 1rem;
+    }
     &:first-child {
       border-top-left-radius: 50px;
       border-bottom-left-radius: 50px;

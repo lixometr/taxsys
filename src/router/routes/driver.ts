@@ -7,6 +7,8 @@ const routes: Array<RouteConfig> = [
         component: {
             render(c) { return c('router-view') }
         },
+        redirect: '/driver/list',
+
         children: [
             {
                 name: "DriverCheck",
@@ -21,17 +23,17 @@ const routes: Array<RouteConfig> = [
             {
                 name: "DriverList",
                 path: 'list',
-                component: () => import("@/views/Driver/DriverList.vue"),  
+                component: () => import("@/views/Driver/DriverList.vue"),
             },
             {
                 name: "DriverApplys",
                 path: 'applications',
-                component: () => import("@/views/Driver/DriverApplys.vue"),  
+                component: () => import("@/views/Driver/DriverApplys.vue"),
             },
             {
                 name: "DriverBlackList",
                 path: 'blacklist',
-                component: () => import("@/views/Driver/DriverBlackList.vue"),  
+                component: () => import("@/views/Driver/DriverBlackList.vue"),
             },
             {
                 name: "AddDriver",

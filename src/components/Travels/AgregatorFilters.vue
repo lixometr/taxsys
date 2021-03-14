@@ -19,13 +19,19 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AgregatorType } from "@/types/agregator.enum";
 import { computed } from "@vue/composition-api";
+import { useApiGetAgregators } from "@/api/agregators";
 @Component({
   setup(props, { emit }) {
+    const { exec: fetchItems, result, error } = useApiGetAgregators();
+    fetchItems();
+    const activeAgregators = computed<any>(() => result.value || []);
     const agregators = computed(() => {
-      const items = Object.keys(AgregatorType).map((key) => ({
+      let items = Object.keys(AgregatorType).map((key) => ({
         key,
         ...AgregatorType[key],
       }));
+
+      items = items.filter((item) => activeAgregators.value.includes(item.key));
       items.push({
         key: "all",
         name: "Все",
@@ -53,11 +59,8 @@ export default class AgregatorFilters extends Vue {
     }
     &:last-child {
       margin-right: 0;
-      margin-left: 12rem;
 
-      @include md {
-        margin-left: 0;
-      }
+     
     }
   }
 }

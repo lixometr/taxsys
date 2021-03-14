@@ -6,7 +6,7 @@ const middleName = useField("", [yup.string().required()]);
 const lastName = useField("", [yup.string().required()]);
 const birthday = useField("", [yup.string().required()]);
 const passport = useField("", [yup.string().required()]);
-const phone = useField("", [yup.string().phone("7", true, "Введите корректный номер телефона"),]);
+const phone = useField("", [yup.number().typeError("Введите корректный номер телефона"),]);
 const city = useField("", [yup.string().required()]);
 export const fields = {
     name,

@@ -25,7 +25,7 @@ get orderIdLink() {
   }
   get orderId() {
     if (this.item.Agreg === AgregName.yandex) {
-      return this.item.OrderIDYandex;
+      return this.item.short_id;
     }
     return this.item.id;
   }

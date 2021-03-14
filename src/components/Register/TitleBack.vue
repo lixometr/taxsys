@@ -1,7 +1,7 @@
 <template>
   <div class="register-title-back">
     <svgArrowLeft class="cursor-pointer" width="18" @click="goBack" />
-    <span>{{ title }}</span>
+    <span><slot>{{ title }}</slot></span>
   </div>
 </template>
 

@@ -36,25 +36,23 @@ import AppSelect from "../../AppSelect.vue";
 import FormSchema from "../../FormSchema/FormSchema.vue";
 import useForm from "@/compositions/validators/useForm";
 import { Component, Vue } from "vue-property-decorator";
-import { useApiRegisterPark } from "@/api/register";
 import { fields } from "./register-park-fields";
 import { schema } from "./register-park-schema";
 @Component({
   components: { FormSchema, AppSelect, AppDatePicker, CitySelect },
-  setup() {
+  setup(props, {emit}) {
     const { serialize, values, errors, handleSubmit } = useForm({
       fields,
       rename: {
-        middleName: "middle_name",
-        lastName: "last_name",
+        // middleName: "middle_name",
+        // lastName: "last_name",
       },
     });
     
     const onSubmit = handleSubmit(async () => {
-      const { exec: send, error } = useApiRegisterPark({});
       const toSend = serialize();
       console.log(toSend);
-      await send(toSend);
+      emit('submit', toSend)
     });
     return { onSubmit, values, errors, schema };
   },

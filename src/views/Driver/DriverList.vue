@@ -8,7 +8,7 @@
     <page-title :between="true">
       <div><h2>Список водителей</h2></div>
       <div>
-        <app-button color="orange" @click="addDriver"
+        <app-button color="orange" @click="addDriver" :shadow="true"
           >Добавить водителя <svgPlus class="ml-10"
         /></app-button>
       </div>
@@ -57,7 +57,7 @@ import useRouter from "@/compositions/useRouter";
     title: "Список водителей",
   },
   setup() {
-    const router = useRouter()
+    const router = useRouter();
     const entity = ref(null);
     const date = ref({
       start: new Date(),
@@ -83,7 +83,7 @@ import useRouter from "@/compositions/useRouter";
     // init({fetchData: toFetch});
 
     const addDriver = () => {
-      router.push({name: "AddDriver"})
+      router.push({ name: "AddDriver" });
     };
 
     return {

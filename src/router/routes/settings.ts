@@ -22,7 +22,22 @@ const routes: Array<RouteConfig> = [
                 name: "SettingsPaymentSystems",
                 path: 'payment-systems',
                 component: () => import("@/views/Settings/PaymentSystems.vue")
-            }
+            },
+            {
+                name: "SettingsDispetchers",
+                path: 'control-rooms',
+                component: () => import("@/views/Settings/Dispetchers.vue")
+            },
+            {
+                name: "SettingsStaff",
+                path: 'staff',
+                component: () => import("@/views/Settings/Staff.vue")
+            },
+            {
+                name: "SettingsPaymentGroups",
+                path: 'payment-groups',
+                component: () => import("@/views/Settings/PaymentGroups.vue")
+            },
         ]
     },
 

@@ -67,6 +67,7 @@ export default class PaymentSystemsItem extends Vue {
       padding-right: 0;
       justify-content: flex-start;
     }
+    color: $grey_3;
     svg {
       width: 20px;
     }

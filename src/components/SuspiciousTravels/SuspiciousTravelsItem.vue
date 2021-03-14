@@ -19,15 +19,8 @@
           >{{ item.Price }} {{ currency }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveCol">
-          <app-badge class="shrink-0">
-            <app-icon
-              :src="AgregatorType[item.Agreg].icon"
-              alt="yandex"
-              class="mr-10"
-              width="24"
-            />
-            {{ AgregatorType.yandex.name }}
-          </app-badge>
+          <agregator-badge class="shrink-0" :type="item.Agreg">
+          </agregator-badge>
         </app-accardion-col>
         <app-accardion-col :class="responsiveCol">
           <app-badge class="shrink-0">
@@ -63,7 +56,11 @@
           </div>
           <div class="row mt-30">
             <div class="col">
-              <app-button color="orange" :stroke="true" @click="deny"
+              <app-button
+                color="orange"
+                class="mb-15"
+                :stroke="true"
+                @click="deny"
                 >Отказать</app-button
               >
             </div>
@@ -131,6 +128,7 @@
 </template>
 
 <script lang="ts">
+import AgregatorBadge from "../AgregatorBadge.vue";
 import AppIcon from "../AppIcon.vue";
 import useStore from "@/compositions/useStore";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
@@ -140,7 +138,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import TravelsMixin from "../Travels/TravelsMixin.vue";
 @Component({
   mixins: [TravelsMixin],
-  components: { AppIcon },
+  components: { AppIcon, AgregatorBadge },
   setup() {
     const getPaymentType = (name: string) => {
       return (

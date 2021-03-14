@@ -1,7 +1,7 @@
 <template>
   <div class="login-form">
     <form action="#" class="login-form__form" @submit.prevent="onLogin">
-      <app-input
+      <phone-input
         class="login-form__input"
         label="+7 999 999 99 99*"
         v-model="loginForm.values.phone"
@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts">
+import PhoneInput from '../../PhoneInput.vue'
 import { UserModule } from "@/store/modules/user";
 import { ref, watch } from "@vue/composition-api";
 import { Component, Vue } from "vue-property-decorator";
@@ -40,6 +41,7 @@ import useRouter from "@/compositions/useRouter";
 import * as yup from "yup";
 import "yup-phone";
 @Component({
+  components: { PhoneInput },
   setup() {
     const router = useRouter();
     // login.exec({
@@ -50,7 +52,7 @@ import "yup-phone";
     const loginForm = useForm({
       fields: {
         phone: useField(process.env.NODE_ENV === 'development' ? "+79660108888" : '', [
-          yup.string().phone("7", true, "Введите корректный номер телефона"),
+          yup.number().typeError("Введите корректный номер телефона"),
         ]),
         password: useField(process.env.NODE_ENV === 'development' ? "123456" : '', [yup.string().required("Введите пароль")]),
       },

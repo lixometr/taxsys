@@ -26,6 +26,7 @@ import AppDatePicker from "@/components/AppDatePicker.vue";
 import AppSelect from "@/components/AppSelect.vue";
 import AppImageUpload from "@/components/AppImageUpload.vue";
 import CitySelect from '@/components/CitySelect.vue'
+import PhoneInput from '@/components/PhoneInput.vue'
 @Component({
   setup() {
     return;
@@ -34,7 +35,8 @@ import CitySelect from '@/components/CitySelect.vue'
     AppDatePicker,
     AppSelect,
     AppImageUpload,
-    CitySelect
+    CitySelect,
+    PhoneInput
   },
 })
 export default class FormSchema extends Vue {

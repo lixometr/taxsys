@@ -27,7 +27,7 @@ import { Component, Vue } from "vue-property-decorator";
       },
       {
         name: "Диспетчерские",
-        routeName: "SettingsDispetcher",
+        routeName: "SettingsDispetchers",
       },
       {
         name: "Группы выплат",
@@ -43,7 +43,7 @@ import { Component, Vue } from "vue-property-decorator";
       },
       {
         name: "Персонал",
-        routeName: "SettingsPersonal",
+        routeName: "SettingsStaff",
       },
     ];
     return {

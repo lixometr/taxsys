@@ -1,5 +1,5 @@
 <template>
-  <div class="preview-image" @click="openModal">
+  <div class="preview-image" v-viewer>
     <div class="preview-image__icon">
       <slot name="icon" />
       <component :is="icon" />
@@ -46,6 +46,7 @@ export default class PreviewImage extends Vue {
     width: 100%;
     height: 100px;
     z-index: 3;
+    pointer-events: none;
     background: linear-gradient(
       180deg,
       #5d55d0 0%,

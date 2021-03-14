@@ -70,7 +70,7 @@
           <app-date-picker
             v-model="form.values.dateDriverLicense"
             label="Дата выдачи В.У."
-             :errors="form.errors.dateDriverLicense"
+            :errors="form.errors.dateDriverLicense"
           ></app-date-picker>
         </div>
       </div>
@@ -83,33 +83,20 @@
           color="purple-grad driver-check-form__btn"
           >ПРОВЕРИТЬ</app-button
         >
-        <div class="driver-check-form__info-wrapper">
-          <svgInfo
-            class="cursor-pointer"
-            @mouseenter="showInfo = true"
-            @mouseleave="showInfo = false"
-          />
-          <transition name="fade">
-            <app-tooltip
-              class="driver-check-form__info"
-              v-if="showInfo"
-              :position="'left'"
-            >
-              Услуга проверка водителя является платной и составляет 20 рублей
-              за одну проверку.
-              <p class="mt-5 mb-5">Оплата списывается с баланса TaxSys.</p>
-              Информация носит исключительно справочный характер. Заказывая
-              данную услугу вы полностью и безоговорочно соглашаетесь с условием
-              оферты.
-            </app-tooltip>
-          </transition>
-        </div>
+        <app-tooltip-info class="driver-check-form__info-wrapper">
+          Услуга проверка водителя является платной и составляет 20 рублей за
+          одну проверку.
+          <p class="mt-5 mb-5">Оплата списывается с баланса TaxSys.</p>
+          Информация носит исключительно справочный характер. Заказывая данную
+          услугу вы полностью и безоговорочно соглашаетесь с условием оферты.
+        </app-tooltip-info>
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts">
+import AppTooltipInfo from "../AppTooltipInfo.vue";
 import AppDatePicker from "@/components/AppDatePicker.vue";
 import AppTooltip from "../AppTooltip.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -158,6 +145,7 @@ import svgInfo from "@/assets/icons/info.svg";
     svgInfo,
     AppTooltip,
     AppDatePicker,
+    AppTooltipInfo,
   },
 })
 export default class DriverCheckFrom extends Vue {}
@@ -187,33 +175,13 @@ export default class DriverCheckFrom extends Vue {}
     }
   }
   &__info-wrapper {
-    position: relative;
-    margin-left: 10px;
-  }
-  &__info {
-    position: absolute;
-    font-size: $fz_xs;
-    color: $grey_2;
-    min-width: 300px;
-    top: -10px;
-    left: 50px;
-    z-index: 10;
-    &::before {
-      top: 10px !important;
-      transform: rotate(45deg) translateY(0) !important;
-    }
-    @include md {
-      top: 40px;
-      right: 0;
-      left: auto;
+    .app-tooltip-info__tooltip {
       &::before {
-        display: none;
+        top: 10px !important;
+        transform: rotate(45deg) translateY(0) !important;
       }
     }
-    @include xs {
-      right: -50px;
-      width: 90%;
-    }
   }
+ 
 }
 </style>
