@@ -10,7 +10,7 @@
     </page-title>
 
     <div class="settings-staff-items flex-layout flex-1">
-      <staff-item v-for="(item, idx) in 5" :key="idx" />
+      <staff-item v-for="(item) in items" :item="item" :key="item.id" />
       <app-pagination
         class="mt-auto"
         :nowPage="page"
@@ -52,7 +52,7 @@ import { ModalName } from "@/types/modal.enum";
     const toFetch = computed(() => ({
       page: page.value,
     }));
-    // init({ fetchData: toFetch });
+    init({ fetchData: toFetch });
     const addStaff = () => {
       const { showByName } = useModal();
       showByName(ModalName.addStaff);

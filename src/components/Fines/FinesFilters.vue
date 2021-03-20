@@ -29,7 +29,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
         },
         {
             name: 'Привлеченные',
-            key: 'invited'
+            key: 'not_park'
         },
         
       ];

@@ -6,7 +6,7 @@ export const useApiLogin = (opts?: UseApiOptions) => useApi<{ phone: string, pas
     ({ phone, password }) => ({
         url: '/login',
         method: "POST",
-        data: { Phone: phone, password, },
+        data: { Phone: phone.replace(/\s/ig, ''), password, },
     }),
     { ...opts }
 )

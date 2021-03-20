@@ -7,7 +7,7 @@
       @keypress.enter="onSubmit"
     />
     <div class="header-search__btn" @click.prevent="onSubmit">
-      <svgSearch />
+      <svgSearch width="20"/>
     </div>
   </div>
 </template>

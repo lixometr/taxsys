@@ -11,8 +11,9 @@
       </page-title>
       <div class="fines-items flex flex-column flex-1">
         <fines-item
-          v-for="item in 5"
+          v-for="item in items"
           :key="item.id"
+          :item="item"
           @payCard="payCard(item.id)"
           @payBalance="payBalance(item.id)"
         />
@@ -47,8 +48,8 @@ import useItemsPage from "@/compositions/useItemsPage";
   setup() {
     const entity = ref("park");
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+      start: undefined,
+      end: undefined,
     });
 
     const {
@@ -66,9 +67,9 @@ import useItemsPage from "@/compositions/useItemsPage";
       dateFrom: date.value.start,
       dateTo: date.value.end,
       page: page.value,
-      entity: entity.value,
+      filter: entity.value,
     }));
-    // init({ fetchData: toFetch });
+    init({ fetchData: toFetch });
     const payCard = () => {
       return;
     };

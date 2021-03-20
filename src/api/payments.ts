@@ -3,19 +3,21 @@ import useMoment from "@/compositions/useMoments";
 import { ApiDate } from "@/types/constants";
 
 
-export const useApiAutomaticPayments = (opts?: UseApiOptions) => useApi<{ dateFrom: Date, dateTo: Date, page: number,  }, PaginationResponse<any>>(
-    ({ dateFrom, dateTo, page,  }) => ({
-        method: "POST",
-        url: '/payments/',
-        params: {
-            page
-        },
-        data: {
-            date_from: useMoment(dateFrom).format(ApiDate),
-            date_to: useMoment(dateTo).format(ApiDate),
-            type: 'momental',
+export const useApiAutomaticPayments = (opts?: UseApiOptions) => useApi<{ dateFrom: Date, dateTo: Date, page: number, }, PaginationResponse<any>>(
+    ({ dateFrom, dateTo, page, }) => {
+        return {
+            method: "POST",
+            url: '/payments/',
+            params: {
+                page
+            },
+            data: {
+                date_from: dateFrom ? useMoment(dateFrom).format(ApiDate) : undefined,
+                date_to: dateTo ? useMoment(dateTo).format(ApiDate) : undefined,
+                type: 'momental',
+            }
         }
-    }), opts)
+    }, opts)
 
 export const useApiManualPayments = (opts?: UseApiOptions) => useApi<{ dateFrom: Date, dateTo: Date, page: number, isPaid: boolean }, PaginationResponse<any>>(
     ({ dateFrom, dateTo, page, isPaid }) => ({
@@ -25,8 +27,8 @@ export const useApiManualPayments = (opts?: UseApiOptions) => useApi<{ dateFrom:
             page
         },
         data: {
-            date_from: useMoment(dateFrom).format(ApiDate),
-            date_to: useMoment(dateTo).format(ApiDate),
+            date_from: dateFrom ? useMoment(dateFrom).format(ApiDate) : undefined,
+            date_to: dateTo ? useMoment(dateTo).format(ApiDate) : undefined,
             type: 'approval',
             is_paid: isPaid
 

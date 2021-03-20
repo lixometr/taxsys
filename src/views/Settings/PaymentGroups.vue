@@ -3,7 +3,7 @@
     <page-title :between="true">
       <div><h2>Группы выплат</h2></div>
       <div>
-        <app-button color="orange" @click="addDispetcher" :shadow="true"
+        <app-button color="orange" @click="addPaymentGroup" :shadow="true"
           >Добавить группу <svgPlus class="ml-10"
         /></app-button>
       </div>
@@ -31,6 +31,8 @@ import { computed, reactive, ref, watch } from "@vue/composition-api";
 import { useApiGetPaymentGroups } from "@/api/payment-groups";
 import useItemsPage from "@/compositions/useItemsPage";
 import svgPlus from "@/assets/icons/plus.svg";
+import useModal from '@/compositions/useModal';
+import { ModalName } from '@/types/modal.enum';
 @Component({
   metaInfo: {
     title: "Группы выплат",
@@ -51,8 +53,9 @@ import svgPlus from "@/assets/icons/plus.svg";
       page: page.value,
     }));
     // init({ fetchData: toFetch });
-    const addDispetcher = () => {
-      return;
+    const addPaymentGroup = () => {
+      const {showByName} = useModal()
+      showByName(ModalName.addPaymentGroup)
     };
     return {
       page,
@@ -61,7 +64,7 @@ import svgPlus from "@/assets/icons/plus.svg";
       prevPage,
       items,
       totalPages,
-      addDispetcher,
+      addPaymentGroup,
     };
   },
   components: {

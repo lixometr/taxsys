@@ -11,9 +11,13 @@
 
     <div class="driver-list-items flex flex-column flex-1">
       <driver-list-item
-        v-for="item in 5"
+        v-for="item in items"
         :key="item.id"
+        :item="item"
         :showAgregators="false"
+        @refresh="refresh"
+        :paymentGroups="paymentGroups && paymentGroups.data"
+        :antifrauds="antifrauds && antifrauds.data"
       />
       <app-pagination
         class="mt-auto"
@@ -28,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import DriverApplysFilters from '../../components/DriverApplys/DriverApplysFilters.vue'
+import DriverApplysFilters from "../../components/DriverApplys/DriverApplysFilters.vue";
 import DriverListItem from "../../components/DriverList/DriverListItem.vue";
 import AppButton from "../../components/AppButton.vue";
 import PageFilters from "../../components/Page/PageFilters.vue";
@@ -37,14 +41,17 @@ import { Component, Vue } from "vue-property-decorator";
 import { computed, ref } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useItemsPage from "@/compositions/useItemsPage";
-import { useApiGetDriverList } from "@/api/driver-list";
+import { useApiGetDriversApplys } from "@/api/driver";
+import { useApiGetAntifrauds } from "@/api/antifraud";
+import { useApiGetPaymentGroups } from "@/api/payment-groups";
 @Component({
   components: {
     PageTitle,
     PageFilters,
     AppButton,
     svgPlus,
-    DriverListItem, DriverApplysFilters
+    DriverListItem,
+    DriverApplysFilters,
   },
   metaInfo: {
     title: "Заявки водителей",
@@ -52,8 +59,8 @@ import { useApiGetDriverList } from "@/api/driver-list";
   setup() {
     const entity = ref(null);
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+      start: undefined,
+      end: undefined,
     });
 
     const {
@@ -64,19 +71,33 @@ import { useApiGetDriverList } from "@/api/driver-list";
       items,
       totalPages,
       init,
+      refreshItems,
     } = useItemsPage({
-      api: useApiGetDriverList,
+      api: useApiGetDriversApplys,
     });
     const toFetch = computed(() => ({
       page: page.value,
       dateFrom: date.value.start,
       dateEnd: date.value.end,
     }));
-    // init({fetchData: toFetch});
+    init({ fetchData: toFetch });
 
-   
+    const refresh = () => {
+      refreshItems();
+    };
+    const { exec: getAntifraud, result: antifrauds } = useApiGetAntifrauds();
+    getAntifraud({ page: 1 });
+
+    const {
+      exec: getPaymentGroups,
+      result: paymentGroups,
+    } = useApiGetPaymentGroups();
+    getPaymentGroups();
 
     return {
+      antifrauds,
+      paymentGroups,
+      refresh,
       entity,
       date,
       page,

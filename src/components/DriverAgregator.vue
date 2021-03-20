@@ -9,14 +9,16 @@
       </div>
     </div>
     <div class="driver-agregator__price" v-if="active">
-      {{ price }} {{currency}}
+      {{ price }} {{ currency }}
     </div>
     <div class="driver-agregator__action">
       <div class="driver-agregator__edit" v-if="active">
         <svgEdit class="cursor-pointer color-violet" width="20" @click="edit" />
       </div>
       <div class="driver-agregator__add" v-else>
-        <app-button color="orange" size="sm" @click="add">подключить</app-button>
+        <app-button color="orange" size="sm" @click="add"
+          >подключить</app-button
+        >
       </div>
     </div>
   </div>
@@ -27,25 +29,39 @@ import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import { computed, toRefs } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgEdit from "@/assets/icons/edit.svg";
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
 interface IProps {
   agregator: AgregName;
+  driverId: number;
   [key: string]: any;
 }
 @Component({
   components: { svgEdit },
-  setup(props: IProps, {emit}) {
-    const { agregator } = toRefs(props);
+  setup(props: IProps, { emit }) {
+    const { agregator, driverId } = toRefs<IProps>(props);
     const agregatorItem = computed(() => {
       return AgregatorType[agregator.value];
     });
     const icon = computed(() => agregatorItem.value.icon);
     const name = computed(() => agregatorItem.value.name);
     const edit = () => {
-      emit('edit')
+      const { showByName } = useModal();
+      showByName(ModalName.changeDriverBalance, {
+        props: {
+          driverId: driverId.value,
+          agregator: agregator.value
+        },
+        on: {
+          send: () => {
+            emit('refresh')
+          }
+        }
+      });
       return;
     };
     const add = () => {
-      emit('add')
+      emit("add");
       return;
     };
     return {
@@ -59,7 +75,8 @@ interface IProps {
 export default class DriverListItemAgregator extends Vue {
   @Prop(Boolean) active: boolean;
   @Prop(String) agregator: AgregName;
-  @Prop(Number) price: number;
+  @Prop([Number, String]) price: string;
+  @Prop(Number) driverId: number;
 
   get currency() {
     return this.$store.getters.currency;
@@ -93,11 +110,11 @@ export default class DriverListItemAgregator extends Vue {
     margin-right: 10px;
   }
   &__name-wrapper {
-      display: flex;
-      align-items: center;  
+    display: flex;
+    align-items: center;
   }
-  &__name{ 
-    color: #3A3535;
+  &__name {
+    color: #3a3535;
     font-size: $fz_xs;
   }
   &__price {
@@ -106,7 +123,7 @@ export default class DriverListItemAgregator extends Vue {
     font-weight: 500;
   }
   &__edit {
-     color: $violet;
+    color: $violet;
   }
 }
 </style>

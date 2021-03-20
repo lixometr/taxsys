@@ -7,10 +7,12 @@ import { UserToken } from "@/types/constants";
 import { errorHandler } from "@/helpers/error-handler";
 import useRouter from "@/compositions/useRouter";
 import useToast from "@/compositions/useToast";
+import { useApiGetBalance } from "@/api/balance";
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule {
   user: UserEntity | null = null
   token: string | null = null
+  balance: number = null
   get isAuth() {
     return !!this.token && this.user
   }
@@ -21,6 +23,10 @@ class User extends VuexModule {
   @Mutation
   setToken(token: string) {
     this.token = token
+  }
+  @Mutation
+  setBalance(balance: number) {
+    this.balance = balance
   }
   @Action
   setTokenWithCookie({ token, expiresIn }: { token: string, expiresIn: number }) {
@@ -44,9 +50,12 @@ class User extends VuexModule {
   async init() {
     this.initToken()
     if (this.token) {
-      await this.fetchUser()
+      const result = await this.fetchUser()
+      if(!result) return
+      await this.fetchBalance()
     }
   }
+  
   @Action
   async fetchUser() {
     const getUser = useApiGetUser({ toast: { error: errorHandler() } })
@@ -57,9 +66,16 @@ class User extends VuexModule {
       this.setUser(null)
       this.removeToken()
     }
-    return getUser
+    return getUser.result.value
   }
-
+  @Action
+  async fetchBalance() {
+    const {exec, result, error} = useApiGetBalance({toast: {error: errorHandler()}})
+    await exec()
+    if(!error.value) {
+      this.setBalance(result.value.balance)
+    }
+  }
   @Action
   async login({ phone, password }) {
     const login = useApiLogin({

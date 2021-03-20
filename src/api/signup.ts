@@ -1,21 +1,29 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
 import useMoment from "@/compositions/useMoments";
+import { RegisterDriverDto } from "@/dto/register-driver.dto";
+import { RegisterParkDto } from "@/dto/register-park.dto";
 import { ApiDate } from "@/types/constants";
+import { classToPlain } from "class-transformer";
 
-export const useApiSignupDriver = (opts?: UseApiOptions) => useApi(
-    (data: any) => {
-        const toSend = { ...data }
-        toSend.phone = toSend.phone.replace(/\s/ig, '')
-        toSend.birthday = useMoment(toSend.birthday).format(ApiDate)
-        toSend.dateLicense = useMoment(toSend.dateLicense).format(ApiDate)
-        toSend.endTimeLicense = useMoment(toSend.endTimeLicense).format(ApiDate)
-        toSend.passportDate = useMoment(toSend.passportDate).format(ApiDate)
+export const useApiSignupDriver = (opts?: UseApiOptions) => useApi<RegisterDriverDto, any>(
+    (data: RegisterDriverDto) => {
+        const toSend = {
+            ...classToPlain(data),
+            photoLicense: data.photoLicense,
+            selfiDriver: data.selfiDriver,
+            photoPassport: data.photoPassport,
+            photoFront: data.photoFront,
+            photoBack: data.photoBack,
+            photoCtcBack: data.photoCtcBack,
+            photoCtcFront: data.photoCtcFront
+        }
         const formData = new FormData()
-        console.log(toSend)
-    
         Object.keys(toSend).map(key => {
             let val = toSend[key]
-            formData.append(key, val)
+            if (val) {
+                formData.append(key, val)
+
+            }
         })
         return {
             method: 'POST',
@@ -29,9 +37,9 @@ export const useApiSignupDriver = (opts?: UseApiOptions) => useApi(
     opts
 )
 export const useApiSignupPark = (opts?: UseApiOptions) => useApi(
-    (data) => {
+    (data: RegisterParkDto) => {
         const formData = new FormData()
-        Object.keys(data).map(key => {
+        Object.keys(classToPlain(data)).map(key => {
             formData.append(key, data[key])
         })
         return {

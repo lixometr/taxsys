@@ -15,7 +15,10 @@
         <div class="col driver-list-cards__name">
           <span>Карта {{ idx }}:</span>
           <span class="font-0">
-            <svgTrash @click="removeCard(idx)" width="13"
+            <svgTrash
+              class="cursor-pointer"
+              @click="onRemoveCard(card)"
+              width="13"
           /></span>
         </div>
         <div class="col driver-list-cards__number">
@@ -23,7 +26,11 @@
             {{ card.number }}
           </span>
           <span class="shrink-0" v-if="canEdit">
-            <app-checkbox variant="star" />
+            <app-checkbox
+              variant="star"
+              :value="card.def"
+              @input="onChangeDefault(card, $event)"
+            />
           </span>
         </div>
       </div>
@@ -38,27 +45,69 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import svgTrash from "@/assets/icons/trash.svg";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
+import {
+  useApiDriverDeleteCard,
+  useApiDriverSetDefaultCard,
+} from "@/api/driver";
+import { errorHandler } from "@/helpers/error-handler";
 interface Card {
   number: string;
 }
 interface IProps {
   [key: string]: any;
   value: Array<Card>;
+  driverId: number;
 }
 @Component({
   setup(props: IProps, { emit }) {
-    const { value } = toRefs<IProps>(props);
+    const { value, driverId } = toRefs<IProps>(props);
     const addCard = () => {
-      const {showByName} = useModal()
-      showByName(ModalName.addCard)
+      const { showByName } = useModal();
+      showByName(ModalName.addCard, {
+        props: {
+          driverId: driverId.value,
+        },
+        on: {
+          send: () => {
+            emit("addedCard");
+          },
+        },
+      });
       return;
     };
-    const removeCard = (idx: number) => {
-      return;
+    const {
+      exec: removeCard,
+      error: deleteError,
+      result,
+    } = useApiDriverDeleteCard({
+      toast: { error: errorHandler(), success: () => "Карта успешно удалена!" },
+    });
+    const onRemoveCard = async (card: any) => {
+      await removeCard({
+        cardId: card.id,
+        id: driverId.value,
+      });
+      if (deleteError.value) return;
+      emit("removedCard");
+    };
+    const {
+      exec: setDefaultCard,
+      error: setDefaultError,
+    } = useApiDriverSetDefaultCard({
+      toast: {
+        error: errorHandler(),
+        success: () => "Карта по умолчанию установлена!",
+      },
+    });
+    const onChangeDefault = async (card: any, value: boolean) => {
+      await setDefaultCard({ cardId: card.id, id: driverId.value });
+      if (setDefaultError.value) return;
+      emit("setDefault");
     };
     return {
+      onChangeDefault,
       addCard,
-      removeCard,
+      onRemoveCard,
     };
   },
   components: {
@@ -74,8 +123,10 @@ export default class DriverListCards extends Vue {
 
   @Prop({
     type: Boolean,
-    default: true
-  }) canEdit: boolean
+    default: true,
+  })
+  canEdit: boolean;
+  @Prop(Number) driverId: number;
 }
 </script>
 
@@ -112,7 +163,7 @@ export default class DriverListCards extends Vue {
         overflow: hidden;
         text-overflow: ellipsis;
         margin-right: 15px;
-     }
+      }
     }
   }
 }

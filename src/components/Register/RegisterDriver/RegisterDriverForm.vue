@@ -1,63 +1,25 @@
 <template>
-  <auth-form class="register-driver-form h-100 scrollbar">
-    <template #title>
-      <register-title-back
-        class="mb-20"
-        @back="goBack"
-        title="Подключение водителя"
-      />
-    </template>
-    <template #default>
-      <register-driver-agregators
-        :value="agregators"
-        @input="onChangeAgregators"
-      />
-      <form action="#" class="flex-1 flex-layout" @submit.prevent="onSubmit">
-        <form-schema class="row" :schema="formSchema">
-          <template v-slot:field-gettid="{ item }">
-            <div class="gett-input-checkbox">
-              <app-input
-                v-model="item.field.value.value"
-                v-bind="item.props"
-                :errors="item.field.errors.value"
-                v-on="item.listeners"
-                class="gett-input__input"
-              />
-              <app-checkbox
-                :value="!!item.field.value.value"
-                @input="!$event ? (item.field.value.value = '') : null"
-              />
-            </div>
-          </template>
-          <template v-slot:field-learning-date="{ item }">
-            <div class="gett-input-checkbox">
-              <app-date-picker
-                v-model="item.field.value.value"
-                v-bind="item.props"
-                :errors="item.field.errors.value"
-                v-on="item.listeners"
-                class="gett-input__input"
-              />
-              <app-checkbox
-                :value="!!item.field.value.value"
-                @input="!$event ? (item.field.value.value = '') : null"
-              />
-            </div>
-          </template>
-        </form-schema>
-        <div class="register-driver-form__btn">
-          <app-button type="submit" color="orange-grad"
-            >Перейти к созданию автомобиля</app-button
-          >
-        </div>
-      </form>
-    </template>
-  </auth-form>
+  <div class="register-driver-form">
+    <register-driver-agregators
+      class="mb-20"
+      :value="agregators"
+      @input="onChangeAgregators"
+    />
+    <register-driver-inputs
+      ref="registerDriverInputs"
+      @submit="onSubmit"
+      :agregators="agregators"
+    >
+      <template #btn>
+        <slot name="btn" />
+      </template>
+    </register-driver-inputs>
+  </div>
 </template>
 
 <script lang="ts">
+import RegisterDriverInputs from "./RegisterDriverInputs.vue";
 import RegisterTitleBack from "../TitleBack.vue";
-import AppCheckbox from "../../AppCheckbox.vue";
 import AppDatePicker from "../../AppDatePicker.vue";
 import CitySelect from "../../CitySelect.vue";
 import AppImageUpload from "../../AppImageUpload.vue";
@@ -82,59 +44,30 @@ interface IProps {
     AppImageUpload,
     CitySelect,
     AppDatePicker,
-    AppCheckbox,
     AuthForm,
     RegisterTitleBack,
+    RegisterDriverInputs,
   },
   setup(props: IProps, { emit }) {
     const { agregators } = toRefs<IProps>(props);
-    const formSchema = computed(() => {
-      let mergedSchema = [...baseSchema];
-      agregators.value.map((agregator: string) => {
-        mergedSchema = mergedSchema.concat(schema[agregator]);
-      });
-      mergedSchema = mergedSchema.filter((schemaItem, index) => {
-        return (
-          mergedSchema.findIndex(
-            (fItem) => fItem.field === schemaItem.field
-          ) === index
-        );
-      });
 
-      return mergedSchema;
-    });
-    const formFields = computed(() => {
-      let mergedFields = { ...baseFields };
-      agregators.value.map((agregator: string) => {
-        mergedFields = Object.assign({}, mergedFields, fields[agregator]);
-      });
-      return mergedFields;
-    });
-    let form = useForm({
-      fields: formFields.value,
-    });
-    const onSubmit = () => {
-      const exec = form.handleSubmit(() => {
-        if (!agregators.value.length) return;
-        const toSend = form.serialize();
-        console.log(toSend);
-        emit("submit", toSend);
-        return;
-      });
-      exec();
+    const onSubmit = (values) => {
+      const toSend = {
+        ...values,
+        agregators: JSON.stringify(agregators.value),
+      };
+
+      emit("submit", toSend);
     };
-    watch(agregators, () => {
-      form = useForm({
-        fields: formFields.value,
-      });
-    });
-    const goBack = () => {
-      emit("back");
-    };
+
     const onChangeAgregators = (newAgregators: string[]) => {
       emit("update:agregators", newAgregators);
     };
-    return {  formSchema, onSubmit, goBack, onChangeAgregators };
+    const registerDriverInputs = ref(null);
+    const submit = async () => {
+      await registerDriverInputs.value.submit();
+    };
+    return { onSubmit, submit, registerDriverInputs, onChangeAgregators };
   },
 })
 export default class RegisterDriverForm extends Vue {
@@ -146,7 +79,6 @@ export default class RegisterDriverForm extends Vue {
 .register-driver-form {
   &__btn {
     margin-top: auto;
-    text-align: right;
   }
   .form-schema__input {
     margin-bottom: 10px;

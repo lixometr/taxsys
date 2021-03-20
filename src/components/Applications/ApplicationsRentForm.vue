@@ -181,16 +181,16 @@ enum DesignTypes {
         developerName: useField("", [yup.string().required()]),
         appName: useField("", [yup.string().required()]),
         design: useField(DesignTypes.upload, [yup.string().required()]),
-        logo: useField(null, [yup.string().required()]),
-        background: useField(null, [yup.string().required()]),
-        privacyDriverLink: useField("", [yup.string().required()]),
-        sendSmsApi: useField("", [yup.string().required()]),
-        site: useField("", [yup.string().required()]),
-        phone: useField("", [
+        logo: useField(null, [yup.string().optional().nullable()]),
+        background: useField(null, [yup.string().optional().nullable()]),
+        privacyDriverLink: useField("", [yup.string().optional()]),
+        sendSmsApi: useField("", [yup.string().optional()]),
+        site: useField("", [yup.string().optional()]),
+        phone: useField(null, [
           yup
             .number()
             .typeError("Введите корректный номер телефона")
-            .required(),
+            .nullable(),
         ]),
         whatsapp: useField("", [yup.string()]),
         viber: useField("", [yup.string()]),

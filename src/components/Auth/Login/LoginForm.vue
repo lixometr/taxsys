@@ -22,7 +22,7 @@
         <router-link :to="{ name: 'Register' }">Регистрация</router-link>
       </div>
       <div class="login-form__link">
-        <router-link :to="{ name: 'Restore' }"
+        <router-link to="#"
           >Восстановление доступа</router-link
         >
       </div>

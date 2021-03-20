@@ -1,7 +1,8 @@
 import { Ref, ref, watch } from "@vue/composition-api";
 import { BaseSchema, ValidationError } from "yup"
 interface UseFieldOptions {
-    onValidate?: (value: any) => any
+    onValidate?: (errors: string[], value: any) => any
+    onInput?: (value: any) => any
     watchValue?: boolean
 }
 export interface UseFieldModel {
@@ -11,13 +12,14 @@ export interface UseFieldModel {
     validate: (...args: any) => any
 }
 const defaultOptions: UseFieldOptions = {
-    onValidate: value => value,
+    onValidate: (errors, value) => value,
+    onInput: (value) => value,
     watchValue: false
 }
 
 type UseFieldValidators = Array<Function | BaseSchema>
 export default function useField(defaultValue: string | boolean | number | object = '', validators: UseFieldValidators, options?: UseFieldOptions): UseFieldModel {
-    options = Object.assign({}, defaultOptions, options)
+    const { onValidate, onInput, watchValue,  } = Object.assign({}, defaultOptions, options)
     const value = ref(defaultValue)
     const errors: Ref<Array<string>> = ref([])
     const validate = async () => {
@@ -34,6 +36,8 @@ export default function useField(defaultValue: string | boolean | number | objec
                     return err.errors
                 }
                 return err
+            } finally {
+                onValidate(errors.value, value.value)
             }
         })
         let ers = await Promise.all(resolvers)
@@ -48,10 +52,9 @@ export default function useField(defaultValue: string | boolean | number | objec
         errors.value = ers
         return errors.value.length < 1
     }
-    if (options.watchValue) {
+    if (watchValue) {
         watch(value, async val => {
             await validate()
-            options.onValidate(value)
         })
     }
     const isValid = ref(true)
@@ -59,6 +62,9 @@ export default function useField(defaultValue: string | boolean | number | objec
         isValid.value = errors.value.length > 0
     })
 
+    watch(value, () => {
+        onInput(value.value)
+    })
 
 
     return { value, errors, isValid, validate }

@@ -7,18 +7,13 @@
         :errors="errors.amount"
         class=""
       />
-      <app-input
-        label="Коментарий"
-        v-model="values.comment"
-        :errors="errors.comment"
-        class=""
-      />
-      <app-checkbox-input
+     
+      <!-- <app-checkbox-input
         label="Выплатить"
         v-model="values.pay"
         :errors="errors.pay"
         shape="rect"
-      />
+      /> -->
       <div class="d-flex justify-content-center">
         <app-button
           class="change-balance-writeoff-form__btn mt-10"
@@ -43,8 +38,7 @@ import * as yup from "yup";
     const { handleSubmit, values, errors, serialize } = useForm({
       fields: {
         amount: useField("", [yup.number().required()]),
-        comment: useField("", [yup.string()]),
-        pay: useField(false, [yup.boolean().required()]),
+        // pay: useField(false, [yup.boolean().required()]),
       },
     });
     const onSubmit = handleSubmit(async () => {

@@ -28,9 +28,25 @@
 </template>
 
 <script lang="ts">
+import useMask from "@/compositions/useMask";
+import { onMounted, ref, toRefs } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
-
-@Component
+interface IProps {
+  [key: string]: any;
+  mask: string;
+}
+@Component({
+  setup(props: IProps) {
+    const { mask } = toRefs<IProps>(props);
+    const el = ref(null);
+    onMounted(() => {
+      if (mask.value) {
+        useMask(el.value, mask.value);
+      }
+    });
+    return { el };
+  },
+})
 export default class AppInput extends Vue {
   @Prop(Object) inputAttrs: any;
   @Prop(String) label: string;
@@ -43,6 +59,7 @@ export default class AppInput extends Vue {
   inline: boolean;
   @Prop(String) width: string;
   @Prop({ type: Boolean, default: true }) showErrors: boolean;
+  @Prop(String) mask: string;
   get _inputAttrs() {
     const attrs = Object.assign(
       {},

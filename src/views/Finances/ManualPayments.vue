@@ -53,8 +53,8 @@ import { errorHandler } from "@/helpers/error-handler";
   setup() {
     const entity = ref("payments");
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+      start: undefined,
+      end: undefined,
     });
 
     const {

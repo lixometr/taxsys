@@ -1,7 +1,7 @@
 <template>
   <modal-content class="change-balance-modal" v-on="$listeners">
     <template #header>
-      <h2 class="modal-title">Изменение баланса</h2>
+      <h2 class="modal-title">{{modalTitle}}</h2>
     </template>
     <template>
       <div>
@@ -21,7 +21,7 @@ import ChangeBalanceWriteOffForm from "../ChangeBalance/ChangeBalanceWriteOffFor
 import AppChooser from "../AppChooser.vue";
 import ModalContent from "./ModalContent.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { ref, toRefs } from "@vue/composition-api";
+import { computed, ref, toRefs } from "@vue/composition-api";
 import { string } from "yup";
 interface IProps {
   action: string;
@@ -39,15 +39,17 @@ interface IProps {
     const activeAction = ref(action.value);
     const actions = [
       {
-        name: "Списать",
+        name: "Вывод с баланса",
         value: "writeoff",
       },
       {
-        name: "Пополнить",
+        name: "Пополнение с баланса",
         value: "put",
       },
     ];
+    const modalTitle = computed(() => actions.find(a => activeAction.value === a.value).name)
     return {
+      modalTitle,
       activeAction,
       actions,
     };
@@ -65,7 +67,7 @@ export default class ChangeBalanceModal extends Vue {
 <style lang="scss">
 .change-balance-modal {
   width: 100%;
-  max-width: 580px;
+  max-width: 650px;
   margin: 0 30px;
   @include xs {
     margin: 0 5px;

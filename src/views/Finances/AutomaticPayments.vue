@@ -37,8 +37,8 @@ import useItemsPage from "@/compositions/useItemsPage";
   },
   setup() {
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+     start: undefined,
+     end: undefined
     });
 
     const {

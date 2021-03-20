@@ -34,8 +34,9 @@ import PageFilters from "@/components/Page/PageFilters.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { computed, reactive, ref, watch } from "@vue/composition-api";
-import { useApiGetTravels } from "@/api/travel";
+import { useApiGetSuspiciousTravels } from "@/api/suspicious-travel";
 import useItemsPage from "@/compositions/useItemsPage";
+
 @Component({
   metaInfo: {
     title: "Подозрительные Поездки",
@@ -43,8 +44,8 @@ import useItemsPage from "@/compositions/useItemsPage";
   setup() {
     const agregator = ref("all");
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+      start: undefined,
+      end: undefined,
     });
 
     const {
@@ -56,7 +57,7 @@ import useItemsPage from "@/compositions/useItemsPage";
       totalPages,
       init,
     } = useItemsPage({
-      api: useApiGetTravels,
+      api: useApiGetSuspiciousTravels,
     });
     const toFetch = computed(() => ({
       dateFrom: date.value.start,

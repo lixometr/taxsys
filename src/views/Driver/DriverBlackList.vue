@@ -24,7 +24,7 @@ import PageTitle from "../../components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { computed, ref } from "@vue/composition-api";
 import useItemsPage from "@/compositions/useItemsPage";
-import { useApiGetDriverList } from "@/api/driver-list";
+import {useApiGetDriverBlackList} from "@/api/driver"
 @Component({
   components: {
     PageTitle,
@@ -43,7 +43,7 @@ import { useApiGetDriverList } from "@/api/driver-list";
       totalPages,
       init,
     } = useItemsPage({
-      api: useApiGetDriverList,
+      api: useApiGetDriverBlackList,
     });
     const toFetch = computed(() => ({
       page: page.value,

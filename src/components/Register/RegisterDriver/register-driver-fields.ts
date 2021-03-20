@@ -14,7 +14,7 @@ export const phone = useField("", [yup.number().typeError("Введите кор
 export const birthday = useField("", [yup.date().required()]);
 export const dateLicense = useField("", [yup.date().required()]);
 export const endTimeLicense = useField("", [yup.date().required()]);
-export const driverExp = useField("", [yup.string().required()]);
+export const driverExp = useField("", [yup.number().required()]);
 export const passport = useField("", [yup.string().required()]);
 export const passportDate = useField("", [yup.date().required()]);
 export const passportWho = useField("", [yup.string().required()]);
@@ -33,7 +33,7 @@ const gettGroup = {
     },
     _gettId: '',
     get gettId() {
-        const field = useField(this._gettId, [yup.string().test('', 'Заполните одно из полей', (value) => {
+        const field = useField(this._gettId, [yup.number().test('', 'Заполните одно из полей', (value) => {
             if (value || this.learningDate.value.value) return true
             return false
         })])
@@ -63,6 +63,7 @@ export const baseFields = {
 }
 export const fields = {
     [AgregName.yandex]: {
+        passport,
         dateLicense,
         endTimeLicense,
         driverExp

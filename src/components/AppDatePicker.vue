@@ -7,8 +7,8 @@
           :label="label"
           :errors="errors"
           @click="togglePopover"
-          @input="inputEvents.input"
-          
+          @change="inputEvents.change"
+        
         />
       </template>
     </v-date-picker>

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-
+import 'reflect-metadata';
 import "@/libs/composition-api"
 import "@/libs/loading-overlay"
 import "@/libs/toast"

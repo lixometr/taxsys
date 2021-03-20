@@ -24,13 +24,13 @@
           >№: 293293293293293</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader"
-          >12,5 часть 1</app-accardion-col
+          >{{item.koap_code}}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader" class="color-grey-3"
-          >12:15 | 22.10.2019</app-accardion-col
+          >{{item.created_at | dateTime}}</app-accardion-col
         >
         <app-accardion-col class="col-xl-1 col-md-4 col-sm-6"
-          >1250 {{ currency }}</app-accardion-col
+          >{{item.summa}} {{ currency }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader" class="fines-item__status">
           <app-status color="green" :stroke="true">оплачен</app-status>
@@ -42,18 +42,18 @@
             <div class="color-grey-2 mb-10">Долгополов Иван Дмитриевич</div>
             <div class="row mb-15">
               <div class="col color-grey-2">Нарушение:</div>
-              <div class="col color-grey-1">от 10.03.2020</div>
+              <div class="col color-grey-1">от {{item.issue_date | moment('DD.MM.YYYY')}}</div>
             </div>
-            <div class="mb-15">Нарушение правил стоянки или остановки</div>
+            <div class="mb-15">{{item.koap_text}}</div>
             <div class="row">
               <div class="col color-grey-2">Статья КоАп:</div>
-              <div class="col color-grey-1">12,5 часть 1</div>
+              <div class="col color-grey-1">{{item.koap_code}}</div>
             </div>
           </div>
           <div>
             <div class="row align-items-center mt-25">
               <div class="col-lg-3">
-                <div class="font-md font-500">10 500 {{ currency }}</div>
+                <div class="font-md font-500">{{item.summa}} {{ currency }}</div>
               </div>
               <div class="col-lg-3">
                 <s class="font-md font-500 text-line-through"
@@ -123,7 +123,7 @@
           </div>
           <div>
             <div class="color-grey-2 mb-10">Адрес:</div>
-            <div>г. Ростов-на-Дону, ул. Тимирязаваская, д. 58/4</div>
+            <div>{{item.address}}</div>
           </div>
         </app-accardion-col>
       </template>

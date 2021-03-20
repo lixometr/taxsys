@@ -4,7 +4,7 @@
       <h2 class="modal-title">Добавление карты</h2>
     </template>
     <template>
-      <add-card-form @send="onSend" />
+      <add-card-form @send="onSend" :driverId="driverId" />
     </template>
   </modal-content>
 </template>
@@ -12,7 +12,7 @@
 <script lang="ts">
 import AddCardForm from "../AddCard/AddCardForm.vue";
 import ModalContent from "./ModalContent.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
   components: { ModalContent, AddCardForm },
@@ -26,7 +26,9 @@ import { Component, Vue } from "vue-property-decorator";
     };
   },
 })
-export default class AddCardModal extends Vue {}
+export default class AddCardModal extends Vue {
+  @Prop(Number) driverId: string;
+}
 </script>
 
 <style lang="scss">

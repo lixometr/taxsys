@@ -177,6 +177,7 @@ const sSelfiDriver = {
     sort: 102
 }
 const yandexSchema: FormSchemaItem[] = [
+    sPassport,
     sDateLicense,
     sEndTimeLicense,
     sDriverExp,

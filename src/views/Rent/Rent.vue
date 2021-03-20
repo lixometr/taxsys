@@ -16,7 +16,12 @@
       </div>
     </page-title>
     <div class="page-rent__items flex flex-column flex-1">
-      <rent-item v-for="item in 5" :key="item" class="page-rent-item" />
+      <rent-item
+        v-for="item in 5"
+        :key="item"
+        class="page-rent-item"
+        @approve="onApprove"
+      />
       <app-pagination
         class="mt-auto"
         :nowPage="page"
@@ -39,11 +44,20 @@ import { computed, ref } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useItemsPage from "@/compositions/useItemsPage";
 import { useApiGetRents } from "@/api/rent";
+import useRouter from "@/compositions/useRouter";
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
 @Component({
   setup() {
     const entity = ref("free");
+    const router = useRouter();
+
     const createRent = () => {
-      return;
+      router.push({ name: "CarAdd" });
+    };
+    const onApprove = () => {
+      const { showByName } = useModal();
+      showByName(ModalName.giveCar);
     };
     const {
       page,
@@ -57,6 +71,7 @@ import { useApiGetRents } from "@/api/rent";
     const toFetch = computed(() => ({ entity: entity.value }));
     // init({fetchData: toFetch})
     return {
+      onApprove,
       entity,
       createRent,
       page,
@@ -81,7 +96,7 @@ export default class Rent extends Vue {}
       justify-content: flex-end;
     }
   }
- 
+
   &-item {
     margin-bottom: 3rem;
     &:last-child {

@@ -8,17 +8,20 @@
         <span class="md-hidden"> {{ userName }}</span>
       </div>
     </router-link>
+    <header-taxy-balance class="header-account__balance" />
     <a href="#" class="header-account__exit" @click.prevent="exit">Выход</a>
   </div>
 </template>
 
 <script lang="ts">
+import HeaderTaxyBalance from "./HeaderTaxyBalance.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgUser from "@/assets/icons/user.svg";
 import { UserModule } from "@/store/modules/user";
 @Component({
   components: {
     svgUser,
+    HeaderTaxyBalance,
   },
   setup() {
     const exit = async () => {
@@ -58,10 +61,23 @@ export default class HeaderAccount extends Vue {
     @include md {
     }
   }
+  &__balance {
+    
+  }
   &__user {
     display: flex;
     align-items: center;
 
+    &-name {
+      text-transform: uppercase;
+      margin-left: 12px;
+      @include md {
+        margin-left: 0;
+      }
+    }
+  }
+  &__user,
+  &__balance {
     &::after {
       content: "";
       display: block;
@@ -71,13 +87,6 @@ export default class HeaderAccount extends Vue {
       height: 15px;
       @include md {
         background: $white;
-      }
-    }
-    &-name {
-      text-transform: uppercase;
-      margin-left: 12px;
-      @include md {
-        margin-left: 0;
       }
     }
   }

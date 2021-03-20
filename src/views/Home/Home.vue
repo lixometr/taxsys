@@ -10,15 +10,12 @@ import { Component, Vue } from "vue-property-decorator";
   components: {},
   setup() {
     // const { showByName } = useModal();
-    // showByName(ModalName.addStaff);
+    // showByName(ModalName.giveCar);
     return;
   },
 })
 export default class Home extends Vue {
-  test = "";
-  mounted() {
-    console.log(10);
-  }
+ 
 }
 </script>
 

@@ -1,72 +1,76 @@
 <template>
-  <div class="register-driver">
-    <register-driver-form
-      @back="goBack"
-      @submit="driverFormSubmit"
-      :agregators.sync="agregators"
-      v-if="step === 1"
-    />
-    <register-driver-car-form
-      @back="step--"
-      @submit="carFormSubmit"
-      :agregators="agregators"
-      v-if="step === 2"
-    />
-  </div>
+  <auth-form class="register-driver h-100 scrollbar">
+    <template #title>
+      <register-title-back
+        class="mb-20"
+        @back="goBack"
+        title="Подключение водителя"
+      />
+    </template>
+    <template #default>
+      <register-driver-form
+        :agregators="agregators"
+        @update:agregators="$emit('update:agregators', $event)"
+        @submit="onSubmit"
+      >
+        <template #btn>
+          <div class="d-flex justify-content-end">
+            <app-button type="submit" color="orange-grad"
+              >Перейти к созданию автомобиля</app-button
+            >
+          </div></template
+        ></register-driver-form
+      >
+    </template>
+  </auth-form>
 </template>
 
 <script lang="ts">
-import RegisterDriverCarForm from "./RegisterDriverCarForm.vue";
 import RegisterDriverForm from "./RegisterDriverForm.vue";
+import RegisterDriverInputs from "./RegisterDriverInputs.vue";
 import RegisterTitleBack from "../TitleBack.vue";
-import AuthForm from "../../Auth/AuthForm.vue";
-import { Component, Vue } from "vue-property-decorator";
-import { ref } from "@vue/composition-api";
-import { AgregName } from "@/types/agregator.enum";
-import { useApiSignupDriver } from "@/api/signup";
-import { errorHandler } from "@/helpers/error-handler";
+import AppDatePicker from "../../AppDatePicker.vue";
+import CitySelect from "../../CitySelect.vue";
+import AppImageUpload from "../../AppImageUpload.vue";
+import FormSchema from "../../FormSchema/FormSchema.vue";
+import RegisterDriverAgregators from "./RegisterDriverAgregators.vue";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import AuthForm from "@/components/Auth/AuthForm.vue";
+interface IProps {
+  agregators: string[];
+  [key: string]: any;
+}
 @Component({
-  setup(props, { emit }) {
-    const agregators = ref([
-      AgregName.gett,
-      AgregName.yandex,
-      AgregName.citymobil,
-    ]);
-    const step = ref(1);
+  components: {
+    RegisterDriverAgregators,
+    FormSchema,
+
+    AppImageUpload,
+    CitySelect,
+    AppDatePicker,
+    AuthForm,
+    RegisterTitleBack,
+    RegisterDriverInputs,
+    RegisterDriverForm,
+  },
+  setup(props: IProps, { emit }) {
+    const onSubmit = (values: any) => {
+      emit("submit", values);
+    };
+
     const goBack = () => {
       emit("back");
     };
-    const driverValues = ref({});
-    const carValues = ref({});
-    const driverFormSubmit = (values: any) => {
-      driverValues.value = values;
-      step.value = 2;
-    };
-    const { exec: sendForm, result, error } = useApiSignupDriver({
-      toast: {error: () => 'Где api o_0!'},
-    });
-    const carFormSubmit = async (values: any) => {
-      // step.value = 3;
-      carValues.value = values;
-      await sendForm({ ...driverValues.value, ...carValues.value, agregators: JSON.stringify(agregators.value) });
-    };
-    return {
-      goBack,
-      driverFormSubmit,
-      carFormSubmit,
-      step,
-      agregators,
-    };
-  },
-  components: {
-    AuthForm,
-    RegisterTitleBack,
-    RegisterDriverForm,
-    RegisterDriverCarForm,
+
+    return { onSubmit, goBack };
   },
 })
-export default class RegisterDriver extends Vue {}
+export default class RegisterDriver extends Vue {
+  @Prop({ type: Array, default: () => [] }) agregators: string[];
+}
 </script>
 
 <style lang="scss">
+.register-driver {
+}
 </style>

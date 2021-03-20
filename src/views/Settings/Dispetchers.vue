@@ -15,7 +15,7 @@
     </page-title>
 
     <div class="settings-dispetchers-items flex-layout flex-1">
-      <dispetchers-item v-for="(item, idx) in 5" :key="idx"  />
+      <dispetchers-item v-for="(item, idx) in 5" :key="idx" />
       <app-pagination
         class="mt-auto"
         :nowPage="page"
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import DispetchersItem from '../../components/Settings/Dispetchers/DispetchersItem.vue'
+import DispetchersItem from "../../components/Settings/Dispetchers/DispetchersItem.vue";
 import PageFilters from "@/components/Page/PageFilters.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -38,6 +38,8 @@ import { useApiGetDispetchers } from "@/api/dispetchers";
 import useItemsPage from "@/compositions/useItemsPage";
 import svgPlus from "@/assets/icons/plus.svg";
 import AgregatorFilters from "@/components/Travels/AgregatorFilters.vue";
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
 @Component({
   metaInfo: {
     title: "Диспетчерские",
@@ -66,9 +68,10 @@ import AgregatorFilters from "@/components/Travels/AgregatorFilters.vue";
       page: page.value,
       agregator: agregator.value,
     }));
-    // init({ fetchData: toFetch });
+    init({ fetchData: toFetch });
     const addDispetcher = () => {
-      return;
+      const { showByName } = useModal();
+      showByName(ModalName.addDispetcher);
     };
     return {
       agregator,
@@ -86,7 +89,8 @@ import AgregatorFilters from "@/components/Travels/AgregatorFilters.vue";
     PageTitle,
     PageFilters,
     svgPlus,
-    AgregatorFilters, DispetchersItem
+    AgregatorFilters,
+    DispetchersItem,
   },
 })
 export default class SettignsDispetchers extends Vue {}

@@ -16,9 +16,13 @@
 
     <div class="driver-list-items flex flex-column flex-1">
       <driver-list-item
-        v-for="item in 5"
+        v-for="item in items"
         :key="item.id"
+        :item="item"
         :showAgregators="true"
+        @refresh="refresh"
+        :antifrauds="antifrauds && antifrauds.data"
+        :paymentGroups="paymentGroups && paymentGroups.data"
       />
       <app-pagination
         class="mt-auto"
@@ -39,11 +43,13 @@ import DriverListFilters from "../../components/DriverList/DriverListFilters.vue
 import PageFilters from "../../components/Page/PageFilters.vue";
 import PageTitle from "../../components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
-import { computed, ref } from "@vue/composition-api";
+import { computed, ref, watch } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useItemsPage from "@/compositions/useItemsPage";
-import { useApiGetDriverList } from "@/api/driver-list";
+import { useApiGetDrivers } from "@/api/driver";
 import useRouter from "@/compositions/useRouter";
+import { useApiGetAntifrauds } from "@/api/antifraud";
+import { useApiGetPaymentGroups } from "@/api/payment-groups";
 @Component({
   components: {
     PageTitle,
@@ -60,8 +66,8 @@ import useRouter from "@/compositions/useRouter";
     const router = useRouter();
     const entity = ref(null);
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+      start: undefined,
+      end: undefined,
     });
 
     const {
@@ -72,21 +78,41 @@ import useRouter from "@/compositions/useRouter";
       items,
       totalPages,
       init,
+      refreshItems,
     } = useItemsPage({
-      api: useApiGetDriverList,
+      api: useApiGetDrivers,
     });
     const toFetch = computed(() => ({
       page: page.value,
       dateFrom: date.value.start,
       dateEnd: date.value.end,
     }));
-    // init({fetchData: toFetch});
+    init({ fetchData: toFetch });
 
     const addDriver = () => {
       router.push({ name: "AddDriver" });
     };
+    const refresh = async () => {
+      await refreshItems();
+    };
+    const {
+      exec: getAntifraud,
+      result: antifrauds,
+    } = useApiGetAntifrauds();
+    getAntifraud({ page: 1 });
+   
+
+    const {
+      exec: getPaymentGroups,
+      result: paymentGroups,
+    } = useApiGetPaymentGroups();
+    getPaymentGroups();
+   
 
     return {
+      paymentGroups,
+      antifrauds,
+      refresh,
       entity,
       date,
       addDriver,

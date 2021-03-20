@@ -1,6 +1,6 @@
 <template>
   <div class="header-search--mob cursor-pointer">
-    <svgSearch @click="onSearch" />
+    <svgSearch @click="onSearch" width="20"/>
   </div>
 </template>
 

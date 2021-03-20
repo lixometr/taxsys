@@ -44,8 +44,8 @@ import { schema } from "./register-park-schema";
     const { serialize, values, errors, handleSubmit } = useForm({
       fields,
       rename: {
-        // middleName: "middle_name",
-        // lastName: "last_name",
+        middleName: "middle_name",
+        lastName: "last_name",
       },
     });
     

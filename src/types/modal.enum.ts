@@ -7,7 +7,11 @@ export enum ModalName {
     changeBalance = 'change-balance',
     blockCar = 'block-car',
     addCarRecord = 'add-car-record',
-    addStaff = 'add-staff'
+    addStaff = 'add-staff',
+    addPaymentGroup = 'add-payment-group',
+    addDispetcher = 'add-dispetcher',
+    giveCar = 'give-car',
+    changeDriverBalance = 'change-driver-balance'
 }
 
 export const ModalComponents = {
@@ -20,5 +24,9 @@ export const ModalComponents = {
     [ModalName.blockCar]: () => import("@/components/Modals/BlockCarModal.vue"),
     [ModalName.addCarRecord]: () => import("@/components/Modals/AddCarRecordModal.vue"),
     [ModalName.addStaff]: () => import("@/components/Modals/AddStaffModal.vue"),
+    [ModalName.addPaymentGroup]: () => import("@/components/Modals/AddPaymentGroupModal.vue"),
+    [ModalName.addDispetcher]: () => import("@/components/Modals/AddDispetcherModal.vue"),
+    [ModalName.giveCar]: () => import("@/components/Modals/GiveCarModal.vue"),
+    [ModalName.changeDriverBalance]: () => import("@/components/Modals/ChangeDriverBalanceModal.vue"),
     
 }

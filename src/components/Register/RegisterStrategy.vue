@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import RegisterPark from './RegisterPark/RegisterPark.vue'
-import RegisterDriver from "./RegisterDriver/RegisterDriver.vue";
+import RegisterDriver from "./RegisterDriver/RegisterDriverStrategy.vue";
 import RegisterStrategyChoose from "./RegisterStrategyChoose.vue";
 import { ref } from "@vue/composition-api";
 import { Component, Vue } from "vue-property-decorator";

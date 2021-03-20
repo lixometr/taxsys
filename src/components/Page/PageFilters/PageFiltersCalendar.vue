@@ -24,14 +24,21 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgCalendar from "@/assets/icons/calendar.svg";
-import { ref, toRefs, watch } from "@vue/composition-api";
+import { Ref, ref, toRefs, watch } from "@vue/composition-api";
+interface IProps {
+  value: { start: Date; end: Date };
+  [key: string]: any;
+}
 @Component({
   components: {
     svgCalendar,
   },
-  setup(props, { emit }) {
-    const { value } = toRefs(props);
-    const date = ref(value.value || {});
+  setup(props: IProps, { emit }) {
+    const { value } = toRefs<IProps>(props);
+    const iniDate = {...value.value}
+    if(!iniDate.start) iniDate.start = new Date
+    if(!iniDate.end) iniDate.end = new Date
+    const date = ref(iniDate);
     watch(date, () => {
       emit("input", date.value);
     });
@@ -51,7 +58,7 @@ import { ref, toRefs, watch } from "@vue/composition-api";
   },
 })
 export default class PageFiltersCalendar extends Vue {
-  @Prop(Object) value: any
+  @Prop(Object) value: any;
 }
 </script>
 

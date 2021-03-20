@@ -1,5 +1,5 @@
 <template>
-  <auth-form class="register-driver-car-form h-100">
+  <auth-form class="register-car h-100">
     <template #title>
       <register-title-back
         class="mb-20"
@@ -8,27 +8,29 @@
       />
     </template>
     <template>
-      <form
-        action="#"
+      <register-car-form
         class="flex-1 h-100 flex-layout"
-        @submit.prevent="onSubmit"
+        @submit="onSubmit"
+        :agregators="agregators"
       >
-        <form-schema class="row" :schema="formSchema"> </form-schema>
-        <div class="register-driver-car-form__footer">
-          <div class="register-driver-car-form__policy">
-            <div>Нажимая «Подключиться» вы принимаете</div>
-            <div><a href="#">условия публичной оферты</a></div>
+        <template #btn>
+          <div class="register-car__footer ">
+            <div class="register-car__policy">
+              <div>Нажимая «Подключиться» вы принимаете</div>
+              <div><a href="#">условия публичной оферты</a></div>
+            </div>
+            <app-button type="submit" color="orange-grad"
+              >подключиться</app-button
+            >
           </div>
-          <app-button type="submit" color="orange-grad"
-            >подключиться</app-button
-          >
-        </div>
-      </form>
+        </template>
+      </register-car-form>
     </template>
   </auth-form>
 </template>
 
 <script lang="ts">
+import RegisterCarForm from "./RegisterCarForm.vue";
 import RegisterTitleBack from "../TitleBack.vue";
 import AuthForm from "../../Auth/AuthForm.vue";
 import AppCheckbox from "../../AppCheckbox.vue";
@@ -53,54 +55,17 @@ interface IProps {
     AppCheckbox,
     AuthForm,
     RegisterTitleBack,
+    RegisterCarForm,
   },
   setup(props: IProps, { emit }) {
-    const { agregators } = toRefs<IProps>(props);
-    const formSchema = computed(() => {
-      let mergedSchema = [...baseSchema];
-      agregators.value.map((agregator: string) => {
-        mergedSchema = mergedSchema.concat(schema[agregator]);
-      });
-      mergedSchema = mergedSchema.filter((schemaItem, index) => {
-        return (
-          mergedSchema.findIndex(
-            (fItem) => fItem.field === schemaItem.field
-          ) === index
-        );
-      });
-
-      return mergedSchema;
-    });
-    const formFields = computed(() => {
-      let mergedFields = { ...baseFields };
-      agregators.value.map((agregator: string) => {
-        mergedFields = Object.assign({}, mergedFields, fields[agregator]);
-      });
-      return mergedFields;
-    });
-    const rename = {}
-    let form = useForm({
-      fields: formFields.value,
-      rename
-    });
-    const onSubmit = () => {
-      const exec = form.handleSubmit(() => {
-        const toSend = form.serialize();
-        emit("submit", toSend);
-        return;
-      });
-      exec();
+    const onSubmit = (values: any) => {
+      emit("submit", values);
     };
-    watch(agregators, () => {
-      form = useForm({
-        fields: formFields.value,
-        rename
-      });
-    });
+
     const goBack = () => {
       emit("back");
     };
-    return { formSchema, onSubmit, goBack };
+    return { onSubmit, goBack };
   },
 })
 export default class RegisterDriverCarForm extends Vue {
@@ -109,7 +74,7 @@ export default class RegisterDriverCarForm extends Vue {
 </script>
 
 <style lang="scss">
-.register-driver-car-form {
+.register-car {
   &__footer {
     margin-top: auto;
     display: flex;
@@ -118,6 +83,9 @@ export default class RegisterDriverCarForm extends Vue {
     @include sm {
       flex-direction: column;
     }
+  }
+  &__form-btn {
+    margin-top: auto;
   }
   .form-schema__input {
     margin-bottom: 10px;

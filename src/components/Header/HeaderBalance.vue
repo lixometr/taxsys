@@ -1,6 +1,5 @@
 <template>
   <div class="header-balance">
-    <header-taxy-balance class="header-balance__item header-balance__taxy"  />
     <header-qiwi-balance class="header-balance__item" />
   </div>
 </template>

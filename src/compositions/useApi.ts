@@ -65,7 +65,7 @@ export default function useApi<T, R extends any>(
             const toast = useToast()
             if (value) {
                 if (typeof options.toast === 'object' && options.toast.error
-                    || typeof options.toast === 'boolean' || options.toast === true) {
+                    || typeof options.toast === 'boolean' && options.toast === true) {
                     toast.error({
                         message: messageSerializers.error(value)
                     })
@@ -77,7 +77,7 @@ export default function useApi<T, R extends any>(
             const toast = useToast()
             if (value) {
                 if (typeof options.toast === 'object' && options.toast.success
-                    || typeof options.toast === 'boolean' || options.toast === true) {
+                    || typeof options.toast === 'boolean' && options.toast === true) {
                     toast.success({
                         message: messageSerializers.success(value)
                     })

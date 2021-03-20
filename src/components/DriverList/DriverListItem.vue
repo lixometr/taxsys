@@ -5,26 +5,43 @@
       contentClass="font-sm color-grey-3"
     >
       <template v-slot:header>
-        <app-accardion-col :class="responsiveHeader">123</app-accardion-col>
-        <app-accardion-col :class="responsiveHeader" class="color-grey-3"
-          >12:15 | 22.10.2019</app-accardion-col
-        >
+        <app-accardion-col :class="responsiveHeader">{{
+          item.id
+        }}</app-accardion-col>
+        <app-accardion-col :class="responsiveHeader" class="color-grey-3">{{
+          item.created_at | dateTime
+        }}</app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
-          >Иванов Тимофей Петрович</app-accardion-col
+          >{{ item.name }} {{ item.middle_name }}
+          {{ item.last_name }}</app-accardion-col
         >
-        <app-accardion-col :class="responsiveHeader"
+        <app-accardion-col
+          :class="responsiveHeader"
+          class="d-flex justify-content-start justify-content-xl-end"
           ><div class="car-number">
-            <div class="car-number-num">A 450 ВП</div>
-            <div class="car-number-code">777</div>
+            <div class="car-number-num">{{ car.GosNomer }}</div>
           </div></app-accardion-col
         >
-        <app-accardion-col :class="responsiveHeader">
-          <div class="color-grey-2">Самара</div>
+        <app-accardion-col
+          :class="responsiveHeader"
+          class="d-flex justify-content-start justify-content-xl-end"
+        >
+          <div class="color-grey-2">{{ city }}</div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
-          <div class="d-flex">
-            <div v-for="(agregator, idx) in agregators" :key="idx" class="mr-5">
-              <app-icon class="driver-list-item__agregator-icon icon-rounded-shadow" :src="agregator.icon" width="25" />
+          <div
+            class="d-flex justify-content-start w-100 justify-content-xl-end"
+          >
+            <div
+              v-for="(agregator, idx) in activeAgregators"
+              :key="idx"
+              class="mr-5"
+            >
+              <app-icon
+                class="driver-list-item__agregator-icon icon-rounded-shadow"
+                :src="agregator.icon"
+                width="25"
+              />
             </div>
           </div>
         </app-accardion-col>
@@ -36,20 +53,28 @@
               <driver-list-item-agregator
                 class="driver-list-item__agregator"
                 :agregator="'yandex'"
-                :active="true"
-                :price="100"
+                :active="!!item.YandexDriver"
+                :price="item.YandexBalans"
+                :driverId="item.id"
+                @refresh="refresh"
               />
             </div>
             <div class="col-xl-4">
               <driver-list-item-agregator
                 class="driver-list-item__agregator"
                 :agregator="'gett'"
+                :active="!!item.GettDriver"
+                :driverId="item.id"
+                @refresh="refresh"
               />
             </div>
             <div class="col-xl-4">
               <driver-list-item-agregator
                 class="driver-list-item__agregator"
                 :agregator="'citymobil'"
+                :active="!!item.CityMobilDriver"
+                :driverId="item.id"
+                @refresh="refresh"
               />
             </div>
           </div>
@@ -63,12 +88,12 @@
               <div class="col color-grey-3">{{ item.name }}</div>
               <div class="col color-grey-2">{{ item.value }}</div>
             </div>
-            <div class="row">
+            <div class="row" v-if="item.IssuedBy">
               <div class="col color-grey-3">Кем выдан:</div>
             </div>
             <div class="row mt-10">
               <div class="col color-grey-2 text-uppercase">
-                Отделом уфмс по гор. москве по район увыхино-жулебино
+                {{ item.IssuedBy }}
               </div>
             </div>
           </div>
@@ -78,7 +103,7 @@
               :searchable="false"
               variant="border"
               placeholder="Группа выплат"
-              :options="paymentGroups"
+              :options="paymentGroups || []"
               v-model="paymentGroup"
             />
             <app-select
@@ -86,8 +111,10 @@
               :searchable="false"
               variant="border"
               placeholder="Антифрод"
-              :options="antifrodItems"
+              :options="antifrauds || []"
               v-model="antifrod"
+              selectLabel="name"
+              :reduce="(item) => item.name"
             />
           </div>
         </app-accardion-col>
@@ -103,7 +130,13 @@
             </div>
           </div>
           <div>
-            <driver-list-cards v-model="cards" />
+            <driver-list-cards
+              @removedCard="refresh"
+              @addedCard="refresh"
+              @setDefault="refresh"
+              :driverId="item.id"
+              v-model="cards"
+            />
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
@@ -145,8 +178,9 @@ import AppIcon from "../AppIcon.vue";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import { PaymentType, PaymentName } from "@/types/payment-type.enum";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { computed, ref } from "@vue/composition-api";
+import { computed, ref, watch } from "@vue/composition-api";
 import svgDriverLicense from "@/assets/icons/driver_license.svg";
+import useMoment from "@/compositions/useMoments";
 @Component({
   components: {
     AppIcon,
@@ -156,68 +190,62 @@ import svgDriverLicense from "@/assets/icons/driver_license.svg";
     svgDriverLicense,
     PreviewImage,
   },
-  setup() {
-    const agregators = computed(() => {
-      return Object.keys(AgregatorType).map((key) => ({
-        ...AgregatorType[key],
-        key,
-      }));
-    });
+  setup(props, { emit }) {
     const paymentGroup = ref("");
 
     const antifrod = ref("");
-    const cards = ref([
-      { number: "5858 8585 8878 9854 " },
-      { number: "5858 8585 8878 9854 " },
-    ]);
     const checkDriver = () => {
       return;
     };
+
+    const refresh = () => {
+      emit("refresh");
+    };
     return {
-      agregators,
+      refresh,
+
       AgregatorType,
       PaymentType,
       PaymentName,
       paymentGroup,
       antifrod,
-      cards,
       svgDriverLicense,
       checkDriver,
     };
   },
 })
 export default class DriverListItem extends Vue {
-  @Prop(Object) item: any;
+  @Prop({ type: Object, default: () => ({}) }) item: any;
   @Prop(Boolean) showAgregators: boolean;
+  @Prop({ type: Array, default: () => [] }) antifrauds: any;
+  @Prop({ type: Array, default: () => [] }) paymentGroups: any;
   get responsiveHeader() {
     return "col-sm-6 col-md-4 col-xl-2";
   }
   get responsiveContent() {
     return "col-12 col-xl-4";
   }
-  get paymentGroups() {
-    return [
-      {
-        label: "Автоматическая",
-        key: "auto",
-      },
-      {
-        label: "С одобрением",
-        key: "manual",
-      },
-    ];
+  get agregators() {
+    return Object.keys(AgregatorType).map((key) => ({
+      ...AgregatorType[key],
+      key,
+    }));
   }
-  get antifrodItems() {
-    return [
-      {
-        label: "1",
-        key: "1",
-      },
-      {
-        label: "2",
-        key: "2",
-      },
-    ];
+  get activeAgregators() {
+    return this.agregators.filter((agreg) => {
+      if (agreg.key === AgregName.yandex) {
+        return !!this.item.YandexDriver;
+      }
+      if (agreg.key === AgregName.gett) {
+        return !!this.item.GettDriver;
+      }
+      if (agreg.key === AgregName.citymobil) {
+        return !!this.item.CityMobilDriver;
+      }
+    });
+  }
+  get cards() {
+    return this.item.cards || [];
   }
   get images() {
     return [
@@ -247,71 +275,99 @@ export default class DriverListItem extends Vue {
       },
     ];
   }
+  get car() {
+    return this.item.car || {};
+  }
+  get city() {
+    return this.item.user?.city;
+  }
   get carData() {
-    return [
+    const fields = [
       {
         name: "Марка/модель:",
-        value: "Kia Rio",
+        value: this.car.Brand,
       },
       {
         name: "Цвет:",
-        value: "Белый",
+        value: this.car.Color,
       },
       {
         name: "Год:",
-        value: "2019",
+        value: this.car.Year,
       },
       {
         name: "VIN:",
-        value: "WDDGG128271674910",
+        value: this.car.Vin,
       },
       {
         name: "СТС серия/номер:",
-        value: "99 12 265397",
+        value: this.car.STS,
       },
       {
         name: "Gett ID:",
-        value: "151765",
+        value: this.item.GettId,
       },
     ];
+    return fields.filter(
+      (field) => !!field.value && field.value !== "Invalid date"
+    );
   }
   get driverData() {
-    return [
+    const fields = [
       {
         name: "Телефон:",
-        value: "+7 900 800 90 08",
-      },
-      {
-        name: "Серия/номер В.У.:",
-        value: "5513 490490",
-      },
-      {
-        name: "Стаж вождения:",
-        value: "10.10.2010",
-      },
-      {
-        name: "Дата выдачи В.У.:",
-        value: "10.10.2010",
-      },
-      {
-        name: "Срок действия В.У.:",
-        value: "10.10.2010",
-      },
-      {
-        name: "Город:",
-        value: "Самара",
-      },
-      {
-        name: "Дата рождения:",
-        value: "10.10.2010",
+        value: this.item.user?.Phone,
       },
       {
         name: "Страна выдачи:",
-        value: "Россия",
+        value: this.item.IssuingCountry,
+      },
+      {
+        name: "Серия/номер В.У.:",
+        value: this.item.SerialDriverLicense,
+      },
+
+      {
+        name: "Стаж вождения:",
+        value: useMoment(this.item.DrivingExperience).format("DD.MM.YYYY"),
+      },
+      {
+        name: "Дата выдачи В.У.:",
+        value: useMoment(this.item.DateDriverLicense).format("DD.MM.YYYY"),
+      },
+      {
+        name: "Срок действия В.У.:",
+        value: useMoment(this.item.DateValidityDriverLicense).format(
+          "DD.MM.YYYY"
+        ),
+      },
+      {
+        name: "Дата прохождения обучения",
+        value: useMoment(this.item.DateTraining).format("DD.MM.YYYY"),
+      },
+      {
+        name: "Город:",
+        value: this.city,
+      },
+      {
+        name: "Дата рождения:",
+        value: useMoment(this.item.DateOfBirth).format("DD.MM.YYYY"),
+      },
+
+      {
+        name: "Серия/номер паспорта:",
+        value: this.item.NumberOfPassport,
+      },
+
+      {
+        name: "Дата выдачи паспорта",
+        value: useMoment(this.item.DateIssuePassport).format("DD.MM.YYYY"),
       },
     ];
+    return fields.filter(
+      (field) => !!field.value && field.value !== "Invalid date"
+    );
   }
-  
 
   get currency() {
     return this.$store.getters.currency;

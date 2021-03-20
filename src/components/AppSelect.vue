@@ -1,5 +1,5 @@
 <template>
-  <div class="app-select" :class="{ error: hasErrors }">
+  <div class="app-select" :class="{ error: hasErrors, inline }">
     <v-select
       class="custom-select"
       :class="{ [`select-${variant}`]: true }"
@@ -35,7 +35,7 @@ enum SelectVariant {
 
   components: {
     svgArrowFilled,
-    svgArrowStroke
+    svgArrowStroke,
   },
   setup() {
     return {
@@ -47,6 +47,7 @@ export default class AppSelect extends Vue {
   @Prop(String) label: string;
   @Prop(String) selectLabel: string;
   @Prop({ type: Array, default: () => [] }) errors: string[];
+  @Prop(Boolean) inline: boolean;
   @Prop({
     type: String,
     default: SelectVariant.default,
@@ -68,6 +69,9 @@ export default class AppSelect extends Vue {
 
 <style lang="scss">
 .app-select {
+  &.inline {
+    display: inline-block;
+  }
   &__errors {
     color: $red;
     min-height: 30px;

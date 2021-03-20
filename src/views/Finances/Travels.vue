@@ -21,7 +21,7 @@
         />
       </div>
     </div>
-    <travel-placeholder v-else/>
+    <travel-placeholder v-else />
   </div>
 </template>
 
@@ -42,8 +42,8 @@ import useItemsPage from "@/compositions/useItemsPage";
   setup() {
     const agregator = ref("all");
     const date = ref({
-      start: new Date(),
-      end: new Date(),
+      start: undefined,
+      end: undefined,
     });
 
     const {

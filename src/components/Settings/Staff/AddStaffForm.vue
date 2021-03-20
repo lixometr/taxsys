@@ -85,19 +85,24 @@
             <span class="mr-10">Режим работы:</span>
             <span class="mr-10">с</span>
             <app-input
-              width="30px"
+              width="60px"
               :inline="true"
+              :inputAttrs="{ class: 'color-purple' }"
               :showErrors="false"
               v-model="values.timeFrom"
               :errors="errors.timeFrom"
+              mask="99:99"
             />
             <span class="mr-10">по</span>
             <app-input
-              width="30px"
+              width="60px"
               :inline="true"
+              :inputAttrs="{ class: 'color-purple' }"
               :showErrors="false"
               v-model="values.timeTo"
               :errors="errors.timeTo"
+              mask="99:99"
+
             />
           </div>
           <div class="row">
@@ -125,6 +130,7 @@
               :showErrors="false"
               width="30px"
               :inline="true"
+              :inputAttrs="{ class: 'color-purple' }"
               v-model="values.fineLonger"
               :errors="errors.fineLonger"
             />
@@ -134,6 +140,7 @@
               class="mr-5"
               width="30px"
               :inline="true"
+              :inputAttrs="{ class: 'color-purple' }"
               v-model="values.fineForAnswer"
               :errors="errors.fineForAnswer"
               :showErrors="false"
@@ -193,6 +200,10 @@ import { Component, Vue } from "vue-property-decorator";
 import * as yup from "yup";
 import svgPlus from "@/assets/icons/plus.svg";
 import { ref } from "@vue/composition-api";
+import { useApiAddStaff } from "@/api/staff";
+import { errorHandler } from "@/helpers/error-handler";
+import { plainToClass } from "class-transformer";
+import { StaffDto } from "@/dto/staff.dto";
 @Component({
   components: { PhoneInput, svgPlus },
   setup(props, { emit }) {
@@ -204,23 +215,42 @@ import { ref } from "@vue/composition-api";
         ]),
         passport: useField("", [yup.string()]),
         inn: useField("", [yup.string()]),
-        card: useField("", [yup.string()]),
+        card: useField(null, [yup.string().length(16).nullable()]),
         salary: useField(null, [yup.number().nullable()]),
         fine: useField(null, [yup.number().nullable()]),
-        timeFrom: useField("", [yup.string()]),
-        timeTo: useField("", [yup.string()]),
-        fineLonger: useField("", [yup.string()]),
+        timeFrom: useField("", [yup.string().test(value => !value.includes('_'))]),
+        timeTo: useField("", [yup.string().test(value => !value.includes('_'))]),
+        fineLonger: useField(null, [yup.number().nullable()]),
         fineForAnswer: useField(null, [yup.number().nullable()]),
         paySum: useField(null, [yup.number().nullable()]),
         payDay: useField(null, [yup.number().nullable()]),
         prepay: useField(null, [yup.number().nullable()]),
         payPrepay: useField(null, [yup.number().nullable()]),
       },
+      rename: {
+        fio: "FIO",
+        passport: "NumberOfPassport",
+        inn: "INN",
+        card: "NumberOfCard",
+        salary: "SalaryRate",
+        fine: "PenaltyForAbsenteeism",
+        timeFrom: "StartWork",
+        timeTo: "EndWork",
+        fineLonger: "AnswerLonger",
+        fineForAnswer: "PenaltyRate",
+        paySum: "PayOff",
+        payDay: "CheckoutDay",
+        prepay: "AdvanceCalculation",
+        payPrepay: "AdvancePayment",
+      },
+    });
+    const { exec: addStaff, error } = useApiAddStaff({
+      toast: { error: errorHandler(), success: () => 'Сотрудник успешно добавлен!'},
     });
     const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
-      console.log(toSend);
-
+      await addStaff(plainToClass(StaffDto, toSend));
+      if (error.value) return;
       emit("send");
     });
     const showAdditional = ref(false);

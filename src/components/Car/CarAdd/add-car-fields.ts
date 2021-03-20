@@ -10,9 +10,9 @@ export const complect = useField('', [yup.string().required()])
 export const driverDemand = useField('', [yup.string().required()])
 export const description = useField('', [yup.string().required()])
 export const deposit = useField('', [yup.number().required()])
-export const rent7_0 = useField('', [yup.number().required()])
-export const rent6_1 = useField('', [yup.number().required()])
-export const buyout = useField('', [yup.number().required()])
+export const rent7_0 = useField(null, [yup.number().nullable()])
+export const rent6_1 = useField(null, [yup.number().nullable()])
+export const buyout = useField(null, [yup.number().nullable()])
 
 export const fields = {
     ctcNumber,
