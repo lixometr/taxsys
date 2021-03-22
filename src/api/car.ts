@@ -1,14 +1,26 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
-class CreateCar {
+import { CreateCarDto } from "@/dto/car.dto";
+import buildFormData from "@/helpers/build-form-data";
+import { classToPlain } from "class-transformer";
 
-}
-export const useApiCreateCar = (opts?: UseApiOptions) => useApi<CreateCar, any>((data: CreateCar) => ({
-    method: 'POST',
-    url: '/car',
-    data
-}), { ...opts })
+export const useApiCreateCar = (opts?: UseApiOptions) => useApi<CreateCarDto, any>(
+    (data: CreateCarDto) => {
+        const toSend = {
+            ...classToPlain(data),
+            photoFront: data.photoFront || undefined,
+            photoBack: data.photoBack || undefined,
+            photoCtcBack: data.photoCtcBack || undefined,
+            photoCtcFront: data.photoCtcFront || undefined
+        }
+        const formData = buildFormData(toSend)
+        return {
+            method: 'POST',
+            url: '/car',
+            data: formData
+        }
+    }, { ...opts })
 
-export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutDriver: boolean }, any>(({ withoutDriver } ) => ({
+export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutDriver: boolean }, any>(({ withoutDriver }) => ({
     method: 'GET',
     url: '/cars/rentable',
     params: {

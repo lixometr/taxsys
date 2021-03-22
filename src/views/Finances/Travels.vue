@@ -1,11 +1,11 @@
 <template>
   <div class="page-travels page-items flex-layout flex-1">
+    <page-filters :calendar.sync="date">
+      <template v-slot:filters>
+        <aggregator-filters v-model="agregator" />
+      </template>
+    </page-filters>
     <div v-if="items.length" class="flex-layout flex-1">
-      <page-filters :calendar.sync="date">
-        <template v-slot:filters>
-          <aggregator-filters v-model="agregator" />
-        </template>
-      </page-filters>
       <page-title>
         <h2>Поездки</h2>
       </page-title>

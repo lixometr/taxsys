@@ -5,33 +5,41 @@
         <manual-payments-filters v-model="entity" />
       </template>
     </page-filters>
-    <page-title>
-      <h2>Ручные выплаты</h2>
-    </page-title>
+    <div class="flex-layout flex-1" v-if="items.length ">
+      <page-title>
+        <h2>Ручные выплаты</h2>
+      </page-title>
 
-    <div class="travels-items flex flex-column flex-1">
-      <manual-payments-item
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
-        :showActions="entity === 'orders'"
-        @accept="accept(item)"
-        @decline="decline(item)"
-        @remove="remove(item)"
-      />
-      <app-pagination
-        class="mt-auto"
-        :nowPage="page"
-        :totalPages="totalPages"
-        @next="nextPage"
-        @prev="prevPage"
-        @showMore="showMore"
-      />
+      <div class="travels-items flex flex-column flex-1">
+        <manual-payments-item
+          v-for="item in items"
+          :key="item.id"
+          :item="item"
+          :showActions="entity === 'orders'"
+          @accept="accept(item)"
+          @decline="decline(item)"
+          @remove="remove(item)"
+        />
+        <app-pagination
+          class="mt-auto"
+          :nowPage="page"
+          :totalPages="totalPages"
+          @next="nextPage"
+          @prev="prevPage"
+          @showMore="showMore"
+        />
+      </div>
+    </div>
+    <div class="flex-layout flex-1" v-else>
+      <manual-payments-applys-placeholder v-if="entity === 'orders'"/>
+      <manual-payments-pay-placeholder v-if="entity === 'payments'"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import ManualPaymentsPayPlaceholder from '../../components/Placeholders/ManualPaymentsPayPlaceholder.vue'
+import ManualPaymentsApplysPlaceholder from '../../components/Placeholders/ManualPaymentsApplysPlaceholder.vue'
 import ManualPaymentsFilters from "../../components/ManualPayments/ManualPaymentsFilters.vue";
 import ManualPaymentsItem from "@/components/ManualPayments/ManualPaymentsItem.vue";
 import PageFilters from "@/components/Page/PageFilters.vue";
@@ -118,7 +126,7 @@ import { errorHandler } from "@/helpers/error-handler";
     PageTitle,
     PageFilters,
     ManualPaymentsItem,
-    ManualPaymentsFilters,
+    ManualPaymentsFilters, ManualPaymentsApplysPlaceholder, ManualPaymentsPayPlaceholder
   },
 })
 export default class ManualPayments extends Vue {}

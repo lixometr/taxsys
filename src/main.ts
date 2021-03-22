@@ -25,6 +25,7 @@ import "@/libs/vue-image-viewer"
 import "@/libs/global-components"
 
 import "@/libs/vue-socket"
+import "@/libs/apex-chart"
 
 import beforeLoad from '@/libs/before-load'
 

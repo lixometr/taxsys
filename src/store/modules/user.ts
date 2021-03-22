@@ -51,11 +51,11 @@ class User extends VuexModule {
     this.initToken()
     if (this.token) {
       const result = await this.fetchUser()
-      if(!result) return
+      if (!result) return
       await this.fetchBalance()
     }
   }
-  
+
   @Action
   async fetchUser() {
     const getUser = useApiGetUser({ toast: { error: errorHandler() } })
@@ -70,9 +70,9 @@ class User extends VuexModule {
   }
   @Action
   async fetchBalance() {
-    const {exec, result, error} = useApiGetBalance({toast: {error: errorHandler()}})
+    const { exec, result, error } = useApiGetBalance({ toast: { error: errorHandler() } })
     await exec()
-    if(!error.value) {
+    if (!error.value) {
       this.setBalance(result.value.balance)
     }
   }

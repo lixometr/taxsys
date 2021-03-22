@@ -1,13 +1,5 @@
 import { DateTransform } from "@/transformers/date.transform"
 
-export class GetDispetchersDto {
-    @DateTransform()
-    date_from: Date
-    @DateTransform()
-    date_to: Date
-    agregator: string
-    page: number
-}
 
 export class CreateDispetcherDto {
     agreg: string

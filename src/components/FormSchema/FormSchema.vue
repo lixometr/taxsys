@@ -27,6 +27,7 @@ import AppSelect from "@/components/AppSelect.vue";
 import AppImageUpload from "@/components/AppImageUpload.vue";
 import CitySelect from '@/components/CitySelect.vue'
 import PhoneInput from '@/components/PhoneInput.vue'
+import AutoCompleteSelect from '@/components/AutoCompleteSelect.vue'
 @Component({
   setup() {
     return;
@@ -36,7 +37,8 @@ import PhoneInput from '@/components/PhoneInput.vue'
     AppSelect,
     AppImageUpload,
     CitySelect,
-    PhoneInput
+    PhoneInput,
+    AutoCompleteSelect
   },
 })
 export default class FormSchema extends Vue {

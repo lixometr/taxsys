@@ -3,7 +3,7 @@ import { AgregName } from "@/types/agregator.enum";
 import * as yup from "yup"
 import "yup-phone"
 
-export const mark = useField('', [yup.string().required()])
+export const mark = useField('', [yup.string().transform((value) => value.name).required()])
 export const model = useField('', [yup.string().required()])
 export const color = useField('', [yup.string().required()])
 export const year = useField('', [yup.number().required().integer()])

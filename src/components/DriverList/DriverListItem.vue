@@ -285,7 +285,7 @@ export default class DriverListItem extends Vue {
     const fields = [
       {
         name: "Марка/модель:",
-        value: this.car.Brand,
+        value: `${this.car.Brand}  ${this.car.Model}`,
       },
       {
         name: "Цвет:",

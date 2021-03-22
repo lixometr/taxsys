@@ -107,15 +107,18 @@ b {
         text-transform: none;
         margin-right: 2rem;
         padding: 0.5rem 2rem;
+
         @include sm {
             margin-top: 1rem;
         }
 
         &:last-child {
             margin-right: 0;
+
             @include md {
                 margin-left: 0;
             }
         }
     }
 }
+

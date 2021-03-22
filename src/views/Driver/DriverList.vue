@@ -5,38 +5,46 @@
         <driver-list-filters v-model="entity" />
       </template>
     </page-filters>
-    <page-title :between="true">
-      <div><h2>Список водителей</h2></div>
-      <div>
-        <app-button color="orange" @click="addDriver" :shadow="true"
-          >Добавить водителя <svgPlus class="ml-10"
-        /></app-button>
-      </div>
-    </page-title>
+    <div class="flex-layout flex-1" v-if="items.length ">
+      <page-title :between="true">
+        <div><h2>Список водителей</h2></div>
+        <div>
+          <app-button color="orange" @click="addDriver" :shadow="true"
+            >Добавить водителя <svgPlus class="ml-10"
+          /></app-button>
+        </div>
+      </page-title>
 
-    <div class="driver-list-items flex flex-column flex-1">
-      <driver-list-item
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
-        :showAgregators="true"
-        @refresh="refresh"
-        :antifrauds="antifrauds && antifrauds.data"
-        :paymentGroups="paymentGroups && paymentGroups.data"
-      />
-      <app-pagination
-        class="mt-auto"
-        :nowPage="page"
-        :totalPages="totalPages"
-        @next="nextPage"
-        @prev="prevPage"
-        @showMore="showMore"
-      />
+      <div class="driver-list-items flex flex-column flex-1">
+        <driver-list-item
+          v-for="item in items"
+          :key="item.id"
+          :item="item"
+          :showAgregators="true"
+          @refresh="refresh"
+          :antifrauds="antifrauds && antifrauds.data"
+          :paymentGroups="paymentGroups && paymentGroups.data"
+        />
+        <app-pagination
+          class="mt-auto"
+          :nowPage="page"
+          :totalPages="totalPages"
+          @next="nextPage"
+          @prev="prevPage"
+          @showMore="showMore"
+        />
+      </div>
+    </div>
+    <div class="flex-layout flex-1" key="noItems" v-else>
+      <driver-list-connect-placeholder v-if="entity === 'park'"/>
+      <driver-list-rent-placeholder v-if="entity === 'rent'"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import DriverListRentPlaceholder from '../../components/Placeholders/DriverListRentPlaceholder.vue'
+import DriverListConnectPlaceholder from '../../components/Placeholders/DriverListConnectPlaceholder.vue'
 import DriverListItem from "../../components/DriverList/DriverListItem.vue";
 import AppButton from "../../components/AppButton.vue";
 import DriverListFilters from "../../components/DriverList/DriverListFilters.vue";
@@ -57,14 +65,14 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     DriverListFilters,
     AppButton,
     svgPlus,
-    DriverListItem,
+    DriverListItem, DriverListConnectPlaceholder, DriverListRentPlaceholder
   },
   metaInfo: {
     title: "Список водителей",
   },
   setup() {
     const router = useRouter();
-    const entity = ref(null);
+    const entity = ref('park');
     const date = ref({
       start: undefined,
       end: undefined,
@@ -95,19 +103,14 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     const refresh = async () => {
       await refreshItems();
     };
-    const {
-      exec: getAntifraud,
-      result: antifrauds,
-    } = useApiGetAntifrauds();
+    const { exec: getAntifraud, result: antifrauds } = useApiGetAntifrauds();
     getAntifraud({ page: 1 });
-   
 
     const {
       exec: getPaymentGroups,
       result: paymentGroups,
     } = useApiGetPaymentGroups();
     getPaymentGroups();
-   
 
     return {
       paymentGroups,

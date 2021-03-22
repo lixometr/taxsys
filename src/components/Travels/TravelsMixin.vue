@@ -3,9 +3,7 @@
 import { AgregName } from "@/types/agregator.enum";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
-@Component({
-    
-})
+@Component({})
 export default class TravelsMixin extends Vue {
   @Prop(Object) item: any;
   get fees() {
@@ -14,8 +12,20 @@ export default class TravelsMixin extends Vue {
   get distanceKm() {
     return this.item.distance / 1000;
   }
-
-get orderIdLink() {
+  get driverFullName() {
+    let fullName = "";
+    if (this.item.driver?.name) {
+      fullName += this.item.driver?.name;
+    }
+    if (this.item.driver?.middle_name) {
+      fullName += " " + this.item.driver?.middle_name;
+    }
+    if (this.item.driver?.last_name) {
+      fullName += " " + this.item.driver?.last_name;
+    }
+    return fullName
+  }
+  get orderIdLink() {
     const orderIdYandex = this.item.OrderIDYandex;
     const agregType = this.item.Agreg;
     if (agregType === AgregName.yandex) {
@@ -47,11 +57,11 @@ get orderIdLink() {
   get parkComission() {
     return Math.abs(this.fees.park_fee);
   }
-  get noCashInfo() {
+  get chargedDriver() {
     const result =
       this.item.Price +
-      parseFloat(this.fees.agreg_fee) +
-      parseFloat(this.fees.park_fee);
+      parseFloat(this.fees.agreg_fee || 0) +
+      parseFloat(this.fees.park_fee || 0);
     if (isNaN(result) || result === Infinity) return false;
 
     return result.toFixed(2);

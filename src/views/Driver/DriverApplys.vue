@@ -5,33 +5,41 @@
         <driver-applys-filters v-model="entity" />
       </template>
     </page-filters>
-    <page-title>
-      <h2>Заявки водителей</h2>
-    </page-title>
+    <div class="flex-layout flex-1" v-if="items.length">
+      <page-title>
+        <h2>Заявки водителей</h2>
+      </page-title>
 
-    <div class="driver-list-items flex flex-column flex-1">
-      <driver-list-item
-        v-for="item in items"
-        :key="item.id"
-        :item="item"
-        :showAgregators="false"
-        @refresh="refresh"
-        :paymentGroups="paymentGroups && paymentGroups.data"
-        :antifrauds="antifrauds && antifrauds.data"
-      />
-      <app-pagination
-        class="mt-auto"
-        :nowPage="page"
-        :totalPages="totalPages"
-        @next="nextPage"
-        @prev="prevPage"
-        @showMore="showMore"
-      />
+      <div class="driver-list-items flex flex-column flex-1">
+        <driver-list-item
+          v-for="item in items"
+          :key="item.id"
+          :item="item"
+          :showAgregators="false"
+          @refresh="refresh"
+          :paymentGroups="paymentGroups && paymentGroups.data"
+          :antifrauds="antifrauds && antifrauds.data"
+        />
+        <app-pagination
+          class="mt-auto"
+          :nowPage="page"
+          :totalPages="totalPages"
+          @next="nextPage"
+          @prev="prevPage"
+          @showMore="showMore"
+        />
+      </div>
+    </div>
+    <div class="flex-layout flex-1" v-else key="noItems">
+      <driver-applys-connect-placeholder v-if="entity === 'connect'"/>
+      <driver-applys-rent-placeholder v-if="entity === 'rent'"/>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import DriverApplysConnectPlaceholder from '../../components/Placeholders/DriverApplysConnectPlaceholder.vue'
+import DriverApplysRentPlaceholder from '../../components/Placeholders/DriverApplysRentPlaceholder.vue'
 import DriverApplysFilters from "../../components/DriverApplys/DriverApplysFilters.vue";
 import DriverListItem from "../../components/DriverList/DriverListItem.vue";
 import AppButton from "../../components/AppButton.vue";
@@ -51,13 +59,13 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     AppButton,
     svgPlus,
     DriverListItem,
-    DriverApplysFilters,
+    DriverApplysFilters, DriverApplysRentPlaceholder, DriverApplysConnectPlaceholder
   },
   metaInfo: {
     title: "Заявки водителей",
   },
   setup() {
-    const entity = ref(null);
+    const entity = ref('connect');
     const date = ref({
       start: undefined,
       end: undefined,

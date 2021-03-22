@@ -1,11 +1,11 @@
 <template>
   <div class="page-fines page-items flex-layout flex-1">
-    <div v-if="true" class="flex-layout flex-1">
-      <page-filters :calendar.sync="date">
-        <template v-slot:filters>
-          <fines-filters v-model="entity" />
-        </template>
-      </page-filters>
+    <page-filters :calendar.sync="date">
+      <template v-slot:filters>
+        <fines-filters v-model="entity" />
+      </template>
+    </page-filters>
+    <div  class="flex-layout flex-1" v-if="false">
       <page-title>
         <h2>Штрафы</h2>
       </page-title>

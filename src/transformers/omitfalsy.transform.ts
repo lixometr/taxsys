@@ -1,6 +1,6 @@
 import { Transform } from "class-transformer"
 
-export const OmitFalsey = () => {
+export const OmitFalsy = () => {
     return Transform(({ value }) => {
         return !value ? undefined : value
     })

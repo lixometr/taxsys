@@ -4,7 +4,7 @@
       <h2>Чёрный список</h2>
     </page-title>
 
-    <div class="driver-blacklist-items flex flex-column flex-1">
+    <div class="driver-blacklist-items flex flex-column flex-1" v-if="false">
       <driver-black-list-item v-for="item in 5" :key="item.id" />
       <app-pagination
         class="mt-auto"
@@ -15,10 +15,12 @@
         @showMore="showMore"
       />
     </div>
+    <driver-black-list-placeholder v-else/>
   </div>
 </template>
 
 <script lang="ts">
+import DriverBlackListPlaceholder from '../../components/Placeholders/DriverBlackListPlaceholder.vue'
 import DriverBlackListItem from "../../components/DriverBlackList/DriverBlackListItem.vue";
 import PageTitle from "../../components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -28,7 +30,7 @@ import {useApiGetDriverBlackList} from "@/api/driver"
 @Component({
   components: {
     PageTitle,
-    DriverBlackListItem,
+    DriverBlackListItem, DriverBlackListPlaceholder
   },
   metaInfo: {
     title: "Чёрный список",

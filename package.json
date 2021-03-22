@@ -10,6 +10,7 @@
   "dependencies": {
     "@types/socket.io-client": "^1.4.35",
     "@vue/composition-api": "^1.0.0-rc.1",
+    "apexcharts": "^3.26.0",
     "axios": "^0.21.1",
     "bootstrap-4-grid": "^3.4.0",
     "class-transformer": "^0.4.0",
@@ -24,6 +25,7 @@
     "v-click-outside": "^3.1.2",
     "v-viewer": "^1.5.1",
     "vue": "^2.6.11",
+    "vue-apexcharts": "^1.6.0",
     "vue-class-component": "^7.2.3",
     "vue-cookies": "^1.7.4",
     "vue-js-modal": "^2.0.0-rc.6",

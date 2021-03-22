@@ -1,32 +1,32 @@
-import { OmitFalsey } from "@/transformers/omitfalsy.transform"
+import { OmitFalsy } from "@/transformers/omitfalsy.transform"
 
 export class StaffDto {
     FIO: string
     phone: string
-    @OmitFalsey()
+    @OmitFalsy()
     NumberOfCard: string
-    @OmitFalsey()
+    @OmitFalsy()
     NumberOfPassport: string
-    @OmitFalsey()
+    @OmitFalsy()
     INN: string
-    @OmitFalsey()
+    @OmitFalsy()
     StartWork: string
-    @OmitFalsey()
+    @OmitFalsy()
     EndWork: string
-    @OmitFalsey()
+    @OmitFalsy()
     SalaryRate: number
-    @OmitFalsey()
+    @OmitFalsy()
     PenaltyForAbsenteeism: number
-    @OmitFalsey()
+    @OmitFalsy()
     AnswerLonger: number
-    @OmitFalsey()
+    @OmitFalsy()
     PenaltyRate: number
-    @OmitFalsey()
+    @OmitFalsy()
     CheckoutDay: number
-    @OmitFalsey()
+    @OmitFalsy()
     PayOff: number
-    @OmitFalsey()
+    @OmitFalsy()
     AdvanceCalculation: number
-    @OmitFalsey()
+    @OmitFalsy()
     AdvancePayment: number
 }

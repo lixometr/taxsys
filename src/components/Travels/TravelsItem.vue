@@ -74,17 +74,9 @@
             <div class="col-6">{{ parkComission }} {{ currency }}</div>
           </div>
 
-          <div class="row" v-if="item.ChargedDriver">
+          <div class="row" v-if="chargedDriver">
             <div class="col-6">Начислено водителю:</div>
-            <div class="col-6">{{ item.ChargedDriver }} ₽</div>
-          </div>
-
-          <div
-            class="row"
-            v-if="item.PaymentType !== PaymentName.cash && noCashInfo"
-          >
-            <div class="col-6">Начислено водителю:</div>
-            <div class="col-6">{{ noCashInfo }} {{ currency }}</div>
+            <div class="col-6">{{ chargedDriver }} {{ currency }}</div>
           </div>
 
           <div class="row" v-if="fees.bonus">
@@ -181,9 +173,6 @@ export default class TravelsItem extends Vue {
   get distanceKm() {
     return this.item.distance / 1000;
   }
-
-
-
 }
 </script>
 

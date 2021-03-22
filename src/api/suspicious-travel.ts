@@ -15,3 +15,12 @@ export const useApiGetSuspiciousTravels = (opts?: UseApiOptions) => useApi<{ dat
 
     }
 }), opts)
+export const useApiModerateSuspiciousTravels = (opts?: UseApiOptions) => useApi<{ id: number, isApproved: boolean }, any>(
+    ({ id, isApproved }) => ({
+        method: "POST",
+        url: `/trip/${id}/moderate_suspicious`,
+        data: {
+            suspicious_approved: isApproved ? 1 : 2
+        }
+    }), opts)
+

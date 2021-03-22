@@ -45,7 +45,7 @@ import { ModalName } from "@/types/modal.enum";
     title: "Диспетчерские",
   },
   setup() {
-    const agregator = ref("all");
+    const agregator = ref("yandex");
     const date = ref({
       start: new Date(),
       end: new Date(),

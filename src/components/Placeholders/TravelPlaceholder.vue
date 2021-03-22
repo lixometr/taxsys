@@ -36,7 +36,7 @@ import { Component, Vue } from "vue-property-decorator";
       router.push({ name: "AddDriver" });
     };
     const addDispetcher = () => {
-      router.push({ name: "AddDriver" });
+      router.push({ name: "SettingsDispetchers" });
     };
     return { addDriver, addDispetcher };
   },

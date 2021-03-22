@@ -11,10 +11,9 @@
         <app-accardion-col :class="responsiveCol" class="color-grey-3">{{
           item.created_at | dateTime
         }}</app-accardion-col>
-        <app-accardion-col :class="responsiveCol"
-          >{{ item.driver.name }} {{ item.driver.middle_name }}
-          {{ item.driver.last_name }}</app-accardion-col
-        >
+        <app-accardion-col :class="responsiveCol">{{
+          driverFullName
+        }}</app-accardion-col>
         <app-accardion-col :class="responsiveCol"
           >{{ item.Price }} {{ currency }}</app-accardion-col
         >
@@ -71,35 +70,46 @@
         </app-accardion-col>
 
         <app-accardion-col :class="responsiveContent">
-          <div class="row" v-if="item.com_agreg">
+          <div class="row" v-if="agregComission">
             <div class="col-6">Комиссия агрегатора:</div>
             <div class="col-6">{{ agregComission }} {{ currency }}</div>
           </div>
 
-          <div class="row" v-if="item.com_park">
+          <div class="row" v-if="parkComission">
             <div class="col-6">Комиссия парка:</div>
             <div class="col-6">{{ parkComission }} {{ currency }}</div>
           </div>
 
-          <div class="row" v-if="item.ChargedDriver">
+          <div
+            class="row"
+            :class="{ 'color-red': antifraud.costTrip }"
+            v-if="chargedDriver"
+          >
             <div class="col-6">Начислено водителю:</div>
-            <div class="col-6">{{ item.ChargedDriver }} ₽</div>
+            <div class="col-6">{{ chargedDriver }} {{ currency }}</div>
           </div>
 
-          <div class="row" v-if="item.PaymentType !== PaymentName.cash">
-            <div class="col-6">Начислено водителю:</div>
-            <div class="col-6">{{ noCashInfo }} {{ currency }}</div>
-          </div>
-
-          <div class="row" v-if="item.surcharges">
+          <div
+            class="row"
+            :class="{ 'color-red': antifraud.bonus }"
+            v-if="item.surcharges"
+          >
             <div class="col-6">Доплаты:</div>
             <div class="col-6">{{ item.surcharges }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
-          <div class="row" v-if="item.timeTrip">
+          <div
+            class="row"
+            :class="{ 'color-red': antifraud.timeTrip }"
+            v-if="item.timeTrip"
+          >
             <div class="col-6">Время:</div>
-            <div class="col-6">{{ item.timeTrip }}</div>
+            <div class="col-6">
+              <span v-if="timeTrip.days">{{ timeTrip.days }} д</span>
+              <span v-if="timeTrip.hours"> {{ timeTrip.hours }} ч</span>
+              <span v-if="timeTrip.min"> {{ timeTrip.min }} мин</span>
+            </div>
           </div>
 
           <div class="row" v-if="item.distance">
@@ -107,17 +117,25 @@
             <div class="col-6">{{ distanceKm }} км</div>
           </div>
 
-          <div class="row" v-if="costPerKm">
+          <div
+            class="row"
+            :class="{ 'color-red': antifraud.costPerKm }"
+            v-if="costPerKm"
+          >
             <div class="col-6">Cтоимость км:</div>
             <div class="col-6">{{ costPerKm }} ₽</div>
           </div>
 
-          <div class="row" v-if="costPerMin">
+          <div
+            class="row"
+            :class="{ 'color-red': antifraud.costPerMin }"
+            v-if="costPerMin"
+          >
             <div class="col-6">Стоимость мин:</div>
             <div class="col-6">{{ costPerMin }} ₽</div>
           </div>
 
-          <div class="row">
+          <div class="row" :class="{ 'color-red': antifraud.tip }">
             <div class="col-6" v-if="item.tip">Чаевые:</div>
             <div class="col-6" v-if="item.tip">{{ item.tip }}</div>
           </div>
@@ -133,13 +151,14 @@ import AppIcon from "../AppIcon.vue";
 import useStore from "@/compositions/useStore";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import { PaymentType, PaymentName } from "@/types/payment-type.enum";
-import { computed } from "@vue/composition-api";
+import { computed, warn } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import TravelsMixin from "../Travels/TravelsMixin.vue";
+
 @Component({
   mixins: [TravelsMixin],
   components: { AppIcon, AgregatorBadge },
-  setup() {
+  setup(props, { emit }) {
     const getPaymentType = (name: string) => {
       return (
         PaymentType[name] || {
@@ -160,9 +179,11 @@ import TravelsMixin from "../Travels/TravelsMixin.vue";
     });
 
     const deny = () => {
+      emit("deny");
       return;
     };
     const approve = () => {
+      emit("approve");
       return;
     };
 
@@ -186,6 +207,34 @@ export default class TravelsItem extends Vue {
 
   get responsiveContent() {
     return " col-12 col-xl-4";
+  }
+  get warns(): Array<any> {
+    return this.item.antifraud_result?.warns || [];
+  }
+  get antifraud() {
+    interface IWarn {
+      type: string;
+      current: number;
+      antifraud: number;
+    }
+
+    const warnTypes = this.warns.map((warn: IWarn) => warn.type);
+    const result = {
+      timeTrip:
+        warnTypes.includes("time_trip_more") ||
+        warnTypes.includes("time_trip_less"),
+      costPerKm: warnTypes.includes("cost_km_more"),
+      costPerMin:
+        warnTypes.includes("cost_min_more") ||
+        warnTypes.includes("cost_min_less"),
+      costTrip: warnTypes.includes("cost_trip_more"),
+      bonus: warnTypes.includes("sum_bonus_more"),
+      tip:
+        warnTypes.includes("sum_tip_more_rub") ||
+        warnTypes.includes("sum_tip_more_perc"),
+    };
+
+    return result;
   }
 }
 </script>
