@@ -15,7 +15,7 @@
     </page-title>
 
     <div class="settings-dispetchers-items flex-layout flex-1">
-      <dispetchers-item v-for="(item, idx) in 5" :key="idx" />
+      <dispetchers-item v-for="(item, idx) in items" :key="idx" :item="item" />
       <app-pagination
         class="mt-auto"
         :nowPage="page"

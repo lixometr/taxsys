@@ -25,11 +25,16 @@ export default class TravelsMixin extends Vue {
     }
     return fullName
   }
+  
   get orderIdLink() {
     const orderIdYandex = this.item.OrderIDYandex;
+    const orderIdCity = this.item.citimobil_id
     const agregType = this.item.Agreg;
     if (agregType === AgregName.yandex) {
       return `https://lk.taximeter.yandex.ru/order/${orderIdYandex}`;
+    }
+    if(agregType === AgregName.citymobil) {
+      return `https://fleet.city-mobil.ru/orders/${orderIdCity}/info`
     }
     return "";
   }

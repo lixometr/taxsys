@@ -6,10 +6,10 @@
     >
       <template v-slot:header>
         <app-accardion-col :class="responsiveHeader">
-          <div>Мельников Максим Юрьевич</div>
+          <div>{{item.FIO}}</div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
-          <div>+7 900 800 90 08</div>
+          <div>{{item.phone}}</div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
           <div>Баланс: 200 000 {{ currency }}</div>
@@ -19,19 +19,19 @@
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Серия/номар паспорта:</div>
-            <div class="col-6 color-grey-2">45 15 555 889</div>
+            <div class="col-6 color-grey-2">{{item.NumberOfPassport}}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">ИНН:</div>
-            <div class="col-6 color-grey-2">5513 490490</div>
+            <div class="col-6 color-grey-2">{{item.INN}}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Номер карты:</div>
-            <div class="col-6 color-purple">4*** **** **** 3564</div>
+            <div class="col-6 color-purple">{{item.NumberOfCard}}</div>
           </div>
         </app-accardion-col>
         

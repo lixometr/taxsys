@@ -10,7 +10,12 @@
     </page-title>
 
     <div class="settings-staff-items flex-layout flex-1">
-      <staff-item v-for="(item) in items" :item="item" :key="item.id" />
+      <staff-item
+        v-for="item in items"
+        :item="item"
+        :key="item.id"
+        @delete="deleteItem(item.id)"
+      />
       <app-pagination
         class="mt-auto"
         :nowPage="page"
@@ -28,11 +33,12 @@ import StaffItem from "../../components/Settings/Staff/StaffItem.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { computed, reactive, ref, watch } from "@vue/composition-api";
-import { useApiGetStaff } from "@/api/staff";
+import { useApiDeleteStaff, useApiGetStaff } from "@/api/staff";
 import useItemsPage from "@/compositions/useItemsPage";
 import svgPlus from "@/assets/icons/plus.svg";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
+import { errorHandler } from "@/helpers/error-handler";
 @Component({
   metaInfo: {
     title: "Персонал",
@@ -46,6 +52,7 @@ import { ModalName } from "@/types/modal.enum";
       items,
       totalPages,
       init,
+      refreshItems,
     } = useItemsPage({
       api: useApiGetStaff,
     });
@@ -57,7 +64,19 @@ import { ModalName } from "@/types/modal.enum";
       const { showByName } = useModal();
       showByName(ModalName.addStaff);
     };
+    const deleteItem = async (id: number) => {
+      const { exec: deleteStaff, error } = useApiDeleteStaff({
+        toast: {
+          success: () => "Сотрудник успешно удален!",
+          error: errorHandler(),
+        },
+      });
+      await deleteStaff({ id });
+      if (error.value) return;
+      await refreshItems();
+    };
     return {
+      deleteItem,
       page,
       showMore,
       nextPage,

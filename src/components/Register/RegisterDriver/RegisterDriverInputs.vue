@@ -121,4 +121,9 @@ export default class RegisterDriverInput extends Vue {
 </script>
 
 <style lang="scss">
+.app-image-upload {
+  svg {
+    color: #6979F8;
+  }
+}
 </style>

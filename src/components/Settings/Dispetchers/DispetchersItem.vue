@@ -6,10 +6,10 @@
     >
       <template v-slot:header>
         <app-accardion-col :class="responsiveHeader">
-          <agregator-badge type="yandex" />
+          <agregator-badge :type="item.agreg" />
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
-          <div>KaPark</div>
+          <div>{{item.name}}</div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
           <div>(Москва и МО)</div>
@@ -24,25 +24,25 @@
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Количество водителей:</div>
-            <div class="col-6">26 560</div>
+            <div class="col-6">{{ item.count_drivers }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Количество заказов</div>
-            <div class="col-6">6 805 560</div>
+            <div class="col-6">{{ item.count_orders }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Оборот по закаазам</div>
-            <div class="col-6">366 805 560 ₽</div>
+            <div class="col-6">{{item.TurnoverOnOrders}} {{ currency }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Комиссия парка</div>
-            <div class="col-6">366 805 560 ₽</div>
+            <div class="col-6">{{ item.ParkCommission }} {{ currency }}</div>
           </div>
         </app-accardion-col>
       </template>
@@ -76,7 +76,9 @@ export default class DispetchersItem extends Vue {
   get responsiveHeader() {
     return "col-md-6  col-xl-3";
   }
-
+  get currency() {
+    return this.$store.getters.currency;
+  }
   get responsiveContent() {
     return "col-12 col-md-6 col-xl-3";
   }
@@ -106,7 +108,7 @@ export default class DispetchersItem extends Vue {
     border-radius: 20px;
     font-size: $fz_sm;
   }
-  &__remove{
+  &__remove {
     color: $grey_3;
     width: 20px;
     svg {

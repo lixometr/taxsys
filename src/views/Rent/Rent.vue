@@ -51,10 +51,11 @@ import { Component, Vue } from "vue-property-decorator";
 import { computed, ref } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useItemsPage from "@/compositions/useItemsPage";
-import { useApiGetRents } from "@/api/rent";
+
 import useRouter from "@/compositions/useRouter";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
+import { useApiGetCarsRentable } from '@/api/car';
 @Component({
   setup() {
     const entity = ref("free");
@@ -75,7 +76,7 @@ import { ModalName } from "@/types/modal.enum";
       showMore,
       items,
       init,
-    } = useItemsPage({ api: useApiGetRents });
+    } = useItemsPage({ api: useApiGetCarsRentable });
     const toFetch = computed(() => ({ entity: entity.value }));
     // init({fetchData: toFetch})
     return {

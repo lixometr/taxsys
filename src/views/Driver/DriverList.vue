@@ -23,7 +23,7 @@
           :showAgregators="true"
           @refresh="refresh"
           :antifrauds="antifrauds && antifrauds.data"
-          :paymentGroups="paymentGroups && paymentGroups.data"
+          :paymentGroups="paymentGroups"
         />
         <app-pagination
           class="mt-auto"

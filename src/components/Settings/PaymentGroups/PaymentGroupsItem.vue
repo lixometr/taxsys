@@ -6,7 +6,7 @@
     >
       <template v-slot:header>
         <app-accardion-col class="col-12">
-          <div class="color-purple">Новые водители</div>
+          <div class="color-purple">{{ item.name }}</div>
         </app-accardion-col>
       </template>
       <template #default>
@@ -63,6 +63,14 @@ export default class StaffItem extends Vue {
     return this.$store.getters.currency;
   }
 
+  get getApplicationsPeriod() {
+    const periods = {
+      AllTime: "Ежедневно и круглосуточно",
+      OnceADay: "Раз в день",
+    };
+    return periods[this.item.AcceptApplications];
+  }
+
   get col1() {
     return [
       {
@@ -71,7 +79,7 @@ export default class StaffItem extends Vue {
       },
       {
         name: "Принимать заявки",
-        value: "Ежедневно и круглосуточно",
+        value: this.getApplicationsPeriod,
       },
       {
         name: "Авто. выплаты при достижении",
@@ -83,25 +91,32 @@ export default class StaffItem extends Vue {
       },
     ];
   }
+
   get col2() {
-    return [
+    const fields = [
       {
         name: "Минимальная сумма на счету",
-        value: "500 ₽",
+        value: "500",
       },
       {
         name: "Минимальная сумма заявки",
-        value: "14 500 ₽",
+        value: this.item.minOrder,
       },
       {
         name: "Максимальная сумма заявки",
-        value: "15 000 ₽",
+        value: this.item.maxOrder,
       },
       {
         name: "Ограничение выплаты в день",
-        value: "20 500 ₽",
+        value: this.item.maxPerDay,
       },
     ];
+    return fields
+     
+      .map((field) => ({
+        ...field,
+        value: field.value + ` ${this.currency}`,
+      }));
   }
   get col3() {
     return [

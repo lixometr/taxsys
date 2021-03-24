@@ -6,6 +6,7 @@
     <template>
       <apexchart
         width="100%"
+        height="400"
         type="bar"
         :options="chartOptions"
         :series="series"

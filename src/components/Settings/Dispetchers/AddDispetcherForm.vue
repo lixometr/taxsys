@@ -2,7 +2,16 @@
   <div class="add-dispetcher-form">
     <form action="#" @submit.prevent="onSubmit">
       <add-dispetcher-agregators class="mb-50" v-model="agregator" />
-      <form-schema :schema="formSchema" class="row mb-30"></form-schema>
+      <form-schema :schema="formSchema" class="row mb-30">
+        <template v-slot:field-payment-group="{ item }">
+          <payment-groups-select
+            :errors="item.field.errors.value"
+            v-model="item.field.value.value"
+            v-bind="item.props"
+            v-on="item.listeners"
+          />
+        </template>
+      </form-schema>
       <div
         class="add-dispetcher-form__yandex mb-10"
         v-if="agregator === AgregName.yandex"
@@ -35,6 +44,7 @@
 </template>
  
 <script lang="ts">
+import PaymentGroupsSelect from '../../PaymentGroupsSelect.vue'
 import AddDispetcherAgregators from "./DispetcherAgregators.vue";
 import FormSchema from "../../FormSchema/FormSchema.vue";
 import RegisterDriverAgregators from "../../Register/RegisterDriver/RegisterDriverAgregators.vue";
@@ -51,14 +61,14 @@ import { errorHandler } from "@/helpers/error-handler";
 import { plainToClass } from "class-transformer";
 import { CreateDispetcherDto } from "@/dto/dispetcher.dto";
 @Component({
-  components: { RegisterDriverAgregators, FormSchema, AddDispetcherAgregators },
+  components: { RegisterDriverAgregators, FormSchema, AddDispetcherAgregators, PaymentGroupsSelect },
   setup(props, { emit }) {
     const agregator = ref(AgregName.yandex);
 
     const formFields = computed(() => fields[agregator.value]);
     const rename = {
       paymentGroup: "paymentgroup_id",
-      city: 'city_id',
+      city: "city_id",
       keyApiV7: "apiKey",
       gettLogin: "loginGett",
       gettPassword: "passGett",
@@ -69,7 +79,7 @@ import { CreateDispetcherDto } from "@/dto/dispetcher.dto";
       bonusCommission: "commisionOfBonus",
       cityApiKey: "citiApiKey",
       apiKeyV7: "keyApiV7",
-      clientId: 'clientID'
+      clientId: "clientID",
     };
     let form = useForm({
       fields: formFields.value,
@@ -86,7 +96,7 @@ import { CreateDispetcherDto } from "@/dto/dispetcher.dto";
         let toSend = form.serialize();
         toSend = { ...toSend, agreg: agregator.value };
         await createDispetcher(plainToClass(CreateDispetcherDto, toSend));
-        if(error.value) return
+        if (error.value) return;
         emit("send");
       })();
     };

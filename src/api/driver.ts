@@ -1,4 +1,5 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
+import { classToPlain } from "class-transformer";
 
 
 
@@ -10,6 +11,7 @@ export const useApiGetDrivers = (opts?: UseApiOptions) => useApi<{ page: number 
     },
 
 }), opts)
+
 export const useApiGetDriversApplys = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<any>>(({ page }) => ({
     method: "GET",
     url: '/drivers',
@@ -17,6 +19,17 @@ export const useApiGetDriversApplys = (opts?: UseApiOptions) => useApi<{ page: n
         page,
         trips: 'none',
     },
+
+}), opts)
+
+export const useApiUpdateDriver = (opts?: UseApiOptions) => useApi<{payment_group_id: number, antifraud_id: number, id: number}, any>(
+    ({payment_group_id, antifraud_id, id}) => ({
+    method: "PUT",
+    url: `/drivers/${id}`,
+    data: {
+        payment_group_id,
+        antifraud_id
+    }
 
 }), opts)
 

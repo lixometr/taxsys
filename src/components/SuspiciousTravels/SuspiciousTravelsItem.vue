@@ -14,7 +14,7 @@
         <app-accardion-col :class="responsiveCol">{{
           driverFullName
         }}</app-accardion-col>
-        <app-accardion-col :class="responsiveCol"
+        <app-accardion-col :class="{...responsiveCol, 'color-red': antifraud.costTrip }"
           >{{ item.Price }} {{ currency }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveCol">

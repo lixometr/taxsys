@@ -21,8 +21,9 @@ export const baseSchema: FormSchemaItem[] = [
         sort: 2,
     },
     {
-        type: "app-input",
+        type: "app-select",
         field: paymentGroup,
+        name: 'payment-group',
         props: {
             label: "Группа выплат",
         },

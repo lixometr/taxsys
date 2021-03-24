@@ -74,6 +74,7 @@
                 :agregator="'citymobil'"
                 :active="!!item.CityMobilDriver"
                 :driverId="item.id"
+                :price="item.citimobil_balance"
                 @refresh="refresh"
               />
             </div>
@@ -104,6 +105,8 @@
               variant="border"
               placeholder="Группа выплат"
               :options="paymentGroups || []"
+              selectLabel="name"
+              :reduce="(item) => item.id"
               v-model="paymentGroup"
             />
             <app-select
@@ -114,7 +117,7 @@
               :options="antifrauds || []"
               v-model="antifrod"
               selectLabel="name"
-              :reduce="(item) => item.name"
+              :reduce="(item) => item.id"
             />
           </div>
         </app-accardion-col>
@@ -178,9 +181,21 @@ import AppIcon from "../AppIcon.vue";
 import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import { PaymentType, PaymentName } from "@/types/payment-type.enum";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { computed, ref, watch } from "@vue/composition-api";
+import { computed, ref, toRefs, watch } from "@vue/composition-api";
 import svgDriverLicense from "@/assets/icons/driver_license.svg";
+import svgPassportOpen from "@/assets/icons/passport_open.svg";
+import svgUserStroke from "@/assets/icons/user_stroke.svg";
+import svgFile from "@/assets/icons/file.svg";
 import useMoment from "@/compositions/useMoments";
+import useRouter from "@/compositions/useRouter";
+import { ApiDate } from "@/types/constants";
+import { useApiUpdateDriver } from "@/api/driver";
+import { errorHandler } from "@/helpers/error-handler";
+import useToast from "@/compositions/useToast";
+interface IProps {
+  item: any;
+  [key: string]: any;
+}
 @Component({
   components: {
     AppIcon,
@@ -188,13 +203,58 @@ import useMoment from "@/compositions/useMoments";
     AppSelect,
     DriverListCards,
     svgDriverLicense,
+    svgUserStroke,
+    svgFile,
+    svgPassportOpen,
     PreviewImage,
   },
-  setup(props, { emit }) {
-    const paymentGroup = ref("");
-
-    const antifrod = ref("");
+  setup(props: IProps, { emit }) {
+    const { item } = toRefs<IProps>(props);
+    const paymentGroup = ref(item.value.payment_group_id);
+    const antifrod = ref(item.value.antifraud_id);
+    const router = useRouter();
+    const updateDriver = async () => {
+      const {error: toastError} = useToast()
+      if(typeof antifrod.value !== 'number') {
+        toastError({message: "Пожалуйста, выберите антифрод"})
+        return
+      }
+      if(typeof paymentGroup.value !== 'number') {
+        toastError({message: "Пожалуйста, выберите группу выплат"})
+        return
+      }
+      const { exec, error } = useApiUpdateDriver({
+        toast: {
+          error: errorHandler(),
+          success: () => "Водитель успешно обновлен!",
+        },
+      });
+      await exec({
+        payment_group_id: paymentGroup.value,
+        antifraud_id: antifrod.value,
+        id: item.value.id,
+      });
+      if (error.value) return;
+    };
+    watch(antifrod, () => {
+      updateDriver();
+    });
+    watch(paymentGroup, () => {
+      updateDriver();
+    });
     const checkDriver = () => {
+      const query = {
+        name: item.value.name,
+        surname: item.value.last_name,
+        lastname: item.value.middle_name,
+        numberOfPassport: item.value.NumberOfPassport,
+        dateOfBirth: useMoment(item.value.DateOfBirth).format(ApiDate),
+        dateDriverLicense: useMoment(item.value.DateDriverLicense).format(
+          ApiDate
+        ),
+        driverLicense: item.value.SerialDriverLicense,
+      };
+      router.push({ name: "DriverCheck", query });
       return;
     };
 
@@ -247,33 +307,48 @@ export default class DriverListItem extends Vue {
   get cards() {
     return this.item.cards || [];
   }
+  get driverImage() {
+    return (prop) => {
+      return this.item.images?.find((item) => item.desc === prop) || {};
+    };
+  }
+  get carImage() {
+    return (prop) => {
+      return this.item.car?.images?.find((item) => item.desc === prop) || {};
+    };
+  }
   get images() {
-    return [
+    const fields = [
       {
-        image: require("@/assets/img/login_image.jpg"),
+        image: this.driverImage("photoPassport").url,
         icon: svgDriverLicense,
       },
       {
-        image: require("@/assets/img/login_image.jpg"),
+        image: this.driverImage("photoLicense").url,
+        icon: svgPassportOpen,
+      },
+      {
+        image: this.driverImage("selfiDriver").url,
+        icon: svgUserStroke,
+      },
+      {
+        image: this.carImage("photoFront").url,
+        icon: svgFile,
+      },
+      {
+        image: this.carImage("photoBack").url,
         icon: svgDriverLicense,
       },
       {
-        image: require("@/assets/img/login_image.jpg"),
+        image: this.carImage("photoCtcFront").url,
         icon: svgDriverLicense,
       },
       {
-        image: require("@/assets/img/login_image.jpg"),
-        icon: svgDriverLicense,
-      },
-      {
-        image: require("@/assets/img/login_image.jpg"),
-        icon: svgDriverLicense,
-      },
-      {
-        image: require("@/assets/img/login_image.jpg"),
+        image: this.carImage("photoCtcBack").url,
         icon: svgDriverLicense,
       },
     ];
+    return fields.filter((field) => !!field.image);
   }
   get car() {
     return this.item.car || {};
@@ -384,6 +459,7 @@ export default class DriverListItem extends Vue {
   }
   &__image-preview {
     margin: 10px;
+    color: $white;
   }
   &__check-driver {
     font-weight: 400;

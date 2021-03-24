@@ -10,66 +10,67 @@
     </page-title>
 
     <div class="settings-payment-groups-items flex-layout flex-1">
-      <payment-groups-item v-for="(item, idx) in 5" :key="idx" />
-      <app-pagination
-        class="mt-auto"
-        :nowPage="page"
-        :totalPages="totalPages"
-        @next="nextPage"
-        @prev="prevPage"
-        @showMore="nextPage"
+      <payment-groups-item
+        v-for="(item, idx) in items"
+        :item="item"
+        :key="idx"
+        @delete="onDeleteItem(item.id)"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import PaymentGroupsItem from '../../components/Settings/PaymentGroups/PaymentGroupsItem.vue'
+import PaymentGroupsItem from "../../components/Settings/PaymentGroups/PaymentGroupsItem.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { computed, reactive, ref, watch } from "@vue/composition-api";
-import { useApiGetPaymentGroups } from "@/api/payment-groups";
+import {
+  useApiDeletePaymentGroups,
+  useApiGetPaymentGroups,
+} from "@/api/payment-groups";
 import useItemsPage from "@/compositions/useItemsPage";
 import svgPlus from "@/assets/icons/plus.svg";
-import useModal from '@/compositions/useModal';
-import { ModalName } from '@/types/modal.enum';
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
+import { errorHandler } from "@/helpers/error-handler";
 @Component({
   metaInfo: {
     title: "Группы выплат",
   },
   setup() {
-    const {
-      page,
-      nextPage,
-      prevPage,
-      showMore,
-      items,
-      totalPages,
-      init,
-    } = useItemsPage({
-      api: useApiGetPaymentGroups,
+    const { exec: fetchItems, result } = useApiGetPaymentGroups();
+    fetchItems();
+
+    const items = ref([]);
+    watch(result, (data: any) => {
+      items.value = data;
     });
-    const toFetch = computed(() => ({
-      page: page.value,
-    }));
-    // init({ fetchData: toFetch });
     const addPaymentGroup = () => {
-      const {showByName} = useModal()
-      showByName(ModalName.addPaymentGroup)
+      const { showByName } = useModal();
+      showByName(ModalName.addPaymentGroup);
+    };
+    const onDeleteItem = async (id: number) => {
+      const { exec, error } = useApiDeletePaymentGroups({
+        toast: {
+          error: errorHandler(),
+          success: () => "Группа выплат успешно удалена!",
+        },
+      });
+      await exec({ id });
+      if (error.value) return;
+      await fetchItems();
     };
     return {
-      page,
-      showMore,
-      nextPage,
-      prevPage,
+      onDeleteItem,
       items,
-      totalPages,
       addPaymentGroup,
     };
   },
   components: {
     PageTitle,
-    svgPlus, PaymentGroupsItem
+    svgPlus,
+    PaymentGroupsItem,
   },
 })
 export default class SettignsPaymentGroups extends Vue {}

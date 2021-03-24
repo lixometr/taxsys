@@ -106,8 +106,29 @@ import useField from "@/compositions/validators/useField";
 import * as yup from "yup";
 import { computed, ref } from "@vue/composition-api";
 import svgInfo from "@/assets/icons/info.svg";
+import useRouter from "@/compositions/useRouter";
+interface IDefaultData {
+  [key: string]: any;
+}
 @Component({
   setup(props, { emit }) {
+    const router = useRouter();
+    const query = router.currentRoute.query;
+    const defaultData: IDefaultData = {
+      name: query.name,
+      surname: query.surname,
+      lastname: query.lastname,
+      numberOfPassport: query.numberOfPassport,
+      driverLicense: query.driverLicense,
+    };
+    if (query.dateOfBirth && typeof query.dateOfBirth === "string") {
+      const dateOfBirth = new Date(query.dateOfBirth);
+      defaultData.dateOfBirth = dateOfBirth;
+    }
+    if (query.dateDriverLicense && typeof query.dateDriverLicense === "string") {
+      const test = new Date(query.dateDriverLicense);
+      defaultData.dateDriverLicense = test;
+    }
     const { exec: sendForm, result, error } = useApiDriverCheck({
       toast: {
         error: (err) => {
@@ -120,13 +141,19 @@ import svgInfo from "@/assets/icons/info.svg";
     });
     const form = useForm({
       fields: {
-        name: useField("", [yup.string().required()]),
-        surname: useField("", [yup.string().required()]),
-        lastname: useField("", [yup.string().required()]),
-        dateOfBirth: useField("", [yup.date().required()]),
-        numberOfPassport: useField("", [yup.string().required()]),
-        driverLicense: useField("", [yup.string().required()]),
-        dateDriverLicense: useField("", [yup.date().required()]),
+        name: useField(defaultData.name, [yup.string().required()]),
+        surname: useField(defaultData.surname, [yup.string().required()]),
+        lastname: useField(defaultData.lastname, [yup.string().required()]),
+        dateOfBirth: useField(defaultData.dateOfBirth, [yup.date().required()]),
+        numberOfPassport: useField(defaultData.numberOfPassport, [
+          yup.string().required(),
+        ]),
+        driverLicense: useField(defaultData.driverLicense, [
+          yup.string().required(),
+        ]),
+        dateDriverLicense: useField(defaultData.dateDriverLicense, [
+          yup.date().required(),
+        ]),
       },
       watchAfterSubmit: true,
     });
@@ -182,6 +209,5 @@ export default class DriverCheckFrom extends Vue {}
       }
     }
   }
- 
 }
 </style>
