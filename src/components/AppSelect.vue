@@ -12,7 +12,7 @@
           <svgArrowStroke width="15" v-if="variant === SelectVariant.border" />
         </span>
       </template>
-      <template #no-options="{}"> Ничего не найдено </template>
+      <template #no-options="{}"><slot name="no-options"> Ничего не найдено</slot> </template>
     </v-select>
     <div class="app-select__errors">
       <div class="app-select__error" v-for="(error, idx) in errors" :key="idx">

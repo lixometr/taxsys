@@ -1,6 +1,8 @@
 <template>
   <div class="rent-item-deposit">
-    <div class="rent-item-deposit__header">Депозит 5000 {{ currency }}</div>
+    <div class="rent-item-deposit__header">
+      Депозит {{ deposit }} {{ currency }}
+    </div>
     <div class="rent-item-deposit__items">
       <div
         class="rent-item-deposit__item"
@@ -16,24 +18,28 @@
 </template>
 
 <script lang="ts">
+import { computed, toRefs } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
-
+interface IProps {
+  [key: string]: any;
+}
 @Component({
-  setup(props, { emit }) {
+  setup(props: IProps, { emit }) {
     const items = [
       {
         name: "6 / 1",
-        value: "6/1",
+        value: "61",
       },
       {
         name: "7 / 0",
-        value: "7/0",
+        value: "70",
       },
       {
         name: "Выкуп",
-        value: "Выкуп",
+        value: "ransom",
       },
     ];
+   
     const selectItem = (item) => {
       emit("input", item.value);
     };
@@ -45,6 +51,8 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class RentItemDeposit extends Vue {
   @Prop(String) value: string;
+  @Prop([Number, String]) deposit: number
+
   get currency() {
     return this.$store.getters.currency;
   }

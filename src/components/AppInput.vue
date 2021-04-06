@@ -12,6 +12,7 @@
         class="app-input__el"
         ref="el"
         :type="type"
+        :disabled="disabled"
         v-bind="_inputAttrs"
         v-on="_inputListeners"
       />
@@ -60,6 +61,7 @@ export default class AppInput extends Vue {
   @Prop(String) width: string;
   @Prop({ type: Boolean, default: true }) showErrors: boolean;
   @Prop(String) mask: string;
+  @Prop({type: Boolean, default: false}) disabled: boolean
   get _inputAttrs() {
     const attrs = Object.assign(
       {},
@@ -71,6 +73,8 @@ export default class AppInput extends Vue {
   get _inputListeners() {
     const listeners = Object.assign({}, this.$listeners, {
       input: this.onInput,
+      change: this.onInput,
+      paste: this.onInput
     });
     return listeners;
   }

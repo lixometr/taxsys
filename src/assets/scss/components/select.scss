@@ -13,6 +13,10 @@
         color: #000;
         margin-left: 0;
         padding-left: 0;
+        max-width: 90%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 
     .vs__search {
@@ -29,12 +33,14 @@
         border: 1px solid rgba(90, 19, 167, 0.35);
         padding: 10px 25px;
     }
-
+    .vs__selected-options {
+        max-width: calc(100% - 20px);
+    }
     .vs__dropdown-option {
         color: $grey_3;
         padding: 13px 0;
         border-bottom: 1px solid rgba(90, 19, 167, 0.35);
-        
+        white-space: initial;
 
         &:last-child {
             border-bottom: none;

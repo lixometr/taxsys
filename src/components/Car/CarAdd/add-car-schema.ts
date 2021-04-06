@@ -1,50 +1,16 @@
 import { FormSchemaItem } from "@/components/FormSchema/form-schema.type";
-import { sPhotoBack, sPhotoCtcBack, sPhotoCtcFront, sPhotoFront } from "@/components/Register/RegisterDriver/register-car-schema";
+import { sColor, sMark, sModel, sPhotoBack, sPhotoCtcBack, sPhotoCtcFront, sPhotoFront } from "@/components/Register/RegisterDriver/register-car-schema";
 import useStore from "@/compositions/useStore";
-import { carNumber, buyout, complect, ctcNumber, deposit, description, driverDemand, rent6_1, rent7_0, run, photoCtcFront, photoCtcBack, photoFront, photoBack } from "./add-car-fields";
-import { color, license, mark, model, vin, year } from "@/components/Register/RegisterDriver/register-car-fields";
+import {  buyout, complect, ctcNumber, deposit, description, driverDemand, rent6_1, rent7_0, run, photoCtcFront, photoCtcBack, photoFront, photoBack } from "./add-car-fields";
+import { color, license, mark, model, carNumber, vin, year } from "@/components/Register/RegisterDriver/register-car-fields";
 import { useApiGetSuggestionColor, useApiGetSuggestionMark, useApiGetSuggestionModel } from "@/api/car";
 const store = useStore()
 const currency = store.getters.currency
 
 export const schema: FormSchemaItem[] = [
-    {
-        name: 'mark',
-        type: "auto-complete-select",
-        field: mark,
-        props: {
-            label: "Марка",
-            selectLabel: 'name',
-            searchFunc: useApiGetSuggestionMark,
-        },
-        class: "col-lg-3 col-md-6",
-        sort: 1,
-    },
-    {
-        type: "auto-complete-select",
-        field: model,
-        props: {
-            label: "Модель",
-            selectLabel: 'name',
-            reduce: item => item.name,
-            makeRequest: () => ({ markId: mark.value.value.id }),
-            searchFunc: useApiGetSuggestionModel,
-        },
-        class: "col-lg-3 col-md-6",
-        sort: 2,
-    },
-    {
-        type: "auto-complete-select",
-        field: color,
-        props: {
-            label: "Цвет",
-            selectLabel: 'name',
-            reduce: item => item.name,
-            searchFunc: useApiGetSuggestionColor,
-        },
-        class: "col-lg-3 col-md-6",
-        sort: 3,
-    },
+   {...sMark, class: 'col-lg-3 col-md-6'},
+   {...sModel, class: 'col-lg-3 col-md-6'},
+   {...sColor, class: 'col-lg-3 col-md-6'},
     {
         type: "app-input",
         field: year,
@@ -173,7 +139,7 @@ export const schema: FormSchemaItem[] = [
         field: photoCtcFront,
         props: {
             label: "Фото СТС (лицевая сторона)",
-            icon: require('@/assets/icons/trash.svg')
+            icon: require('@/assets/icons/file.svg')
         },
         class: 'col-lg-3',
     

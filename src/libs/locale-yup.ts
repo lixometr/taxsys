@@ -1,5 +1,10 @@
-import { setLocale } from 'yup';
-setLocale({
+import * as yup from 'yup';
+// yup.addMethod(yup.string, 'cyrilic', (value) => {
+//     const cyrillicPattern = /^\p{Script=Cyrillic}+$/u;
+//     return value.test(cyrillicPattern)
+// })
+
+yup.setLocale({
     mixed: {
         default: 'Неправильное поле',
         required: "Заполните это поле",

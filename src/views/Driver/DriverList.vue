@@ -9,9 +9,7 @@
       <page-title :between="true">
         <div><h2>Список водителей</h2></div>
         <div>
-          <app-button color="orange" @click="addDriver" :shadow="true"
-            >Добавить водителя <svgPlus class="ml-10"
-          /></app-button>
+          <download-btn />
         </div>
       </page-title>
 
@@ -22,7 +20,7 @@
           :item="item"
           :showAgregators="true"
           @refresh="refresh"
-          :antifrauds="antifrauds && antifrauds.data"
+          :antifrauds="antifrauds"
           :paymentGroups="paymentGroups"
         />
         <app-pagination
@@ -43,6 +41,7 @@
 </template>
 
 <script lang="ts">
+import DownloadBtn from '../../components/DownloadBtn.vue'
 import DriverListRentPlaceholder from '../../components/Placeholders/DriverListRentPlaceholder.vue'
 import DriverListConnectPlaceholder from '../../components/Placeholders/DriverListConnectPlaceholder.vue'
 import DriverListItem from "../../components/DriverList/DriverListItem.vue";
@@ -65,7 +64,7 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     DriverListFilters,
     AppButton,
     svgPlus,
-    DriverListItem, DriverListConnectPlaceholder, DriverListRentPlaceholder
+    DriverListItem, DriverListConnectPlaceholder, DriverListRentPlaceholder, DownloadBtn
   },
   metaInfo: {
     title: "Список водителей",
@@ -97,14 +96,11 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     }));
     init({ fetchData: toFetch });
 
-    const addDriver = () => {
-      router.push({ name: "AddDriver" });
-    };
     const refresh = async () => {
       await refreshItems();
     };
     const { exec: getAntifraud, result: antifrauds } = useApiGetAntifrauds();
-    getAntifraud({ page: 1 });
+    getAntifraud({ paginate: false });
 
     const {
       exec: getPaymentGroups,
@@ -118,7 +114,6 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
       refresh,
       entity,
       date,
-      addDriver,
       page,
       nextPage,
       prevPage,

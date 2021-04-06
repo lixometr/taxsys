@@ -26,7 +26,7 @@
               class="mr-10"
               width="24"
             />
-            {{ AgregatorType.yandex.name }}
+            {{ AgregatorType[item.Agreg].name }}
           </app-badge>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">

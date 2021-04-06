@@ -41,6 +41,10 @@
                 class="driver-list-item__agregator-icon icon-rounded-shadow"
                 :src="agregator.icon"
                 width="25"
+                v-tooltip.top.start="{
+                  content: agregatorBalance[agregator.key] + ' ' + currency,
+                  classes: 'driver-list-item__tooltip',
+                }"
               />
             </div>
           </div>
@@ -54,7 +58,7 @@
                 class="driver-list-item__agregator"
                 :agregator="'yandex'"
                 :active="!!item.YandexDriver"
-                :price="item.YandexBalans"
+                :price="agregatorBalance[AgregName.yandex]"
                 :driverId="item.id"
                 @refresh="refresh"
               />
@@ -74,7 +78,7 @@
                 :agregator="'citymobil'"
                 :active="!!item.CityMobilDriver"
                 :driverId="item.id"
-                :price="item.citimobil_balance"
+                :price="agregatorBalance[AgregName.citymobil]"
                 @refresh="refresh"
               />
             </div>
@@ -214,14 +218,14 @@ interface IProps {
     const antifrod = ref(item.value.antifraud_id);
     const router = useRouter();
     const updateDriver = async () => {
-      const {error: toastError} = useToast()
-      if(typeof antifrod.value !== 'number') {
-        toastError({message: "Пожалуйста, выберите антифрод"})
-        return
+      const { error: toastError } = useToast();
+      if (typeof antifrod.value !== "number") {
+        toastError({ message: "Пожалуйста, выберите антифрод" });
+        return;
       }
-      if(typeof paymentGroup.value !== 'number') {
-        toastError({message: "Пожалуйста, выберите группу выплат"})
-        return
+      if (typeof paymentGroup.value !== "number") {
+        toastError({ message: "Пожалуйста, выберите группу выплат" });
+        return;
       }
       const { exec, error } = useApiUpdateDriver({
         toast: {
@@ -263,7 +267,7 @@ interface IProps {
     };
     return {
       refresh,
-
+      AgregName,
       AgregatorType,
       PaymentType,
       PaymentName,
@@ -290,6 +294,12 @@ export default class DriverListItem extends Vue {
       ...AgregatorType[key],
       key,
     }));
+  }
+  get agregatorBalance() {
+    return {
+      [AgregName.yandex]: this.item.YandexBalans?.toString(),
+      [AgregName.citymobil]: this.item.citimobil_balance?.toString(),
+    };
   }
   get activeAgregators() {
     return this.agregators.filter((agreg) => {
@@ -452,6 +462,19 @@ export default class DriverListItem extends Vue {
 
 <style lang="scss">
 .driver-list-item {
+  &__tooltip {
+    .tooltip-inner {
+      padding: 8px 16px;
+      background: $blue_grad;
+      border-radius: 10px 10px 0px 10px;
+      transform: translateX(-60%);
+      font-size: $fz_md;
+      font-weight: 600;
+    }
+    .tooltip-arrow {
+      display: none;
+    }
+  }
   &__agregator {
     @include lg {
       margin-bottom: 20px;

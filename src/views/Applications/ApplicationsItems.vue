@@ -12,14 +12,13 @@
     </page-title>
     <div class="applications-items__wrapper" v-if="true">
       <applications-item v-for="(item, idx) in 5" :key="idx" />
-      <applications-controller />
     </div>
     <applications-placeholder v-else></applications-placeholder>
   </div>
 </template>
 
 <script lang="ts">
-import ApplicationsController from "../../components/Applications/ApplicationsController.vue";
+
 import ApplicationsItem from "../../components/Applications/ApplicationsItem.vue";
 import ApplicationsPlaceholder from "../../components/Placeholders/ApplicationsPlaceholder.vue";
 import PageTitle from "../../components/Page/PageTitle.vue";
@@ -35,7 +34,6 @@ import { errorHandler } from "@/helpers/error-handler";
     svgPlus,
     ApplicationsPlaceholder,
     ApplicationsItem,
-    ApplicationsController,
   },
   setup() {
     const router = useRouter();

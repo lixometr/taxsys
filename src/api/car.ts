@@ -20,11 +20,12 @@ export const useApiCreateCar = (opts?: UseApiOptions) => useApi<CreateCarDto, an
         }
     }, { ...opts })
 
-export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutDriver: boolean }, any>(({ withoutDriver }) => ({
+export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutDriver: boolean, paginate?: boolean }, any>(({ withoutDriver, paginate = true }) => ({
     method: 'GET',
     url: '/cars/rentable',
     params: {
-        without_driver: withoutDriver ? 1 : 0
+        without_driver: withoutDriver ? 1 : 0,
+        paginate: paginate ? 10 : 0
     }
 }), { ...opts })
 
@@ -49,6 +50,14 @@ export const useApiGetSuggestionMark = (opts?: UseApiOptions) => useApi<{ name: 
 export const useApiGetSuggestionModel = (opts?: UseApiOptions) => useApi<{ markId: number }, SuggestionItem[]>(({ markId }) => ({
     method: 'GET',
     url: '/suggestions/mark/model',
+    params: {
+        mark_id: markId
+    }
+}), { ...opts })
+
+export const useApiGetCarInfo = (opts?: UseApiOptions) => useApi<{ markId: number }, SuggestionItem[]>(({ markId }) => ({
+    method: 'GET',
+    url: `/car/`,
     params: {
         mark_id: markId
     }

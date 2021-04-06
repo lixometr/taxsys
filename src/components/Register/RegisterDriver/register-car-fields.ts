@@ -4,13 +4,18 @@ import * as yup from "yup"
 import "yup-phone"
 
 export const mark = useField('', [yup.string().transform((value) => value.name).required()])
+
 export const model = useField('', [yup.string().required()])
 export const color = useField('', [yup.string().required()])
 export const year = useField('', [yup.number().required().integer()])
-export const carNumber = useField('', [yup.string().required()])
+export const carNumber = useField('', [yup.string().test('', 'Введите корректное значение', (value: string) => {
+    return /^[АВЕКМНОРСТУХ\d]*$/i.test(value)
+}).required()])
 export const license = useField(null, [yup.number().nullable()])
 export const numberCtc = useField('', [yup.string().required()])
-export const vin = useField('', [yup.string().required()])
+export const vin = useField('', [yup.string().test('', 'Введите корректное значение', (value: string) => {
+    return /^[ABCDEFGHJKLMNPRSTUVWXYZ\d]*$/i.test(value)
+}).required()])
 export const photoCtcFront = useField(null, [yup.string().required()])
 export const photoCtcBack = useField(null, [yup.string().required()])
 

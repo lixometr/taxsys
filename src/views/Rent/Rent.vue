@@ -18,8 +18,9 @@
       </page-title>
       <div class="page-rent__items flex flex-column flex-1">
         <rent-item
-          v-for="item in 5"
-          :key="item"
+          v-for="(item, idx) in items"
+          :key="idx"
+          :item="item"
           class="page-rent-item"
           @approve="onApprove"
         />
@@ -77,8 +78,8 @@ import { useApiGetCarsRentable } from '@/api/car';
       items,
       init,
     } = useItemsPage({ api: useApiGetCarsRentable });
-    const toFetch = computed(() => ({ entity: entity.value }));
-    // init({fetchData: toFetch})
+    const toFetch = computed(() => ({ withoutDriver: entity.value === 'free' }));
+    init({fetchData: toFetch})
     return {
       onApprove,
       entity,

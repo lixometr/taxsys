@@ -15,22 +15,22 @@
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
           ><div class="car-number">
-            <div class="car-number-num">A 450 ВП</div>
-            <div class="car-number-code">777</div>
+            <div class="car-number-num">{{item.car.GosNomer}}</div>
+           
           </div></app-accardion-col
         >
 
         <app-accardion-col :class="responsiveHeader"
-          >№: 293293293293293</app-accardion-col
+          >№: {{item.account}}</app-accardion-col
         >
-        <app-accardion-col :class="responsiveHeader"
-          >{{item.koap_code}}</app-accardion-col
-        >
-        <app-accardion-col :class="responsiveHeader" class="color-grey-3"
-          >{{item.created_at | dateTime}}</app-accardion-col
-        >
+        <app-accardion-col :class="responsiveHeader">{{
+          item.koap_code
+        }}</app-accardion-col>
+        <app-accardion-col :class="responsiveHeader" class="color-grey-3">{{
+          item.created_at | dateTime
+        }}</app-accardion-col>
         <app-accardion-col class="col-xl-1 col-md-4 col-sm-6"
-          >{{item.summa}} {{ currency }}</app-accardion-col
+          >{{ item.summa }} {{ currency }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader" class="fines-item__status">
           <app-status color="green" :stroke="true">оплачен</app-status>
@@ -39,29 +39,34 @@
       <template #default>
         <app-accardion-col :class="responsiveContent">
           <div>
-            <div class="color-grey-2 mb-10">Долгополов Иван Дмитриевич</div>
+            <div class="color-grey-2 mb-10">{{item.car.driver.fio}}</div>
             <div class="row mb-15">
               <div class="col color-grey-2">Нарушение:</div>
-              <div class="col color-grey-1">от {{item.issue_date | moment('DD.MM.YYYY')}}</div>
+              <div class="col color-grey-1">
+                от {{ item.issue_date | moment("DD.MM.YYYY") }}
+              </div>
             </div>
-            <div class="mb-15">{{item.koap_text}}</div>
+            <!-- <div class="mb-15">{{item.koap_text}}</div> -->
             <div class="row">
               <div class="col color-grey-2">Статья КоАп:</div>
-              <div class="col color-grey-1">{{item.koap_code}}</div>
+              <div class="col color-grey-1">{{ item.koap_code }}</div>
             </div>
           </div>
           <div>
             <div class="row align-items-center mt-25">
               <div class="col-lg-3">
-                <div class="font-md font-500">{{item.summa}} {{ currency }}</div>
+                <div class="font-md font-500">{{ price }} {{ currency }}</div>
               </div>
-              <div class="col-lg-3">
+              <div class="col-lg-3" v-if="hasSale">
                 <s class="font-md font-500 text-line-through"
-                  >10 500 {{ currency }}</s
+                  >{{ oldPrice }} {{ currency }}</s
                 >
               </div>
               <div class="col-lg-6">
-                <div class="fines-item__sale">-50% до 10.04.2020</div>
+                <div class="fines-item__sale" v-if="hasSale">
+                  -{{ item.discount }}% до
+                  {{ item.discount_end_date | moment("DD.MM.YYYY") }}
+                </div>
               </div>
             </div>
           </div>
@@ -89,17 +94,13 @@
           <div class="mb-25">
             <div class="color-grey-2 mb-10">Описание</div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis
-              tincidunt ultrices nunc amet elit eget. Orci suspendisse commodo
-              molestie lacus nec leo scelerisque varius consectetur.
-              <a href="#">Подробнее</a>
+              {{ item.koap_text }}
             </div>
           </div>
           <div>
             <div class="color-grey-2 mb-10">Подразделение</div>
             <div>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mattis
-              tincidunt ultrices nunc amet elit eget.
+              {{ item.division }}
             </div>
           </div>
         </app-accardion-col>
@@ -123,7 +124,7 @@
           </div>
           <div>
             <div class="color-grey-2 mb-10">Адрес:</div>
-            <div>{{item.address}}</div>
+            <div>{{ item.address }}</div>
           </div>
         </app-accardion-col>
       </template>
@@ -160,6 +161,32 @@ export default class DriverListItem extends Vue {
   get currency() {
     return this.$store.getters.currency;
   }
+
+  get price() {
+    if (this.hasSale) {
+      const d = (this.sale / 100) * this.oldPrice;
+      let price = this.oldPrice - d;
+      return price.toFixed(2)
+    }
+    return this.item.summa;
+  }
+  get oldPrice() {
+    if (!this.hasSale) return 0;
+    return this.item.summa;
+  }
+  get sale() {
+    const sale = parseInt(this.item.discount);
+    if (isNaN(sale)) {
+      return 0;
+    }
+    return sale;
+  }
+  get hasSale() {
+    if (this.sale <= 0) return false;
+    const discountDate = new Date(this.item.discount_end_date);
+    if (discountDate.toString() === "Invalid Date") return false;
+    return new Date().getTime() < discountDate.getTime();
+  }
 }
 </script>
 
@@ -175,9 +202,9 @@ export default class DriverListItem extends Vue {
   }
   &__status {
     display: flex;
-    justify-content: flex-end!important;
+    justify-content: flex-end !important;
     @include lg {
-      justify-content: flex-start!important;
+      justify-content: flex-start !important;
     }
     .btn {
       color: $grey_1;

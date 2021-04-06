@@ -21,6 +21,7 @@ import "@/libs/date-filter"
 import "@/libs/locale-yup"
 import "@/libs/vue-select"
 import "@/libs/vue-image-viewer"
+import "@/libs/v-tooltip"
 
 import "@/libs/global-components"
 

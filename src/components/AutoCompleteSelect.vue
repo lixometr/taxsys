@@ -1,10 +1,13 @@
 <template>
   <app-select
+    class="autocomplete-select"
+    :class="{ 'not-searched': !isSearched }"
     v-bind="$attrs"
     v-on="$listeners"
     :options="options"
     @search="onSearch"
-  />
+  >
+  </app-select>
 </template>
 
 <script lang="ts">
@@ -22,14 +25,17 @@ interface IProps {
   components: { AppSelect },
   setup(props: IProps) {
     const { searchFunc, makeOptions, makeRequest } = toRefs<IProps>(props);
+    const isSearched = ref(false);
     const { exec: searchItems, result } = searchFunc.value();
+
     const options = computed(() => makeOptions.value(result.value) || []);
     const onSearch = async (search: string) => {
       if (!search) return;
       await searchItems(makeRequest.value({ search }));
+      isSearched.value = true;
       return options.value;
     };
-    return { options, onSearch };
+    return { options, onSearch, isSearched };
   },
 })
 export default class AutoCompleteSelect extends Vue {
@@ -48,4 +54,11 @@ export default class AutoCompleteSelect extends Vue {
 </script>
 
 <style lang="scss">
+.autocomplete-select {
+  &.not-searched {
+    .vs__dropdown-menu {
+      display: none;
+    }
+  }
+}
 </style>

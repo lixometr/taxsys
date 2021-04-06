@@ -11,6 +11,7 @@ import rent from './routes/rent'
 import fines from './routes/fine'
 import rentApp from './routes/applications'
 import car from './routes/car'
+import modernLogin from './routes/modern-login'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -29,6 +30,7 @@ const routes: Array<RouteConfig> = [
   ...fines,
   ...rentApp,
   ...car,
+  ...modernLogin,
   {
     path: '*',
     name: "PageNotFound",

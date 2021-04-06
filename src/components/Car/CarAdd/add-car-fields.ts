@@ -2,10 +2,10 @@ import useField from "@/compositions/validators/useField";
 import { AgregName } from "@/types/agregator.enum";
 import * as yup from "yup"
 import "yup-phone"
-import {  color, license, mark, model, numberCtc, vin, year } from "@/components/Register/RegisterDriver/register-car-fields";
+import {  color, license, mark,  model, carNumber, vin, year } from "@/components/Register/RegisterDriver/register-car-fields";
 import { watch } from "@vue/composition-api";
 
-export const ctcNumber = useField('', [yup.string().required()])
+export const ctcNumber = useField('', [yup.string().required().length(10)])
 export const run = useField(null, [yup.number().nullable()])
 export const complect = useField('', [yup.string().optional()])
 export const driverDemand = useField('', [yup.string().optional()])
@@ -18,7 +18,6 @@ export const photoCtcBack = useField(null, [yup.string().nullable()])
 export const photoFront = useField(null, [yup.string().nullable()])
 export const photoBack = useField(null, [yup.string().nullable()])
 
-export const carNumber = useField('', [yup.string().required()])
 
 
 const buyoutGroup = {

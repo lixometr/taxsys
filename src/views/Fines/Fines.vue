@@ -5,7 +5,7 @@
         <fines-filters v-model="entity" />
       </template>
     </page-filters>
-    <div  class="flex-layout flex-1" v-if="false">
+    <div  class="flex-layout flex-1" v-if="items.length > 0">
       <page-title>
         <h2>Штрафы</h2>
       </page-title>

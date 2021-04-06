@@ -11,11 +11,14 @@
             :driverId="driverId"
             :agregator="agregator"
             v-if="activeAction === 'writeoff'"
+            @send="onSent"
           />
           <driver-balance-put-form
             :driverId="driverId"
             :agregator="agregator"
             v-if="activeAction === 'put'"
+            @send="onSent"
+
           />
         </div>
       </div>
@@ -41,7 +44,7 @@ interface IProps {
     DriverBalanceWriteoffForm,
     DriverBalancePutForm,
   },
-  setup(props: IProps) {
+  setup(props: IProps, {emit}) {
     const { action } = toRefs<IProps>(props);
     const activeAction = ref(action.value);
     const actions = [
@@ -54,7 +57,11 @@ interface IProps {
         value: "put",
       },
     ];
+    const onSent = () => {
+      emit('close')
+    }
     return {
+      onSent,
       activeAction,
       actions,
     };

@@ -34,29 +34,44 @@ import * as yup from "yup";
 import { useApiDriverAddCard } from "@/api/driver";
 import { toRefs } from "@vue/composition-api";
 import { errorHandler } from "@/helpers/error-handler";
+import { useApiPartnerAddCard } from "@/api/partner-card";
 interface IProps {
   [key: string]: any;
-  driverId: number;
+  id: number;
+  type: string
 }
 @Component({
   components: { AppCheckboxInput },
   setup(props: IProps, { emit }) {
-    const { driverId } = toRefs<IProps>(props);
+    const { id, type} = toRefs<IProps>(props);
     const { handleSubmit, values, errors, serialize } = useForm({
       fields: {
-        number: useField("", [yup.string().matches(/^[0-9]+$/, "Введите корректное значение").length(16).required()]),
+        number: useField("", [
+          yup
+            .string()
+            .matches(/^[0-9]+$/, "Введите корректное значение")
+            .length(16)
+            .required(),
+        ]),
         isDefault: useField(false, [yup.boolean().required()]),
       },
       rename: {
         isDefault: "def",
       },
     });
-    const { exec: addCard, error, result } = useApiDriverAddCard({
-      toast: { error: errorHandler(), success: () => 'Карта успешно добавлена!' },
+    const apiRoute = {
+      driver: useApiDriverAddCard,
+      partner: useApiPartnerAddCard,
+    };
+    const { exec: addCard, error, result } = apiRoute[type.value]({
+      toast: {
+        error: errorHandler(),
+        success: () => "Карта успешно добавлена!",
+      },
     });
     const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
-      await addCard({ ...toSend, id: driverId.value });
+      await addCard({ ...toSend, id: id.value });
       if (error.value) return;
       emit("send");
     });
@@ -68,7 +83,8 @@ interface IProps {
   },
 })
 export default class AddCardForm extends Vue {
-  @Prop([String, Number]) driverId: string;
+  @Prop([String, Number]) id: string;
+  @Prop(String) type: string
 }
 </script>
 

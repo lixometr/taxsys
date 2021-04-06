@@ -13,7 +13,7 @@ export const AgregatorType = {
         icon: require('@/assets/img/gett_logo.png')
     },
     [AgregName.citymobil]: {
-        name: "Ситимоби",
+        name: "Ситимобил",
         icon: require('@/assets/img/city_logo.png')
 
     }

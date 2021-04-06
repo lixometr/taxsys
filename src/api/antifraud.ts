@@ -3,11 +3,12 @@ import { AntifraudEntity } from "@/models/antifraud.entity";
 
 
 
-export const useApiGetAntifrauds = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<any>>(({ page }) => ({
+export const useApiGetAntifrauds = (opts?: UseApiOptions) => useApi<{ page?: number, paginate?: boolean }, PaginationResponse<any>>(({ page, paginate = true }) => ({
     method: "GET",
     url: '/partner/antifraud/',
     params: {
-        page
+        page,
+        paginate: paginate ? 5 : 0
     },
 
 }), opts)

@@ -65,7 +65,8 @@ interface IProps {
       const { showByName } = useModal();
       showByName(ModalName.addCard, {
         props: {
-          driverId: driverId.value,
+          id: driverId.value,
+          type: "driver"
         },
         on: {
           send: () => {

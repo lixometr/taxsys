@@ -4,7 +4,7 @@
       <h2 class="modal-title">Добавление карты</h2>
     </template>
     <template>
-      <add-card-form @send="onSend" :driverId="driverId" />
+      <add-card-form @send="onSend" :type="type" :id="id" />
     </template>
   </modal-content>
 </template>
@@ -13,7 +13,10 @@
 import AddCardForm from "../AddCard/AddCardForm.vue";
 import ModalContent from "./ModalContent.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
-
+enum ModalType {
+  driver = 'driver',
+  partner = 'partner'
+}
 @Component({
   components: { ModalContent, AddCardForm },
   setup(props, { emit }) {
@@ -28,6 +31,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 })
 export default class AddCardModal extends Vue {
   @Prop(Number) driverId: string;
+  @Prop(String) type: ModalType
 }
 </script>
 

@@ -38,6 +38,11 @@ const routes: Array<RouteConfig> = [
                 path: 'payment-groups',
                 component: () => import("@/views/Settings/PaymentGroups.vue")
             },
+            {
+                name: "SettingsWidgetAdd",
+                path: 'widget/add',
+                component: () => import("@/views/Settings/WidgetAdd.vue")
+            },
         ]
     },
 

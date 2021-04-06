@@ -1,6 +1,9 @@
 <template>
   <div class="applications-add-form">
     <form action="#" @submit.prevent="onSubmit">
+      <div class="row mb-20 justify-content-center">
+        <app-chooser :items="rentTypes" v-model="type" />
+      </div>
       <div class="row mb-10">
         <div class="col-lg-6">
           <app-input
@@ -19,128 +22,46 @@
           />
         </div>
       </div>
-      <div class="applications-add-form__design-items mb-50">
-        <div class="applications-add-form__design-item">
-          <app-button
-            type="button"
-            color="purple"
-            :stroke="true"
-            :active="values.design === DesignTypes.order"
-            @click="values.design = DesignTypes.order"
-            >Заказать оформление</app-button
-          >
-          <div class="applications-add-form__design-item-text">+ 15 000 ₽</div>
-        </div>
-        <div class="applications-add-form__design-item">
-          <app-button
-            type="button"
-            color="purple"
-            :stroke="true"
-            :active="values.design === DesignTypes.upload"
-            @click="values.design = DesignTypes.upload"
-            >Загрузить свой дизайн</app-button
-          >
-          <div class="applications-add-form__design-item-text">+ 0 ₽</div>
-        </div>
-      </div>
-      <div class="applications-add-form__upload mb-10">
-        <div class="applications-add-form__upload-item">
-          <div class="mr-10">Логотип приложения</div>
-          <div class="d-flex">
-            <pin-upload
-              class="mr-10"
-              v-model="values.logo"
-              :errors="errors.logo"
-            />
-            <app-tooltip-info> (700x700 px, png / jpg / svg) </app-tooltip-info>
-          </div>
-        </div>
-        <div class="applications-add-form__upload-item">
-          <div class="mr-10">Фон в приложении</div>
-          <div class="d-flex">
-            <pin-upload
-              class="mr-10"
-              v-model="values.background"
-              :errors="errors.background"
-            />
-            <app-tooltip-info> (1080x1920 px, png / jpg)</app-tooltip-info>
-          </div>
-        </div>
-      </div>
-      <div class="row mb-30">
-        <div class="col-lg-6">
-          <app-input
-            label="Ссылка на публичную оферту для водителей"
-            v-model="values.privacyDriverLink"
-            :errors="errors.privacyDriverLink"
-            class=""
-          />
-        </div>
-        <div class="col-lg-6">
-          <app-input
-            label="Сервис для отправки сообщений (sms.ru): API ключ"
-            v-model="values.sendSmsApi"
-            :errors="errors.sendSmsApi"
-            class=""
+      <div class="row mb-10" v-if="type === 'rent'">
+        <div class="col-lg-12">
+          <app-checkbox-input
+            :reverse="true"
+            label="Заказать оформление и страницы входа"
+            :errors="errors.orderDesign"
+            v-model="values.orderDesign"
           />
         </div>
       </div>
-      <div>
-        <div class="color-purple font-md mb-10">Контакты</div>
-        <div class="row">
-          <div class="col-lg-6">
-            <app-input
-              label="Сайт"
-              v-model="values.site"
-              :errors="errors.site"
-              class=""
-            />
-          </div>
-          <div class="col-lg-6">
-            <phone-input
-              label="Телефон"
-              v-model="values.phone"
-              :errors="errors.phone"
-              class=""
-            />
-          </div>
-          <div class="col-xl-3 col-lg-6">
-            <phone-input
-              label="WhatsApp"
-              v-model="values.whatsapp"
-              :errors="errors.whatsapp"
-              class=""
-            />
-          </div>
-          <div class="col-xl-3 col-lg-6">
-            <phone-input
-              label="Viber"
-              v-model="values.viber"
-              :errors="errors.viber"
-              class=""
-            />
-          </div>
-          <div class="col-xl-3 col-lg-6">
-            <app-input
-              label="Telegram"
-              v-model="values.tg"
-              :errors="errors.tg"
-              class=""
-            />
-          </div>
-          <div class="col-xl-3 col-lg-6">
-            <app-input
-              label="Instagram"
-              v-model="values.instagram"
-              :errors="errors.instagram"
-              class=""
-            />
-          </div>
+      <div
+        class="applications-add-form__upload mb-10"
+        v-if="!values.orderDesign && type === 'rent'"
+      >
+        <div class="applications-add-form__upload-item">
+          <app-image-upload
+            :icon="svgFile"
+            v-model="values.logo"
+            label="Логотип приложения"
+          />
+        </div>
+        <div class="applications-add-form__upload-item">
+          <app-image-upload
+            :icon="svgFile"
+            v-model="values.background"
+            label="Фон в приложении"
+          />
+        </div>
+        <div class="applications-add-form__upload-item">
+          <app-image-upload
+            :icon="svgFile"
+            v-model="values.icon"
+            label="Иконка приложения"
+          />
         </div>
       </div>
+
       <div class="applications-add-form__footer">
         <div class="applications-add-form__footer-price">
-          {{price}} {{ currency }}
+          {{ price }} {{ currency }}
         </div>
         <div class="applications-add-form__footer-btn">
           <app-button
@@ -159,43 +80,44 @@
 </template>
  
 <script lang="ts">
+import AppImageUpload from "../AppImageUpload.vue";
+import AppCheckboxInput from "../AppCheckboxInput.vue";
+import AppCheckbox from "../AppCheckbox.vue";
+import AppChooser from "../AppChooser.vue";
 import PhoneInput from "../PhoneInput.vue";
 import AppTooltipInfo from "../AppTooltipInfo.vue";
 import PinUpload from "../PinUpload.vue";
-import AppCheckboxInput from "../AppCheckboxInput.vue";
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
 import { Component, Vue } from "vue-property-decorator";
 import * as yup from "yup";
 import "yup-phone";
-import { computed } from "@vue/composition-api";
-enum DesignTypes {
-  order = "order",
-  upload = "upload",
+import { computed, ref, toRefs } from "@vue/composition-api";
+import useRouter from "@/compositions/useRouter";
+import svgFile from "@/assets/icons/file.svg";
+interface IProps {
+  [key: string]: any;
 }
 @Component({
-  components: { AppCheckboxInput, PinUpload, AppTooltipInfo, PhoneInput },
-  setup(props, { emit }) {
+  components: {
+    AppCheckboxInput,
+    PinUpload,
+    AppTooltipInfo,
+    PhoneInput,
+    AppChooser,
+    AppCheckbox,
+    AppImageUpload,
+  },
+  setup(props: IProps, { emit }) {
+    const router = useRouter();
     const { handleSubmit, values, errors, serialize } = useForm({
       fields: {
         developerName: useField("", [yup.string().required()]),
         appName: useField("", [yup.string().required()]),
-        design: useField(DesignTypes.upload, [yup.string().required()]),
         logo: useField(null, [yup.string().optional().nullable()]),
         background: useField(null, [yup.string().optional().nullable()]),
-        privacyDriverLink: useField("", [yup.string().optional()]),
-        sendSmsApi: useField("", [yup.string().optional()]),
-        site: useField("", [yup.string().optional()]),
-        phone: useField(null, [
-          yup
-            .number()
-            .typeError("Введите корректный номер телефона")
-            .nullable(),
-        ]),
-        whatsapp: useField("", [yup.string()]),
-        viber: useField("", [yup.string()]),
-        tg: useField("", [yup.string()]),
-        instagram: useField("", [yup.string()]),
+        icon: useField(null, [yup.string().optional().nullable()]),
+        orderDesign: useField(false, [yup.boolean().required()]),
       },
     });
     const onSubmit = handleSubmit(async () => {
@@ -204,13 +126,38 @@ enum DesignTypes {
 
       emit("send");
     });
-    const price = computed(() => '22 000')
+
+    const rentTypes = [
+      {
+        value: "rent",
+        name: "Аренда",
+      },
+      {
+        value: "buy",
+        name: "Покупка",
+      },
+    ];
+    const defualtType = router.currentRoute.query.type || "rent";
+    const type = ref(defualtType);
+    const price = computed(() => {
+      if (type.value === "buy") {
+        return "25 000";
+      } else {
+        if(values.orderDesign) {
+          return '23 500'
+        } else {
+          return '22 000'
+        }
+      }
+    });
     return {
+      type,
+      rentTypes,
       onSubmit,
       values,
       errors,
-      DesignTypes,
-      price
+      price,
+      svgFile,
     };
   },
 })
@@ -228,35 +175,7 @@ export default class ApplicationsAddForm extends Vue {
   &__btn {
     padding: 1rem 6rem;
   }
-  &__design-items {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    @include sm {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  }
-  &__design-item {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    &:first-child {
-      margin-right: 30px;
-      @include sm {
-        margin-right: 0;
-        margin-bottom: 20px;
-      }
-    }
-    .btn {
-      flex: 1;
-    }
-    &-text {
-      font-weight: bold;
-      color: #8f8aff;
-      margin-left: 10px;
-    }
-  }
+
   &__upload {
     display: flex;
     @include sm {
@@ -264,11 +183,12 @@ export default class ApplicationsAddForm extends Vue {
       align-items: flex-start;
     }
     &-item {
-      flex: 1;
-      display: flex;
-      justify-content: space-between;
-      &:first-child {
-        margin-right: 30px;
+      margin-right: 30px;
+      svg {
+        color: $violet;
+      }
+      &:last-child {
+        margin-right: 0;
         @include sm {
           margin-right: 0;
           // margin-bottom: 20px;
@@ -294,7 +214,7 @@ export default class ApplicationsAddForm extends Vue {
     &-btn {
       flex: 1;
       @include lg {
-      margin-bottom: 15px;
+        margin-bottom: 15px;
 
         order: 1;
       }

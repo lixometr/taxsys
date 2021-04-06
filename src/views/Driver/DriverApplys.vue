@@ -6,10 +6,14 @@
       </template>
     </page-filters>
     <div class="flex-layout flex-1" v-if="items.length">
-      <page-title>
-        <h2>Заявки водителей</h2>
+      <page-title :between="true">
+        <div><h2>Заявки водителей</h2></div>
+        <div>
+          <app-button color="orange" @click="addDriver" :shadow="true"
+            >Добавить водителя <svgPlus class="ml-10"
+          /></app-button>
+        </div>
       </page-title>
-
       <div class="driver-list-items flex flex-column flex-1">
         <driver-list-item
           v-for="item in items"
@@ -17,8 +21,8 @@
           :item="item"
           :showAgregators="false"
           @refresh="refresh"
-          :paymentGroups="paymentGroups && paymentGroups.data"
-          :antifrauds="antifrauds && antifrauds.data"
+          :paymentGroups="paymentGroups"
+          :antifrauds="antifrauds"
         />
         <app-pagination
           class="mt-auto"
@@ -31,15 +35,15 @@
       </div>
     </div>
     <div class="flex-layout flex-1" v-else key="noItems">
-      <driver-applys-connect-placeholder v-if="entity === 'connect'"/>
-      <driver-applys-rent-placeholder v-if="entity === 'rent'"/>
+      <driver-applys-connect-placeholder v-if="entity === 'connect'" />
+      <driver-applys-rent-placeholder v-if="entity === 'rent'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import DriverApplysConnectPlaceholder from '../../components/Placeholders/DriverApplysConnectPlaceholder.vue'
-import DriverApplysRentPlaceholder from '../../components/Placeholders/DriverApplysRentPlaceholder.vue'
+import DriverApplysConnectPlaceholder from "../../components/Placeholders/DriverApplysConnectPlaceholder.vue";
+import DriverApplysRentPlaceholder from "../../components/Placeholders/DriverApplysRentPlaceholder.vue";
 import DriverApplysFilters from "../../components/DriverApplys/DriverApplysFilters.vue";
 import DriverListItem from "../../components/DriverList/DriverListItem.vue";
 import AppButton from "../../components/AppButton.vue";
@@ -52,6 +56,7 @@ import useItemsPage from "@/compositions/useItemsPage";
 import { useApiGetDriversApplys } from "@/api/driver";
 import { useApiGetAntifrauds } from "@/api/antifraud";
 import { useApiGetPaymentGroups } from "@/api/payment-groups";
+import useRouter from "@/compositions/useRouter";
 @Component({
   components: {
     PageTitle,
@@ -59,13 +64,15 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     AppButton,
     svgPlus,
     DriverListItem,
-    DriverApplysFilters, DriverApplysRentPlaceholder, DriverApplysConnectPlaceholder
+    DriverApplysFilters,
+    DriverApplysRentPlaceholder,
+    DriverApplysConnectPlaceholder,
   },
   metaInfo: {
     title: "Заявки водителей",
   },
   setup() {
-    const entity = ref('connect');
+    const entity = ref("connect");
     const date = ref({
       start: undefined,
       end: undefined,
@@ -94,15 +101,19 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
       refreshItems();
     };
     const { exec: getAntifraud, result: antifrauds } = useApiGetAntifrauds();
-    getAntifraud({ page: 1 });
+    getAntifraud({ paginate: false });
 
     const {
       exec: getPaymentGroups,
       result: paymentGroups,
     } = useApiGetPaymentGroups();
     getPaymentGroups();
-
+    const router = useRouter();
+    const addDriver = () => {
+      router.push({ name: "AddDriver" });
+    };
     return {
+      addDriver,
       antifrauds,
       paymentGroups,
       refresh,

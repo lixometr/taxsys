@@ -9,6 +9,7 @@
         class="settings-topbar-item__btn"
         size="sm"
         color="orange-grad"
+        @click="goTo"
         >Купить</app-button
       >
     </template>
@@ -20,8 +21,18 @@ import SettingsTopBarItem from "./SettingsTopBarItem.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 import svgCheck from "@/assets/icons/check-square.svg";
+import useRouter from "@/compositions/useRouter";
 @Component({
   components: { SettingsTopBarItem, svgCheck },
+  setup() {
+    const router = useRouter();
+    const goTo = () => {
+      router.push({ name: "ApplicationsRent", query: { type: "buy" } });
+    };
+    return {
+      goTo,
+    };
+  },
 })
 export default class SettingsTopBarBuy extends Vue {}
 </script>

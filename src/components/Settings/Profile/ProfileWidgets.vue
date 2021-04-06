@@ -28,10 +28,13 @@
 import ProfileWidget from "./ProfileWidget.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgPlus from "@/assets/icons/plus.svg";
+import useRouter from "@/compositions/useRouter";
 @Component({
   components: { ProfileWidget, svgPlus },
   setup() {
+    const router = useRouter()
     const addWidget = () => {
+      router.push({name: "SettingsWidgetAdd"})
       return;
     };
     return {

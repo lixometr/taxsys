@@ -14,7 +14,7 @@
         <app-accardion-col :class="responsiveCol">{{
           driverFullName
         }}</app-accardion-col>
-        <app-accardion-col :class="{...responsiveCol, 'color-red': antifraud.costTrip }"
+        <app-accardion-col :class="{[responsiveCol]: true, 'color-red': antifraud.costTrip }"
           >{{ item.Price }} {{ currency }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveCol">
@@ -82,7 +82,6 @@
 
           <div
             class="row"
-            :class="{ 'color-red': antifraud.costTrip }"
             v-if="chargedDriver"
           >
             <div class="col-6">Начислено водителю:</div>

@@ -76,10 +76,11 @@ export const baseSchema: FormSchemaItem[] = [
 
     },
     {
-        type: "app-input",
+        type: "app-select",
         field: countryLicense,
         props: {
             label: "Страна выдачи В.У.",
+            options: ['Российская Федерация', 'Кыргызская Республика', 'Республика Беларусь', 'Республика Казахста']
         },
         class: "col-lg-4",
         sort: 11
@@ -189,7 +190,7 @@ const cityMobilSchema: FormSchemaItem[] = [
     sPassportDate,
     sPassportWho,
     sPhotoPassport,
-
+    sPhotoLicense
 ]
 const gettSchema: FormSchemaItem[] = [
     sPassport,
@@ -199,6 +200,8 @@ const gettSchema: FormSchemaItem[] = [
         field: gettId,
         props: {
             label: "Gett ID",
+            disabled: !!learningDate.value.value
+
         },
         class: "col-lg-6",
         sort: 15
@@ -209,6 +212,7 @@ const gettSchema: FormSchemaItem[] = [
         field: learningDate,
         props: {
             label: "Дата прохождения обучения",
+            disabled: !!gettId.value.value
         },
         class: "col-lg-6",
         sort: 16

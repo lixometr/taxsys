@@ -6,8 +6,9 @@
       </template>
     </page-filters>
     <div v-if="items.length" class="flex-layout flex-1">
-      <page-title>
-        <h2>Поездки</h2>
+      <page-title :between="true">
+        <div><h2>Поездки</h2></div>
+        <div><download-btn /></div>
       </page-title>
       <div class="travels-items flex flex-column flex-1">
         <travels-item v-for="item in items" :key="item.id" :item="item" />
@@ -26,6 +27,7 @@
 </template>
 
 <script lang="ts">
+import DownloadBtn from '../../components/DownloadBtn.vue'
 import TravelPlaceholder from "../../components/Placeholders/TravelPlaceholder.vue";
 import TravelsItem from "@/components/Travels/TravelsItem.vue";
 import AggregatorFilters from "@/components/Travels/AgregatorFilters.vue";
@@ -81,7 +83,7 @@ import useItemsPage from "@/compositions/useItemsPage";
     PageFilters,
     AggregatorFilters,
     TravelsItem,
-    TravelPlaceholder,
+    TravelPlaceholder, DownloadBtn
   },
 })
 export default class Travels extends Vue {}

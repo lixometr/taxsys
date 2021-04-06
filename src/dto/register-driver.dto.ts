@@ -2,6 +2,7 @@ import useMoment from "@/compositions/useMoments"
 import { ApiDate } from "@/types/constants"
 import { FileTransform } from "@/transformers/file.transform"
 import { Transform, Type } from "class-transformer"
+import { OmitNull } from "@/transformers/omitnull.transform"
 
 export class RegisterDriverDto {
     @Transform(({value}) => JSON.stringify(value), {toPlainOnly: true})
@@ -16,6 +17,8 @@ export class RegisterDriverDto {
     endTimeLicense: Date
     @Transform(({ value }) => useMoment(value).format(ApiDate), { toPlainOnly: true })
     passportDate: Date
+    @OmitNull()
+    gettId: number
     @Transform(({ value }) => {
         if(value) {
             return useMoment(value).format(ApiDate)

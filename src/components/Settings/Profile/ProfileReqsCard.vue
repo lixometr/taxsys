@@ -31,7 +31,7 @@ import svgTrash from "@/assets/icons/trash.svg";
 })
 export default class ProfileReqsCard extends Vue {
   @Prop(Number) index: number;
-  @Prop(String) cardNumber: string;
+  @Prop([String, Number]) cardNumber: string;
   @Prop(Boolean) active: boolean;
 }
 </script>

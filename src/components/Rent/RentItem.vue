@@ -7,28 +7,27 @@
             <div class="rent-item__image">
               <img src="@/assets/img/rent_car.png" alt="image" />
             </div>
-            <div class="rent-item__model-name">Mazda 6</div>
+            <div class="rent-item__model-name">{{ item.Brand }}</div>
           </div>
         </app-accardion-col>
 
         <app-accardion-col class="col-lg-3 col-md-6">
           <div class="rent-item__charcs color-grey-2 w-100">
-            <div class="rent-item__charc">2005 г.в.</div>
-            <div class="rent-item__charc">116 223 км</div>
+            <div class="rent-item__charc">{{ item.Year }} г.в.</div>
+            <div class="rent-item__charc">{{ milleage }} км</div>
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-2 col-md-4">
           <div class="rent-item__number car-number">
-            <div class="car-number-num">A 420 BП</div>
-            <div class="car-number-code">777</div>
+            <div class="car-number-num">{{ item.GosNomer }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-2 col-md-4">
-          <div class="rent-item__price">3000 {{ currency }}</div>
+          <div class="rent-item__price">{{activePrice}} {{ currency }}</div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-2 col-md-4">
           <div class="rent-item__btn">
-            <app-button color="green" @click="approve">выдать</app-button>
+            <app-button color="green" @click.stop="approve">выдать</app-button>
           </div>
         </app-accardion-col>
       </template>
@@ -36,24 +35,21 @@
         <app-accardion-col class="col-lg-3">
           <div class="rent-item__description">
             <div class="font-500 color-grey-2">Описание</div>
-            <div class="color-grey-3">
-              Sodales eget risus, ornare platea rutrum tincidunt. Aliquam lacus
-              aliquet eget consectetur. <a href="#">Подробнее</a>
-            </div>
+            <div class="color-grey-3" v-html="item.Description"></div>
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-3">
           <div class="rent-item__requirements">
             <div class="font-500 color-grey-2">Требования к водителю</div>
-            <div class="color-grey-3">
-              Sodales eget risus, ornare platea rutrum tincidunt. Aliquam lacus
-              aliquet eget consectetur. Подробнее
-            </div>
+            <div class="color-grey-3" v-html="item.DriverRequirements"></div>
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-3">
           <div class="rent-item__deposit w-100">
-            <rent-item-deposit v-model="deposit"/>
+            <rent-item-deposit
+              :deposit="item.Deposit"
+              v-model="deposit"
+            />
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-3">
@@ -61,15 +57,20 @@
             <action-icon-edit
               class="rent-item__action"
               @click="edit"
+              v-tooltip="'Редактировать'"
             />
 
             <action-icon-active
-              class="rent-item__action "
+              class="rent-item__action"
               @click="toggleActive"
               :isActive="true"
-
+              v-tooltip="'Скрыть'"
             />
-            <action-icon-delete class="rent-item__action" @click="remove">
+            <action-icon-delete
+              class="rent-item__action"
+              @click="remove"
+              v-tooltip="'Удалить'"
+            >
             </action-icon-delete>
           </div>
         </app-accardion-col>
@@ -79,18 +80,24 @@
 </template>
 
 <script lang="ts">
-import RentItemDeposit from './RentItemDeposit.vue'
-import ActionIconEdit from '../ActionIcons/ActionIconEdit.vue'
+import RentItemDeposit from "./RentItemDeposit.vue";
+import ActionIconEdit from "../ActionIcons/ActionIconEdit.vue";
 import ActionIconActive from "../ActionIcons/ActionIconActive.vue";
 import ActionIconDelete from "../ActionIcons/ActionIconDelete.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgEdit from "@/assets/icons/edit.svg";
 import svgTrash from "@/assets/icons/trash.svg";
 import svgEye from "@/assets/icons/eye.svg";
-import { ref } from '@vue/composition-api';
+import { computed, ref, toRefs } from "@vue/composition-api";
+import { RentItem as IRentItem } from "@/models/rent-item.entity";
+interface IProps {
+  [key: string]: any
+  item: IRentItem
+}
 @Component({
-  setup(props, { emit }) {
-    const deposit = ref('')
+  setup(props: IProps, { emit }) {
+    const {item} = toRefs<IProps>(props)
+    const deposit = ref("70");
     const approve = () => {
       emit("approve");
       return;
@@ -104,7 +111,19 @@ import { ref } from '@vue/composition-api';
     const toggleActive = () => {
       emit("active");
     };
+     const activePrice = computed(() => {
+      if (deposit.value === "61") {
+        return item.value.Rent61 || 0;
+      }
+      if (deposit.value === "70") {
+        return item.value.Rent70 || 0;
+      }
+      if (deposit.value === "ransom") {
+        return item.value.Ransom || 0;
+      }
+    });
     return {
+      activePrice,
       deposit,
       remove,
       toggleActive,
@@ -117,13 +136,18 @@ import { ref } from '@vue/composition-api';
     svgTrash,
     svgEye,
     ActionIconDelete,
-    ActionIconActive, ActionIconEdit, RentItemDeposit
+    ActionIconActive,
+    ActionIconEdit,
+    RentItemDeposit,
   },
 })
 export default class RentItem extends Vue {
-  @Prop() item: any;
+  @Prop() item: IRentItem;
   get currency() {
     return this.$store.getters.currency;
+  }
+  get milleage() {
+    return Intl.NumberFormat("ru").format(this.item.Milleage);
   }
 }
 </script>

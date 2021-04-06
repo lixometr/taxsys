@@ -36,7 +36,7 @@ import useRouter from "@/compositions/useRouter";
       AgregName.yandex,
       AgregName.citymobil,
     ]);
-    const step = ref(1);
+    const step = ref(2);
     const goBack = () => {
       emit("back");
     };

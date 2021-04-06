@@ -1,5 +1,5 @@
 <template>
-  <div class="app-checkbox-input">
+  <div class="app-checkbox-input" :class="{ reverse }">
     <div class="app-checkbox-input__inner">
       <app-checkbox
         class="shrink-0"
@@ -51,6 +51,7 @@ export default class AppCheckboxInput extends Vue {
     default: () => [],
   })
   errors: Array<string>;
+  @Prop(Boolean) reverse: boolean;
 
   @ModelSync("value", "input", { type: Boolean })
   readonly inputModel!: boolean;
@@ -74,6 +75,13 @@ export default class AppCheckboxInput extends Vue {
   }
   &__error {
     padding-top: 6px;
+  }
+  &.reverse {
+    .app-checkbox-input__title {
+      order: -1;
+      margin-left: 0;
+      margin-right: 10px;
+    }
   }
 }
 </style>

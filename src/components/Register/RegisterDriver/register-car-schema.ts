@@ -1,35 +1,49 @@
+import { useApiGetSuggestionColor, useApiGetSuggestionMark, useApiGetSuggestionModel } from "@/api/car";
 import { FormSchemaItem } from "@/components/FormSchema/form-schema.type";
 import useField from "@/compositions/validators/useField";
 import { AgregName } from "@/types/agregator.enum";
 import { carNumber, color, license, mark, model, numberCtc, photoBack, photoCtcBack, photoCtcFront, photoFront, vin, year } from "./register-car-fields";
+export const sMark = {
+    name: 'mark',
+    type: "auto-complete-select",
+    field: mark,
+    props: {
+        label: "Марка",
+        selectLabel: 'name',
+        searchFunc: useApiGetSuggestionMark,
+    },
+    class: "col-lg-4 col-md-6",
+    sort: 1,
+}
+export const sModel = {
+    type: "auto-complete-select",
+    field: model,
+    props: {
+        label: "Модель",
+        selectLabel: 'name',
+        reduce: item => item.name,
+        makeRequest: () => ({ markId: mark.value.value.id }),
+        searchFunc: useApiGetSuggestionModel,
+    },
+    class: "col-lg-4 col-md-6",
+    sort: 2,
+}
+export const sColor = {
+    type: "auto-complete-select",
+    field: color,
+    props: {
+        label: "Цвет",
+        selectLabel: 'name',
+        reduce: item => item.name,
+        searchFunc: useApiGetSuggestionColor,
+    },
+    class: "col-lg-4 col-md-6",
+    sort: 3,
+}
 export const baseSchema: FormSchemaItem[] = [
-    {
-        type: "app-input",
-        field: mark,
-        props: {
-            label: "Марка",
-        },
-        class: "col-lg-4",
-        sort: 1,
-    },
-    {
-        type: "app-input",
-        field: model,
-        props: {
-            label: "Модель",
-        },
-        class: "col-lg-4",
-        sort: 2,
-    },
-    {
-        type: "app-input",
-        field: color,
-        props: {
-            label: "Цвет",
-        },
-        class: "col-lg-4",
-        sort: 3,
-    },
+    sMark,
+    sModel,
+    sColor,
     {
         type: "app-input",
         field: year,
@@ -78,7 +92,7 @@ const sLicense = {
 
     sort: 6
 }
-export const sPhotoCtcFront =  {
+export const sPhotoCtcFront = {
     type: 'app-image-upload',
     field: photoCtcFront,
     props: {
@@ -89,7 +103,7 @@ export const sPhotoCtcFront =  {
 
     sort: 100
 }
-export const sPhotoCtcBack =  {
+export const sPhotoCtcBack = {
     type: 'app-image-upload',
     field: photoCtcBack,
     props: {
@@ -100,7 +114,7 @@ export const sPhotoCtcBack =  {
 
     sort: 101
 }
-export const sPhotoFront =  {
+export const sPhotoFront = {
     type: 'app-image-upload',
     field: photoFront,
     props: {
@@ -111,7 +125,7 @@ export const sPhotoFront =  {
 
     sort: 102
 }
-export const sPhotoBack =  {
+export const sPhotoBack = {
     type: 'app-image-upload',
     field: photoBack,
     props: {

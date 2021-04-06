@@ -12,8 +12,7 @@
           item.created_at | dateTime
         }}</app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
-          >{{ item.driver.name }} {{ item.driver.middle_name }}
-          {{ item.driver.last_name }}</app-accardion-col
+          >{{ item.driver.fio }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader"
           >{{ item.amount }} {{ currency }}</app-accardion-col
@@ -23,7 +22,7 @@
             :noHover="true"
             color="grey"
             class="manual-payments-item__btn-driver manual-payments-item__btn"
-            >Новый водитель</app-button
+            >{{item.group.name}}</app-button
           >
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">

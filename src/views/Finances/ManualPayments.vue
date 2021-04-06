@@ -5,9 +5,10 @@
         <manual-payments-filters v-model="entity" />
       </template>
     </page-filters>
-    <div class="flex-layout flex-1" v-if="items.length ">
-      <page-title>
-        <h2>Ручные выплаты</h2>
+    <div class="flex-layout flex-1" v-if="items.length">
+      <page-title :between="true">
+        <div><h2>Ручные выплаты</h2></div>
+        <div><download-btn /></div>
       </page-title>
 
       <div class="travels-items flex flex-column flex-1">
@@ -31,15 +32,16 @@
       </div>
     </div>
     <div class="flex-layout flex-1" v-else>
-      <manual-payments-applys-placeholder v-if="entity === 'orders'"/>
-      <manual-payments-pay-placeholder v-if="entity === 'payments'"/>
+      <manual-payments-applys-placeholder v-if="entity === 'orders'" />
+      <manual-payments-pay-placeholder v-if="entity === 'payments'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import ManualPaymentsPayPlaceholder from '../../components/Placeholders/ManualPaymentsPayPlaceholder.vue'
-import ManualPaymentsApplysPlaceholder from '../../components/Placeholders/ManualPaymentsApplysPlaceholder.vue'
+import DownloadBtn from "../../components/DownloadBtn.vue";
+import ManualPaymentsPayPlaceholder from "../../components/Placeholders/ManualPaymentsPayPlaceholder.vue";
+import ManualPaymentsApplysPlaceholder from "../../components/Placeholders/ManualPaymentsApplysPlaceholder.vue";
 import ManualPaymentsFilters from "../../components/ManualPayments/ManualPaymentsFilters.vue";
 import ManualPaymentsItem from "@/components/ManualPayments/ManualPaymentsItem.vue";
 import PageFilters from "@/components/Page/PageFilters.vue";
@@ -126,7 +128,10 @@ import { errorHandler } from "@/helpers/error-handler";
     PageTitle,
     PageFilters,
     ManualPaymentsItem,
-    ManualPaymentsFilters, ManualPaymentsApplysPlaceholder, ManualPaymentsPayPlaceholder
+    ManualPaymentsFilters,
+    ManualPaymentsApplysPlaceholder,
+    ManualPaymentsPayPlaceholder,
+    DownloadBtn,
   },
 })
 export default class ManualPayments extends Vue {}
