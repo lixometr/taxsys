@@ -1,4 +1,4 @@
-import { useApiGetSuggestionColor, useApiGetSuggestionMark, useApiGetSuggestionModel } from "@/api/car";
+import { useApiGetSuggestionColor, useApiGetSuggestionMark, useApiGetSuggestionModel } from "@/api/car-suggestion";
 import { FormSchemaItem } from "@/components/FormSchema/form-schema.type";
 import useField from "@/compositions/validators/useField";
 import { AgregName } from "@/types/agregator.enum";

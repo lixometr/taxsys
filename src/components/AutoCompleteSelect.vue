@@ -14,7 +14,7 @@
 import AppSelect from "./AppSelect.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { computed, ref, toRefs } from "@vue/composition-api";
-import { useApiGetSuggestionMark } from "@/api/car";
+import { useApiGetSuggestionMark } from "@/api/car-suggestion";
 interface IProps {
   [key: string]: any;
   searchFunc: Function;

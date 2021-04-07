@@ -10,18 +10,18 @@
             :width="77"
             :height="51"
             border
-            :src="require('@/assets/img/fine_mock.png')"
+            :src="item.getMainImage()"
+            v-if="item.getMainImage()"
           />
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
           ><div class="car-number">
-            <div class="car-number-num">{{item.car.GosNomer}}</div>
-           
+            <div class="car-number-num">{{ item.car.GosNomer }}</div>
           </div></app-accardion-col
         >
 
         <app-accardion-col :class="responsiveHeader"
-          >№: {{item.account}}</app-accardion-col
+          >№: {{ item.account }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader">{{
           item.koap_code
@@ -39,7 +39,7 @@
       <template #default>
         <app-accardion-col :class="responsiveContent">
           <div>
-            <div class="color-grey-2 mb-10">{{item.car.driver.fio}}</div>
+            <div class="color-grey-2 mb-10">{{ item.car.driver.fio }}</div>
             <div class="row mb-15">
               <div class="col color-grey-2">Нарушение:</div>
               <div class="col color-grey-1">
@@ -55,15 +55,17 @@
           <div>
             <div class="row align-items-center mt-25">
               <div class="col-lg-3">
-                <div class="font-md font-500">{{ price }} {{ currency }}</div>
+                <div class="font-md font-500">
+                  {{ item.getPrice() }} {{ currency }}
+                </div>
               </div>
-              <div class="col-lg-3" v-if="hasSale">
+              <div class="col-lg-3" v-if="item.hasSale()">
                 <s class="font-md font-500 text-line-through"
-                  >{{ oldPrice }} {{ currency }}</s
+                  >{{ item.getOldPrice() }} {{ currency }}</s
                 >
               </div>
               <div class="col-lg-6">
-                <div class="fines-item__sale" v-if="hasSale">
+                <div class="fines-item__sale" v-if="item.hasSale()">
                   -{{ item.discount }}% до
                   {{ item.discount_end_date | moment("DD.MM.YYYY") }}
                 </div>
@@ -110,16 +112,11 @@
             <app-image
               :width="152"
               :height="88"
-              :src="require('@/assets/img/map.png')"
+              :src="image"
               :shadow="true"
               class="mr-20 mb-20"
-            />
-            <app-image
-              :width="152"
-              :height="88"
-              :src="require('@/assets/img/fine_mock.png')"
-              :shadow="true"
-              class="mr-20 mb-20"
+              v-for="(image, idx) in item.getImages()"
+              :key="idx"
             />
           </div>
           <div>
@@ -137,6 +134,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import { computed, ref } from "@vue/composition-api";
 import AppStatus from "../AppStatus.vue";
 import AppImage from "@/components/AppImage.vue";
+import { Fine } from "@/models/fine.entity";
 @Component({
   components: { AppStatus, AppImage },
   setup(props, { emit }) {
@@ -150,7 +148,7 @@ import AppImage from "@/components/AppImage.vue";
   },
 })
 export default class DriverListItem extends Vue {
-  @Prop(Object) item: any;
+  @Prop(Object) item: Fine;
   get responsiveHeader() {
     return "col-sm-6 col-md-4 col-xl-2";
   }
@@ -160,32 +158,6 @@ export default class DriverListItem extends Vue {
 
   get currency() {
     return this.$store.getters.currency;
-  }
-
-  get price() {
-    if (this.hasSale) {
-      const d = (this.sale / 100) * this.oldPrice;
-      let price = this.oldPrice - d;
-      return price.toFixed(2)
-    }
-    return this.item.summa;
-  }
-  get oldPrice() {
-    if (!this.hasSale) return 0;
-    return this.item.summa;
-  }
-  get sale() {
-    const sale = parseInt(this.item.discount);
-    if (isNaN(sale)) {
-      return 0;
-    }
-    return sale;
-  }
-  get hasSale() {
-    if (this.sale <= 0) return false;
-    const discountDate = new Date(this.item.discount_end_date);
-    if (discountDate.toString() === "Invalid Date") return false;
-    return new Date().getTime() < discountDate.getTime();
   }
 }
 </script>

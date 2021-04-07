@@ -1,3 +1,4 @@
+import useOptionalFields from "@/compositions/optional-fields";
 import useField from "@/compositions/validators/useField";
 import { AgregName } from "@/types/agregator.enum";
 import { watch } from "@vue/composition-api";
@@ -18,38 +19,16 @@ export const driverExp = useField("", [yup.number().required()]);
 export const passport = useField("", [yup.string().required().length(10)]);
 export const passportDate = useField("", [yup.date().required()]);
 export const passportWho = useField("", [yup.string().required()]);
+const { group } = useOptionalFields({
+    validators: {
+        learningDate: yup.string().nullable(),
+        gettId: yup.number().nullable().optional()
+    },
+    onlyOne: true
+})
 
-const gettGroup = {
-
-    learningDate: useField(null, [yup.string().nullable().test('', 'Заполните одно из полей', value => {
-        setTimeout(() => {
-            if (gettGroup.learningDate.value.value) {
-                gettGroup.gettId.value.value = null
-                return true
-            }
-        }, 0)
-        if (value) return true
-        if (gettGroup.gettId.value.value) {
-            return true
-        }
-        return false
-    })], { watchValue: true }),
-    gettId: useField(null, [yup.number().nullable().test('', 'Заполните одно из полей', (value) => {
-        setTimeout(() => {
-            if (gettGroup.gettId.value.value) {
-                gettGroup.learningDate.value.value = null
-                return true
-            }
-        }, 0)
-        if (value) return true
-        if (gettGroup.learningDate.value.value) {
-            return true
-        }
-        return false
-    })], { watchValue: true })
-}
-export const learningDate = gettGroup.learningDate
-export const gettId = gettGroup.gettId
+export const learningDate = group.learningDate
+export const gettId = group.gettId
 
 
 export const photoPassport = useField(null, [yup.string().required()]);

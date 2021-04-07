@@ -4,7 +4,7 @@
       <h2 class="modal-title">Добавить запись о ТО</h2>
     </template>
     <template>
-      <add-car-record-form @send="onSend" />
+      <add-car-record-form @send="onSend" :id="id"/>
     </template>
   </modal-content>
 </template>
@@ -13,7 +13,7 @@
 import AddCarRecordForm from '../Car/AddCarRecordForm.vue'
 import AddCardForm from "../AddCard/AddCardForm.vue";
 import ModalContent from "./ModalContent.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({
   components: { ModalContent, AddCardForm, AddCarRecordForm },
@@ -27,7 +27,9 @@ import { Component, Vue } from "vue-property-decorator";
     };
   },
 })
-export default class AddCarRecordModal extends Vue {}
+export default class AddCarRecordModal extends Vue {
+  @Prop(Number) id: number
+}
 </script>
 
 <style lang="scss">

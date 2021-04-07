@@ -3,7 +3,7 @@ import { sColor, sMark, sModel, sPhotoBack, sPhotoCtcBack, sPhotoCtcFront, sPhot
 import useStore from "@/compositions/useStore";
 import {  buyout, complect, ctcNumber, deposit, description, driverDemand, rent6_1, rent7_0, run, photoCtcFront, photoCtcBack, photoFront, photoBack } from "./add-car-fields";
 import { color, license, mark, model, carNumber, vin, year } from "@/components/Register/RegisterDriver/register-car-fields";
-import { useApiGetSuggestionColor, useApiGetSuggestionMark, useApiGetSuggestionModel } from "@/api/car";
+import { useApiGetSuggestionColor, useApiGetSuggestionMark, useApiGetSuggestionModel } from "@/api/car-suggestion";
 const store = useStore()
 const currency = store.getters.currency
 

@@ -1,5 +1,5 @@
 <template>
-  <action-icon class="action-icon-edit">
+  <action-icon class="action-icon-edit" v-on="$listeners" v-bind="$attrs">
     <svgEdit />
   </action-icon>
 </template>

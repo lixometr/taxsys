@@ -1,4 +1,7 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
+import { AddCarRecordDto } from "@/dto/add-car-record.dto";
+import { CarRequestsDto } from "@/dto/car-requests.dto";
+import { CarTrackerDto } from "@/dto/car-tracker.dto";
 import { CreateCarDto } from "@/dto/car.dto";
 import buildFormData from "@/helpers/build-form-data";
 import { classToPlain } from "class-transformer";
@@ -29,37 +32,57 @@ export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutD
     }
 }), { ...opts })
 
-interface SuggestionItem {
-    id: number
-    name: string
-}
-export const useApiGetSuggestionColor = (opts?: UseApiOptions) => useApi<{ name: string }, SuggestionItem[]>(({ name }) => ({
-    method: 'GET',
-    url: '/suggestions/color',
-    params: {
-        name
-    }
-}), { ...opts })
-export const useApiGetSuggestionMark = (opts?: UseApiOptions) => useApi<{ name: string }, SuggestionItem[]>(({ name }) => ({
-    method: 'GET',
-    url: '/suggestions/mark',
-    params: {
-        name
-    }
-}), { ...opts })
-export const useApiGetSuggestionModel = (opts?: UseApiOptions) => useApi<{ markId: number }, SuggestionItem[]>(({ markId }) => ({
-    method: 'GET',
-    url: '/suggestions/mark/model',
-    params: {
-        mark_id: markId
-    }
-}), { ...opts })
 
-export const useApiGetCarInfo = (opts?: UseApiOptions) => useApi<{ markId: number }, SuggestionItem[]>(({ markId }) => ({
+export const useApiGetCarInfo = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
     method: 'GET',
-    url: `/car/`,
-    params: {
-        mark_id: markId
+    url: `/car/${id}`,
+}), { ...opts })
+export const useApiDeleteCar = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
+    method: 'DELETE',
+    url: `/car/${id}`,
+}), { ...opts })
+export const useApiUpdateCar = (opts?: UseApiOptions) => useApi<{ id: number, data: any }, any>(({ id, data }) => ({
+    method: 'PUT',
+    url: `/car/${id}`,
+    data: data
+}), { ...opts })
+export const useApiCarUpdateTracker = (opts?: UseApiOptions) => useApi<{ data: CarTrackerDto, id: number }, any>(
+    ({ id, data }) => ({
+        method: 'PUT',
+        url: `/car/${id}`,
+        data: {
+            tracker: classToPlain(data)
+        }
+    }), { ...opts })
+export const useApiCarEndRent = (opts?: UseApiOptions) => useApi<{ id: number,}, any>(({ id }) => ({
+    method: 'PUT',
+    url: `/car/${id}`,
+    data: {
+        driver_id: null
     }
 }), { ...opts })
+export const useApiBlockCar = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
+    method: 'POST',
+    url: `/car/${id}/tracker/block`,
+}), { ...opts })
+export const useApiUnBlockCar = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
+    method: 'POST',
+    url: `/car/${id}/tracker/unblock`,
+}), { ...opts })
+export const useApiCarAddInspection = (opts?: UseApiOptions) => useApi<AddCarRecordDto, any>(
+    (data: AddCarRecordDto) => ({
+        method: 'POST',
+        url: `/inspection`,
+        data: classToPlain(data)
+    }), { ...opts })
 
+export const useApiCarUpdateRequests = (opts?: UseApiOptions) => useApi<{ data: CarRequestsDto, id: number }, any>(
+    ({ id, data }) => {
+        return {
+            method: 'PUT',
+            url: `/car/${id}`,
+            data: {
+                options: classToPlain(data)
+            }
+        }
+    }, { ...opts })

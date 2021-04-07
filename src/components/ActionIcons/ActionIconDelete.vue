@@ -1,5 +1,5 @@
 <template>
-  <action-icon class="action-icon-delete">
+  <action-icon class="action-icon-delete" v-on="$listeners" v-bind="$attrs">
     <svgTrash />
   </action-icon>
 </template>

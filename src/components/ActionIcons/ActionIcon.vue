@@ -1,5 +1,5 @@
 <template>
-  <div class="action-icon">
+  <div class="action-icon" v-on="$listeners" v-bind="$attrs">
     <slot />
   </div>
 </template>

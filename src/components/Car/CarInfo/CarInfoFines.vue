@@ -14,7 +14,9 @@
         <app-accardion-col class="col-xl-6">
           <div class="row align-items-center">
             <div class="col">Автоматичесая оплата штрафов</div>
-            <div class="col"><app-switcher v-model="autoFines" /></div>
+            <div class="col">
+              <app-switcher :value="autoFines" @input="changeFines" />
+            </div>
           </div>
         </app-accardion-col>
 
@@ -44,20 +46,44 @@
 
 <script lang="ts">
 import CarInfoTrackerForm from "./CarInfoTrackerForm.vue";
-import { Component, Vue } from "vue-property-decorator";
-import { ref } from "@vue/composition-api";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { computed, ref, toRefs } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
 import AppStatus from "@/components/AppStatus.vue";
+import { useApiCarUpdateRequests } from "@/api/car";
+import { CarRequestsDto } from "@/dto/car-requests.dto";
+import { plainToClass } from "class-transformer";
+import { Car } from "@/models/car.entity";
+import { errorHandler } from "@/helpers/error-handler";
+interface IProps {
+  [key: string]: any;
+  item: Car;
+}
 @Component({
-  setup() {
-    const autoFines = ref(false);
+  setup(props: IProps, { emit }) {
+    const { item } = toRefs<IProps>(props);
+    const autoFines = computed(() => item.value.options?.fines_autopay);
     const addRecord = () => {
       const { showByName } = useModal();
       showByName(ModalName.addCarRecord);
     };
+    const changeFines = async (newValue: boolean) => {
+      const { exec, error } = useApiCarUpdateRequests({
+        toast: { error: errorHandler(), success: () => "Обновлено" },
+      });
+      const data: CarRequestsDto = {
+        ...item.value.options,
+        fines_autopay: newValue,
+      };
+      const toSend = plainToClass(CarRequestsDto, data);
+      await exec({ id: item.value.id, data: toSend });
+      emit("refresh");
+      if (error.value) return;
+    };
     return {
+      changeFines,
       addRecord,
       autoFines,
     };
@@ -65,6 +91,7 @@ import AppStatus from "@/components/AppStatus.vue";
   components: { CarInfoTrackerForm, svgPlus, AppStatus },
 })
 export default class CarInfoFines extends Vue {
+  @Prop({type: Object, default: () => ({})}) item: Car;
   get currency() {
     return this.$store.getters.currency;
   }

@@ -18,11 +18,13 @@
       </page-title>
       <div class="page-rent__items flex flex-column flex-1">
         <rent-item
-          v-for="(item, idx) in items"
-          :key="idx"
+          v-for="(item) in items"
+          :key="item.id"
           :item="item"
           class="page-rent-item"
           @approve="onApprove"
+          @remove="removeCar(item.id)"
+          @edit="editCar(item.id)"
         />
         <app-pagination
           class="mt-auto"
@@ -35,15 +37,15 @@
       </div>
     </div>
     <div class="flex-layout flex-1" key="noItems" v-else>
-      <rent-free-placeholder v-if="entity === 'free'"/>
-      <rent-work-placeholder v-if="entity === 'work'"/>
+      <rent-free-placeholder v-if="entity === 'free'" />
+      <rent-work-placeholder v-if="entity === 'work'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import RentWorkPlaceholder from '../../components/Placeholders/RentWorkPlaceholder.vue'
-import RentFreePlaceholder from '../../components/Placeholders/RentFreePlaceholder.vue'
+import RentWorkPlaceholder from "../../components/Placeholders/RentWorkPlaceholder.vue";
+import RentFreePlaceholder from "../../components/Placeholders/RentFreePlaceholder.vue";
 import PageTitle from "../../components/Page/PageTitle.vue";
 import RentItem from "../../components/Rent/RentItem.vue";
 import RentFilters from "../../components/Rent/RentFilters.vue";
@@ -56,7 +58,8 @@ import useItemsPage from "@/compositions/useItemsPage";
 import useRouter from "@/compositions/useRouter";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
-import { useApiGetCarsRentable } from '@/api/car';
+import { useApiDeleteCar, useApiGetCarsRentable } from "@/api/car";
+import { errorHandler } from "@/helpers/error-handler";
 @Component({
   setup() {
     const entity = ref("free");
@@ -77,10 +80,25 @@ import { useApiGetCarsRentable } from '@/api/car';
       showMore,
       items,
       init,
+      refreshItems
     } = useItemsPage({ api: useApiGetCarsRentable });
-    const toFetch = computed(() => ({ withoutDriver: entity.value === 'free' }));
-    init({fetchData: toFetch})
+    const toFetch = computed(() => ({
+      withoutDriver: entity.value === "free",
+    }));
+    init({ fetchData: toFetch });
+
+    const removeCar = async (id: number) => {
+      const { exec, error } = useApiDeleteCar({toast: {error: errorHandler(), success: () => 'Машина успешно удалена!'}});
+      await exec({ id });
+      if(error.value) return
+      await refreshItems()
+    };
+    const editCar = async (id: number) => {
+      return
+    }
     return {
+      removeCar,
+      editCar,
       onApprove,
       entity,
       createRent,
@@ -92,7 +110,15 @@ import { useApiGetCarsRentable } from '@/api/car';
       items,
     };
   },
-  components: { PageFilters, RentFilters, svgPlus, RentItem, PageTitle, RentFreePlaceholder, RentWorkPlaceholder },
+  components: {
+    PageFilters,
+    RentFilters,
+    svgPlus,
+    RentItem,
+    PageTitle,
+    RentFreePlaceholder,
+    RentWorkPlaceholder,
+  },
 })
 export default class Rent extends Vue {}
 </script>

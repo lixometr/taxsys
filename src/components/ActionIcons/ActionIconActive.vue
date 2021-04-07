@@ -1,5 +1,5 @@
 <template>
-  <action-icon class="action-icon-active ">
+  <action-icon class="action-icon-active " v-on="$listeners" v-bind="$attrs">
     <svgActive v-if="isActive" />
     <svgNoActive v-else/>
   </action-icon>

@@ -24,14 +24,16 @@
                     class="car-info-payoff__turn-input text-center"
                     width="50px"
                     :inline="true"
-                    v-model="payHours"
+                    :value="payHours"
+                    @input="payHoursChange"
                     :showErrors="false"
                   />
                   <span>{{ hourPaySclon }}</span></span
                 >
                 <app-switcher
                   class="car-info-payoff__turn-switcher"
-                  v-model="activePayHours"
+                  :value="payHoursActive"
+                  @input="payHoursChange"
                 />
               </div>
             </div>
@@ -45,14 +47,16 @@
                     class="car-info-payoff__turn-input text-center"
                     width="30px"
                     :inline="true"
-                    v-model="blockHours"
+                    :value="blockHours"
+                    @input="blockHoursChange"
                     :showErrors="false"
                   />
                   <span>{{ hourBlockSclon }}</span></span
                 >
                 <app-switcher
                   class="car-info-payoff__turn-switcher"
-                  v-model="activeBlockHours"
+                  :value="blockHoursActive"
+                  @input="blockHoursChange"
                 />
               </div>
             </div>
@@ -64,22 +68,45 @@
 </template>
 
 <script lang="ts">
-import CarInfoPayoffForm from './CarInfoPayoffForm.vue'
+import CarInfoPayoffForm from "./CarInfoPayoffForm.vue";
 import AppImage from "../../AppImage.vue";
 import CarInfoTrackerForm from "./CarInfoTrackerForm.vue";
-import { Component, Vue } from "vue-property-decorator";
-import { computed, ref } from "@vue/composition-api";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { computed, ref, toRefs } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
 import AppStatus from "@/components/AppStatus.vue";
 import useWordSclon from "@/compositions/useWordSclon";
+import { useCarInfoInteger } from "./car-info-toggler-model";
+import { Car } from "@/models/car.entity";
+interface IProps {
+  [key: string]: any;
+  item: Car;
+}
 @Component({
-  setup() {
+  setup(props: IProps, { emit }) {
+    const { item } = toRefs<IProps>(props);
     const activeBlockHours = ref(false);
     const activePayHours = ref(false);
-    const payHours = ref("3");
-    const blockHours = ref("3");
+    const {
+      booleanItem: payHoursActive,
+      intItem: payHours,
+      onChange: payHoursChange,
+    } = useCarInfoInteger({
+      field: "auto_charge",
+      item,
+      onUpdate: () => emit("refresh"),
+    });
+    const {
+      booleanItem: blockHoursActive,
+      intItem: blockHours,
+      onChange: blockHoursChange,
+    } = useCarInfoInteger({
+      field: "auto_block",
+      item,
+      onUpdate: () => emit("refresh"),
+    });
     const addRecord = () => {
       const { showByName } = useModal();
       showByName(ModalName.addCarRecord);
@@ -87,7 +114,12 @@ import useWordSclon from "@/compositions/useWordSclon";
     const { exec } = useWordSclon(["час", "часа", "часов"]);
     const hourPaySclon = computed(() => exec(+payHours.value));
     const hourBlockSclon = computed(() => exec(+blockHours.value));
+
     return {
+      blockHoursActive,
+      blockHoursChange,
+      payHoursActive,
+      payHoursChange,
       hourPaySclon,
       hourBlockSclon,
       addRecord,
@@ -97,9 +129,16 @@ import useWordSclon from "@/compositions/useWordSclon";
       blockHours,
     };
   },
-  components: { CarInfoTrackerForm, svgPlus, AppStatus, AppImage, CarInfoPayoffForm },
+  components: {
+    CarInfoTrackerForm,
+    svgPlus,
+    AppStatus,
+    AppImage,
+    CarInfoPayoffForm,
+  },
 })
 export default class CarInfoPayoff extends Vue {
+  @Prop({type: Object, default: () => ({})}) item: Car;
   get currency() {
     return this.$store.getters.currency;
   }
@@ -112,12 +151,11 @@ export default class CarInfoPayoff extends Vue {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-   
+
     @include sm {
       flex-direction: column;
       align-items: flex-start;
-        margin-bottom: 20px;
-
+      margin-bottom: 20px;
     }
     &-input {
       margin-left: 15px;

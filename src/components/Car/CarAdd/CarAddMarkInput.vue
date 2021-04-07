@@ -15,7 +15,7 @@
 import AppSelect from "../../AppSelect.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { computed, ref } from "@vue/composition-api";
-import { useApiGetSuggestionMark } from "@/api/car";
+import { useApiGetSuggestionMark } from "@/api/car-suggestion";
 
 @Component({
   components: { AppSelect },

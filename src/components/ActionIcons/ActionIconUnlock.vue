@@ -1,5 +1,5 @@
 <template>
-  <div class="action-icon-unlock action-icon">
+  <div class="action-icon-unlock action-icon" v-on="$listeners" v-bind="$attrs">
     <svgUnLock />
   </div>
 </template>

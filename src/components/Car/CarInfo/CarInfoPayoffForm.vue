@@ -77,7 +77,7 @@ import * as yup from "yup";
         rent7_0: useField("", [yup.number().required()]),
         rent6_1: useField("", [yup.number().required()]),
         buyout: useField("", [yup.number().required()]),
-        deposit: useField("", [yup.number().required()]),
+        deposit: useField(null, [yup.number().required().nullable()]),
         depoistFirstPart: useField("", [yup.number().required()]),
         rest: useField("", [yup.number().required()]),
       },

@@ -7,7 +7,7 @@
             <div class="rent-item__image">
               <img src="@/assets/img/rent_car.png" alt="image" />
             </div>
-            <div class="rent-item__model-name">{{ item.Brand }}</div>
+            <div class="rent-item__model-name">{{ item.Brand }} {{item.Model}}</div>
           </div>
         </app-accardion-col>
 
@@ -89,10 +89,10 @@ import svgEdit from "@/assets/icons/edit.svg";
 import svgTrash from "@/assets/icons/trash.svg";
 import svgEye from "@/assets/icons/eye.svg";
 import { computed, ref, toRefs } from "@vue/composition-api";
-import { RentItem as IRentItem } from "@/models/rent-item.entity";
+import { Car  } from "@/models/car.entity";
 interface IProps {
   [key: string]: any
-  item: IRentItem
+  item: Car
 }
 @Component({
   setup(props: IProps, { emit }) {
@@ -142,7 +142,7 @@ interface IProps {
   },
 })
 export default class RentItem extends Vue {
-  @Prop() item: IRentItem;
+  @Prop() item: Car;
   get currency() {
     return this.$store.getters.currency;
   }
