@@ -43,6 +43,11 @@ const routes: Array<RouteConfig> = [
                 path: 'widget/add',
                 component: () => import("@/views/Settings/WidgetAdd.vue")
             },
+            {
+                name: "SettingsWidgetEdit",
+                path: 'widget/:id/edit',
+                component: () => import("@/views/Settings/WidgetEdit.vue")
+            },
         ]
     },
 

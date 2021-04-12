@@ -21,7 +21,7 @@
         >
 
         <app-accardion-col :class="responsiveHeader"
-          >№: {{ item.account }}</app-accardion-col
+          >№: {{ item.issue_number }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader">{{
           item.koap_code

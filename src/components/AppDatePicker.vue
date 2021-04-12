@@ -7,7 +7,7 @@
           :label="label"
           :errors="errors"
           @click="togglePopover"
-          @change="inputEvents.change"
+          @change.native="inputEvents.change"
         
         />
       </template>

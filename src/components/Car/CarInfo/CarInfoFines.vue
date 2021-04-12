@@ -21,19 +21,19 @@
         </app-accardion-col>
 
         <app-accardion-col class="col-12">
-          <div class="car-info-fines__item" v-for="(itm, idx) in 3" :key="idx">
+          <div class="car-info-fines__item" v-for="(item, idx) in fines" :key="idx">
             <div class="row">
               <div class="col-xl-4 car-info-fines__item-col">
-                Постановление №: 293293293293293
+                Постановление №: {{item.issue_number}}
               </div>
-              <div class="col-xl-2 car-info-fines__item-col">14.15.2020</div>
-              <div class="col-xl-2 car-info-fines__item-col">12,5 часть 1</div>
+              <div class="col-xl-2 car-info-fines__item-col">{{item.created_at | moment('DD.MM.YYYY')}}</div>
+              <div class="col-xl-2 car-info-fines__item-col">{{item.koap_code}}</div>
               <div class="col-xl-2 car-info-fines__item-col">
-                1277.50 {{ currency }}
+                {{item.getPrice()}} {{ currency }}
               </div>
               <div class="col-xl-2 car-info-fines__item-col">
                 <app-status size="sm" color="green" :stroke="true"
-                  >оплачен</app-status
+                  >{{item.getStatus()}}</app-status
                 >
               </div>
             </div>
@@ -94,6 +94,9 @@ export default class CarInfoFines extends Vue {
   @Prop({type: Object, default: () => ({})}) item: Car;
   get currency() {
     return this.$store.getters.currency;
+  }
+  get fines() {
+    return this.item.fines || []
   }
 }
 </script>

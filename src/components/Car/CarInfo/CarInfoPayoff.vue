@@ -12,7 +12,7 @@
       >
       <template>
         <app-accardion-col class="col-12">
-          <car-info-payoff-form />
+          <car-info-payoff-form :item="item"/>
         </app-accardion-col>
         <app-accardion-col class="col-12">
           <div class="row">

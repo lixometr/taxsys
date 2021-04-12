@@ -64,28 +64,56 @@
 </template>
  
 <script lang="ts">
+import { useApiCarUpdatePayoff } from "@/api/car";
 import useWordSclon from "@/compositions/useWordSclon";
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
-import { computed } from "@vue/composition-api";
-import { Component, Vue } from "vue-property-decorator";
+import { UpdateCarPayoffDto } from "@/dto/car.dto";
+import { errorHandler } from "@/helpers/error-handler";
+import { Car } from "@/models/car.entity";
+import { computed, toRefs } from "@vue/composition-api";
+import { plainToClass } from "class-transformer";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import * as yup from "yup";
+interface IProps {
+  [key: string]: any;
+  item: Car;
+}
 @Component({
-  setup(props, { emit }) {
+  setup(props: IProps, { emit }) {
+    const { item } = toRefs<IProps>(props);
     const { handleSubmit, values, errors, serialize } = useForm({
       fields: {
-        rent7_0: useField("", [yup.number().required()]),
+        rent7_0: useField(item.value.Rent70, [yup.number().required()]),
         rent6_1: useField("", [yup.number().required()]),
         buyout: useField("", [yup.number().required()]),
         deposit: useField(null, [yup.number().required().nullable()]),
         depoistFirstPart: useField("", [yup.number().required()]),
         rest: useField("", [yup.number().required()]),
       },
+      rename: {
+        rent7_0: "Rent70",
+        rent6_1: "Rent61",
+        buyout: "Ransom",
+        rest: "deposit_delay_days",
+        depoistFirstPart: "first_deposit",
+        deposit: "Deposit",
+      },
     });
     const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
       console.log(toSend);
-
+      const { exec, error } = useApiCarUpdatePayoff({
+        toast: {
+          error: errorHandler(),
+          success: () => "Данные успешно обновлены!",
+        },
+      });
+      await exec({
+        data: plainToClass(UpdateCarPayoffDto, toSend),
+        id: item.value.id,
+      });
+      if (error.value) return;
       emit("send");
     });
     const { exec } = useWordSclon(["дня", "дней", "дней"]);
@@ -98,7 +126,9 @@ import * as yup from "yup";
     };
   },
 })
-export default class CarInfoPayoffForm extends Vue {}
+export default class CarInfoPayoffForm extends Vue {
+  @Prop() item: Car;
+}
 </script>
 
 <style lang="scss">

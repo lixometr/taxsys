@@ -26,7 +26,11 @@
       </div>
     </div>
     <div class="app-image-upload__errors">
-      <div class="app-image-upload__error" v-for="(error, idx) in errors" :key="idx">
+      <div
+        class="app-image-upload__error"
+        v-for="(error, idx) in errors"
+        :key="idx"
+      >
         {{ error }}
       </div>
     </div>
@@ -37,14 +41,26 @@
 import { computed, ref, toRefs, watch } from "@vue/composition-api";
 import { Component, Prop, Vue } from "vue-property-decorator";
 interface IProps {
-  value: any;
+  value: File;
+  defaultPreview: string;
   [key: string]: any;
 }
 @Component({
   inheritAttrs: false,
   setup(props: IProps, { emit }) {
-    const { value } = toRefs<IProps>(props);
-    const previewUrl = computed(() => value.value ? URL.createObjectURL(value.value) : null);
+    const { value, defaultPreview } = toRefs<IProps>(props);
+    const previewUrl = computed(() => {
+      if (value.value) {
+        return URL.createObjectURL(value.value);
+      } else {
+        if (defaultPreview.value) {
+      
+          return defaultPreview.value;
+        } else {
+          return null;
+        }
+      }
+    });
     const onFileChange = (e: any) => {
       const file = e.target.files[0];
       emit("input", file);
@@ -61,6 +77,7 @@ interface IProps {
 export default class AppImageUplaod extends Vue {
   @Prop(String) label: string;
   @Prop(File) value: File;
+  @Prop(String) defaultPreview: string;
   @Prop([String, Object]) icon: any;
   @Prop({ type: Array, default: () => [] }) errors: string[];
 }

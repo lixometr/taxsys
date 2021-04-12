@@ -40,6 +40,7 @@
           <app-image-upload
             :icon="svgFile"
             v-model="values.logo"
+            :errors="errors.logo"
             label="Логотип приложения"
           />
         </div>
@@ -47,6 +48,7 @@
           <app-image-upload
             :icon="svgFile"
             v-model="values.background"
+            :errors="errors.background"
             label="Фон в приложении"
           />
         </div>
@@ -54,6 +56,8 @@
           <app-image-upload
             :icon="svgFile"
             v-model="values.icon"
+            :errors="errors.icon"
+
             label="Иконка приложения"
           />
         </div>
@@ -95,6 +99,10 @@ import "yup-phone";
 import { computed, ref, toRefs } from "@vue/composition-api";
 import useRouter from "@/compositions/useRouter";
 import svgFile from "@/assets/icons/file.svg";
+import { useApiCreateApplication } from "@/api/applications";
+import { plainToClass } from "class-transformer";
+import { CreateApplicationDto } from "@/dto/application.dto";
+import { errorHandler } from "@/helpers/error-handler";
 interface IProps {
   [key: string]: any;
 }
@@ -110,23 +118,6 @@ interface IProps {
   },
   setup(props: IProps, { emit }) {
     const router = useRouter();
-    const { handleSubmit, values, errors, serialize } = useForm({
-      fields: {
-        developerName: useField("", [yup.string().required()]),
-        appName: useField("", [yup.string().required()]),
-        logo: useField(null, [yup.string().optional().nullable()]),
-        background: useField(null, [yup.string().optional().nullable()]),
-        icon: useField(null, [yup.string().optional().nullable()]),
-        orderDesign: useField(false, [yup.boolean().required()]),
-      },
-    });
-    const onSubmit = handleSubmit(async () => {
-      const toSend = serialize();
-      console.log(toSend);
-
-      emit("send");
-    });
-
     const rentTypes = [
       {
         value: "rent",
@@ -139,14 +130,58 @@ interface IProps {
     ];
     const defualtType = router.currentRoute.query.type || "rent";
     const type = ref(defualtType);
+
+    const { handleSubmit, values, errors, serialize } = useForm({
+      fields: {
+        developerName: useField("", [yup.string().required()]),
+        appName: useField("", [yup.string().required()]),
+        logo: useField(null, [yup.string().test('', 'Заполните это поле', (value) => {
+          if(type.value === 'rent' && !values.orderDesign) {
+            if(!value) return false
+          }
+          return true
+        }).nullable()]),
+        background: useField(null, [yup.string().test('', 'Заполните это поле', (value) => {
+          if(type.value === 'rent' && !values.orderDesign) {
+            if(!value) return false
+          }
+          return true
+        }).nullable()]),
+        icon: useField(null, [yup.string().test('', 'Заполните это поле', (value) => {
+          if(type.value === 'rent' && !values.orderDesign) {
+            if(!value) return false
+          }
+          return true
+        }).nullable()]),
+        orderDesign: useField(false, [yup.boolean().required()]),
+      },
+      rename: {
+        developerName: "google_dev",
+        appName: "app_name",
+        orderDesign: "need_design",
+      },
+    });
+    const onSubmit = handleSubmit(async () => {
+      const toSend = serialize();
+      const { exec, error } = useApiCreateApplication({
+        toast: {
+          error: errorHandler(),
+          success: () => "Приложение успешно создано!",
+        },
+      });
+      toSend.order_type = type.value;
+      await exec(plainToClass(CreateApplicationDto, toSend));
+      if (error.value) return;
+      emit("send");
+    });
     const price = computed(() => {
       if (type.value === "buy") {
         return "25 000";
       } else {
-        if(values.orderDesign) {
-          return '23 500'
+        if (values.orderDesign) {
+          return "23 500";
         } else {
-          return '22 000'
+          return "22 000";
         }
       }
     });

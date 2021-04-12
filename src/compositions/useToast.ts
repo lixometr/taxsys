@@ -1,6 +1,5 @@
 import Vue from "vue"
 import { ToastComponent, ToastOptions } from "vue-toast-notification";
-import { useQueue } from "./useQueue";
 export default function useToast() {
     let instance: ToastComponent = null
     const show = (options: ToastOptions) => {

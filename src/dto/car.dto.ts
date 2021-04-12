@@ -59,3 +59,19 @@ export class CreateCarDto {
     @FileTransform()
     photoCtcFront: Blob
 }
+
+export class UpdateCarPayoffDto {
+    @ToInteger()
+    Rent70: number
+    @ToInteger()
+    Rent61: number
+    @ToInteger()
+    Ransom: number
+    @ToInteger()
+    deposit_delay_days: number
+    @ToInteger()
+    first_deposit: number
+    @ToInteger()
+    Deposit: number
+
+}

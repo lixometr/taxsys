@@ -35,14 +35,15 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 interface IProps {
   [key: string]: any;
   mask: string;
+  maskPlaceholder: string;
 }
 @Component({
   setup(props: IProps) {
-    const { mask } = toRefs<IProps>(props);
+    const { mask, maskPlaceholder } = toRefs<IProps>(props);
     const el = ref(null);
     onMounted(() => {
       if (mask.value) {
-        useMask(el.value, mask.value);
+        useMask(el.value, mask.value, { placeholder: maskPlaceholder.value });
       }
     });
     return { el };
@@ -61,7 +62,8 @@ export default class AppInput extends Vue {
   @Prop(String) width: string;
   @Prop({ type: Boolean, default: true }) showErrors: boolean;
   @Prop(String) mask: string;
-  @Prop({type: Boolean, default: false}) disabled: boolean
+  @Prop({ type: String, default: "_" }) maskPlaceholder: string;
+  @Prop({ type: Boolean, default: false }) disabled: boolean;
   get _inputAttrs() {
     const attrs = Object.assign(
       {},
@@ -74,7 +76,7 @@ export default class AppInput extends Vue {
     const listeners = Object.assign({}, this.$listeners, {
       input: this.onInput,
       change: this.onInput,
-      paste: this.onInput
+      paste: this.onInput,
     });
     return listeners;
   }

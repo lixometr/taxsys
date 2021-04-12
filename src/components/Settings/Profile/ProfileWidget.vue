@@ -1,8 +1,8 @@
 <template>
-  <div class="profile-widget ">
-    <div class="profile-widget__title">Название сайта</div>
+  <div class="profile-widget">
+    <div class="profile-widget__title">{{ item.title }}</div>
     <div class="profile-widget__icon">
-      <img src="~@/assets/img/yandex_taxy.png" />
+      <img :src="agregIcon" width="40"/>
     </div>
     <div class="profile-widget__btn">
       <app-button color="orange-grad" @click="edit">редактировать</app-button>
@@ -16,11 +16,23 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgArrowRight from "@/assets/icons/arrow-stroke-right.svg";
-
+import useRouter from "@/compositions/useRouter";
+import { Widget } from "@/models/widget.entity";
+import { toRefs } from "@vue/composition-api";
+import { AgregatorType } from "@/types/agregator.enum";
+interface IProps {
+  [key: string]: any;
+  item: Widget;
+}
 @Component({
-  setup(props, { emit }) {
+  setup(props: IProps, { emit }) {
+    const { item } = toRefs<IProps>(props);
+    const router = useRouter();
     const edit = () => {
-      emit("edit");
+      router.push({
+        name: "SettingsWidgetEdit",
+        params: { id: item.value.id.toString() },
+      });
       return;
     };
     return { edit };
@@ -30,9 +42,10 @@ import svgArrowRight from "@/assets/icons/arrow-stroke-right.svg";
   },
 })
 export default class ProfileWidget extends Vue {
-  @Prop(String) title: string;
-  @Prop(Object) icon: any;
-  @Prop(String) color: string;
+  @Prop({ type: Object, default: () => ({}) }) item: Widget;
+  get agregIcon() {
+    return AgregatorType[this.item.agreg].icon;
+  }
 }
 </script>
 
@@ -64,6 +77,9 @@ export default class ProfileWidget extends Vue {
       margin-right: 0;
       margin-bottom: 10px;
     }
+    img {
+      border-radius: 5px;
+    }
     svg {
       transform: rotate(180deg);
     }
@@ -78,9 +94,9 @@ export default class ProfileWidget extends Vue {
     }
   }
   &__btn {
-      margin-right: 35px;
-      @include sm {
-        margin-right: 0;
+    margin-right: 35px;
+    @include sm {
+      margin-right: 0;
       margin-bottom: 10px;
     }
     .btn {

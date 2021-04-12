@@ -1,38 +1,41 @@
+import { Type } from "class-transformer"
 import { Fine } from "./fine.entity"
+import { ImageEntity } from "./image.entity"
 
 class HistoryItem {
-    action: "driver_changed"
-    created_at: "2021-04-07T09:06:17.000000Z"
+    action: string
+    created_at: string
     details: { driver_id: number, fio: string }
     driver_id: number
-    id: 1
-    model_id: 4351
-    model_type: "App\Models\Car"
-    updated_at: "2021-04-07T09:06:17.000000Z"
+    id: number
+    model_id: number
+    model_type: string
 }
 export class Car {
-    Brand: "Hyundai"
-    Color: "Белый"
-    Deposit: 2000
-    Description: "Автомобиль на автомате, в хорошем состоянии. Путевые листы предоставляем"
-    DriverRequirements: "Стаж более 3х лет"
+    Brand: string
+    Color: string
+    Deposit: number
+    Description: string
+    DriverRequirements: string
     Equipment: "Стандарт"
     GosNomer: "H506HM799"
+    images: [ImageEntity]
     License: null
-    Milleage: 110000
+    Milleage: number
     Model: "Solaris"
     Ransom: null
-    Rent61: 1650
-    Rent70: 1550
-    STS: "9916203254"
-    Vin: "Z94K241CBLR155854"
-    YandexID: null
-    Year: 2019
-    citimobil_id: null
+    Rent61: number
+    Rent70: number
+    STS: string
+    Vin: string
+    YandexID: string
+    Year: number
+    citimobil_id: number
     created_at: "2021-03-31T09:44:08.000000Z"
-    driver_id: null
-    hidden: false
+    driver_id: number
+    hidden: boolean
     id: 4351
+    @Type(() => Fine)
     fines: Fine[]
     inspections: any[]
     options: {
@@ -44,8 +47,7 @@ export class Car {
         request_waybill: number
     }
     history: HistoryItem[]
-    partner_id: 3
-    rentable: 1
+    rentable: number
     tracker: any
     updated_at: "2021-03-31T09:44:08.000000Z"
 }

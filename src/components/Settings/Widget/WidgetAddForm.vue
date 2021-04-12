@@ -79,6 +79,7 @@
     <div class="row">
       <div class="col-lg-6">
         <app-image-upload
+          :defaultPreview="backgroundDefault"
           :icon="svgPicture"
           class="widget-add-form-upload-bg"
           v-model="values.background"
@@ -92,7 +93,7 @@
             <span>Код для вставки</span>
             <svgCopy width="23" @click="copyInsertText" />
           </div>
-          <div class="widget-add-form-code" v-html="insertCode"></div>
+          <div class="widget-add-form-code">{{ insertCode }}</div>
         </div>
       </div>
     </div>
@@ -116,16 +117,30 @@ import AppTextArea from "../../../components/AppTextArea.vue";
 import AppSelect from "../../../components/AppSelect.vue";
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import * as yup from "yup";
 import { AgregatorType } from "@/types/agregator.enum";
 import svgPicture from "@/assets/icons/picuture_icon.svg";
 import svgCopy from "@/assets/icons/copy.svg";
-import { ref } from "@vue/composition-api";
+import { computed, ref, toRefs } from "@vue/composition-api";
 import useToast from "@/compositions/useToast";
 import svgFormPreview from "@/assets/icons/widget_form_preview.svg";
 import { plainToClass } from "class-transformer";
-import {WidgetAddDto} from "@/dto/widget-add.dto"
+import { CreateWidgetDto } from "@/dto/widget.dto";
+import { useApiCreateWidget, useApiUpdateWidget } from "@/api/widget";
+import { errorHandler } from "@/helpers/error-handler";
+import { Widget } from "@/models/widget.entity";
+import { complect } from "@/components/Car/CarAdd/add-car-fields";
+import router from "@/router";
+enum FormTypes {
+  edit = "edit",
+  create = "create",
+}
+interface IProps {
+  [key: string]: any;
+  type: FormTypes;
+  item: Widget;
+}
 @Component({
   components: {
     AppSelect,
@@ -135,7 +150,8 @@ import {WidgetAddDto} from "@/dto/widget-add.dto"
     svgCopy,
     svgFormPreview,
   },
-  setup() {
+  setup(props: IProps) {
+    const { type, item } = toRefs<IProps>(props);
     const agregators = Object.keys(AgregatorType).map((key) => ({
       value: key,
       label: AgregatorType[key].name,
@@ -154,24 +170,89 @@ import {WidgetAddDto} from "@/dto/widget-add.dto"
         value: "popup",
       },
     ];
+    let defaultValues = {
+      site: "",
+      agregator: "",
+      appLink: "",
+      type: "",
+      title: "",
+      titleColor: "",
+      textColor: "",
+      background: null,
+      code: "'",
+    };
+    if (type.value === FormTypes.edit)
+      [
+        (defaultValues = {
+          site: item.value.site_url,
+          agregator: item.value.agreg,
+          appLink: item.value.app_url,
+          type: item.value.type,
+          title: item.value.title,
+          titleColor: item.value.title_color,
+          textColor: item.value.text_color,
+          background: null,
+
+          code: item.value.code,
+        }),
+      ];
+    let backgroundField = useField(defaultValues.background, [
+      yup.string().required().nullable(),
+    ]);
+    if (type.value === FormTypes.edit) {
+      backgroundField = useField(defaultValues.background, [
+        yup.string().nullable(),
+      ]);
+    }
     const { values, errors, handleSubmit, serialize } = useForm({
       fields: {
-        site: useField("", [yup.string().required()]),
-        agregator: useField("", [yup.string().required()]),
-        appLink: useField("", [yup.string().required()]),
-        type: useField("", [yup.string().required()]),
-        title: useField("", [yup.string().required()]),
-        titleColor: useField("", [yup.string().required()]),
-        textColor: useField("", [yup.string().required()]),
-        background: useField(null, [yup.string().required().nullable()]),
+        site: useField(defaultValues.site, [yup.string().required().url()]),
+        agregator: useField(defaultValues.agregator, [yup.string().required()]),
+        appLink: useField(defaultValues.appLink, [
+          yup.string().required().url(),
+        ]),
+        type: useField(defaultValues.type, [yup.string().required()]),
+        title: useField(defaultValues.title, [yup.string().required()]),
+        titleColor: useField(defaultValues.titleColor, [
+          yup.string().required(),
+        ]),
+        textColor: useField(defaultValues.textColor, [yup.string().required()]),
+        background: backgroundField,
+      },
+      rename: {
+        agregator: "agreg",
+        site: "site_url",
+        appLink: "app_url",
+        titleColor: "title_color",
+        textColor: "text_color",
       },
     });
-    const insertCode = ref("some code");
+    const insertCode = ref(defaultValues.code);
+
     const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
-      const sendDto = plainToClass(WidgetAddDto, toSend)
-      console.log(sendDto);
-      return;
+      const sendDto = plainToClass(CreateWidgetDto, toSend);
+      let formAction;
+      if (type.value === FormTypes.create) {
+        formAction = useApiCreateWidget({
+          toast: {
+            error: errorHandler(),
+            success: () => "Виджет успешно создан!",
+          },
+        });
+        await formAction.exec(sendDto);
+      } else {
+        formAction = useApiUpdateWidget({
+          toast: {
+            error: errorHandler(),
+            success: () => "Виджет успешно обновлен!",
+          },
+        });
+        await formAction.exec({ data: sendDto, id: item.value.id });
+      }
+      if (formAction.error.value) return;
+      insertCode.value = formAction.result.value.code;
+      router.push({ name: "SettingsProfile" });
     });
     const { success: toastSuccess, error: toastError } = useToast();
 
@@ -190,7 +271,12 @@ import {WidgetAddDto} from "@/dto/widget-add.dto"
         });
       }
     };
+    const backgroundDefault = computed(() => {
+      if (type.value === FormTypes.create) return null;
+      return item.value.images.find((img) => img.desc === "background")?.url;
+    });
     return {
+      backgroundDefault,
       copyInsertText,
       values,
       onSubmit,
@@ -202,7 +288,10 @@ import {WidgetAddDto} from "@/dto/widget-add.dto"
     };
   },
 })
-export default class WidgetAddForm extends Vue {}
+export default class WidgetAddForm extends Vue {
+  @Prop({ type: String, default: FormTypes.create }) type: FormTypes;
+  @Prop({ type: Object, default: () => ({}) }) item: Widget;
+}
 </script>
 
 <style lang="scss">
@@ -295,8 +384,8 @@ export default class WidgetAddForm extends Vue {}
     margin-right: 25px;
     margin-left: 150px;
     @include sm {
-        margin-bottom: 20px;
-        margin-left: 0;
+      margin-bottom: 20px;
+      margin-left: 0;
     }
   }
 }

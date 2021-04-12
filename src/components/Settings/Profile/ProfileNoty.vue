@@ -3,7 +3,7 @@
     <div class="profile-noty__name">{{ title }}</div>
     <div class="profile-noty__actions">
       <div class="profile-noty__action">
-        <app-checkbox :value="sms" @input="toggleSms" />
+        <app-checkbox :value="telegram" @input="toggleTelegram" />
       </div>
       <div class="profile-noty__action">
         <app-checkbox :value="email" @input="toggleEmail" />
@@ -21,11 +21,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
     const toggleEmail = (value: boolean) => {
       emit("update:email", value);
     };
-    const toggleSms = (value: boolean) => {
-      emit("update:sms", value);
+    const toggleTelegram = (value: boolean) => {
+      emit("update:telegram", value);
     };
     return {
-      toggleSms,
+      toggleTelegram,
       toggleEmail,
     };
   },
@@ -34,7 +34,7 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class ProfileNoty extends Vue {
   @Prop(String) title: string;
   @Prop(Boolean) email: boolean;
-  @Prop(Boolean) sms: boolean;
+  @Prop(Boolean) telegram: boolean;
 }
 </script>
 

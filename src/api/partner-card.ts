@@ -1,4 +1,7 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
+import { AddCardDto } from "@/dto/card.dto";
+import { CardEntity } from "@/models/card.entity";
+import { classToPlain, plainToClass } from "class-transformer";
 
 export const useApiGetPartnerCards = (opts?: UseApiOptions) => useApi<any, any>(
     () => ({
@@ -7,16 +10,15 @@ export const useApiGetPartnerCards = (opts?: UseApiOptions) => useApi<any, any>(
         data: {
         }
 
-    }), opts)
+    }), opts, ({data}) => {
+        return data.map((card: CardEntity) => plainToClass(CardEntity, card))
+    })
 
-export const useApiPartnerAddCard = (opts?: UseApiOptions) => useApi<{ number: number, def: boolean, }, any>(
-    ({ number, def }) => ({
+export const useApiPartnerAddCard = (opts?: UseApiOptions) => useApi<AddCardDto, any>(
+    (data) => ({
         method: "POST",
         url: `/partner/add_card`,
-        data: {
-            number,
-            def
-        }
+        data: classToPlain(data)
 
     }), opts)
 export const useApiPartnerDeleteCard = (opts?: UseApiOptions) => useApi<{ id: number }, any>(

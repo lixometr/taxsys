@@ -2,9 +2,10 @@ import useApi, { UseApiOptions } from "@/compositions/useApi";
 import { AddCarRecordDto } from "@/dto/add-car-record.dto";
 import { CarRequestsDto } from "@/dto/car-requests.dto";
 import { CarTrackerDto } from "@/dto/car-tracker.dto";
-import { CreateCarDto } from "@/dto/car.dto";
+import { CreateCarDto, UpdateCarPayoffDto } from "@/dto/car.dto";
 import buildFormData from "@/helpers/build-form-data";
-import { classToPlain } from "class-transformer";
+import { Car } from "@/models/car.entity";
+import { classToPlain, plainToClass } from "class-transformer";
 
 export const useApiCreateCar = (opts?: UseApiOptions) => useApi<CreateCarDto, any>(
     (data: CreateCarDto) => {
@@ -33,10 +34,12 @@ export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutD
 }), { ...opts })
 
 
-export const useApiGetCarInfo = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
+export const useApiGetCarInfo = (opts?: UseApiOptions) => useApi<{ id: number }, Car>(({ id }) => ({
     method: 'GET',
     url: `/car/${id}`,
-}), { ...opts })
+}), { ...opts }, async ({ data }) => {
+    return plainToClass(Car, data)
+})
 export const useApiDeleteCar = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
     method: 'DELETE',
     url: `/car/${id}`,
@@ -54,7 +57,7 @@ export const useApiCarUpdateTracker = (opts?: UseApiOptions) => useApi<{ data: C
             tracker: classToPlain(data)
         }
     }), { ...opts })
-export const useApiCarEndRent = (opts?: UseApiOptions) => useApi<{ id: number,}, any>(({ id }) => ({
+export const useApiCarEndRent = (opts?: UseApiOptions) => useApi<{ id: number, }, any>(({ id }) => ({
     method: 'PUT',
     url: `/car/${id}`,
     data: {
@@ -84,5 +87,15 @@ export const useApiCarUpdateRequests = (opts?: UseApiOptions) => useApi<{ data: 
             data: {
                 options: classToPlain(data)
             }
+        }
+    }, { ...opts })
+
+export const useApiCarUpdatePayoff = (opts?: UseApiOptions) => useApi<{ data: UpdateCarPayoffDto, id: number }, any>(
+    ({ id, data }) => {
+        return {
+            method: 'PUT',
+            url: `/car/${id}`,
+            data: classToPlain(data)
+
         }
     }, { ...opts })

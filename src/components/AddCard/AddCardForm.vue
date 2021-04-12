@@ -6,6 +6,7 @@
         v-model="values.number"
         :errors="errors.number"
         class=""
+        mask="9999 9999 9999 9999"
       />
       <app-checkbox-input
         label="Сделать картой по умолчанию"
@@ -35,6 +36,8 @@ import { useApiDriverAddCard } from "@/api/driver";
 import { toRefs } from "@vue/composition-api";
 import { errorHandler } from "@/helpers/error-handler";
 import { useApiPartnerAddCard } from "@/api/partner-card";
+import { plainToClass } from "class-transformer";
+import {AddCardDto} from "@/dto/card.dto"
 interface IProps {
   [key: string]: any;
   id: number;
@@ -49,8 +52,8 @@ interface IProps {
         number: useField("", [
           yup
             .string()
-            .matches(/^[0-9]+$/, "Введите корректное значение")
-            .length(16)
+            .matches(/^[0-9\s]+$/, "Введите корректное значение")
+            .length(19)
             .required(),
         ]),
         isDefault: useField(false, [yup.boolean().required()]),
@@ -71,7 +74,7 @@ interface IProps {
     });
     const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
-      await addCard({ ...toSend, id: id.value });
+      await addCard({ data: plainToClass(AddCardDto, toSend), id: id.value });
       if (error.value) return;
       emit("send");
     });

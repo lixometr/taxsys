@@ -6,14 +6,14 @@
           <div class="applications-item__image">
             <img src="@/assets/img/application_mock.jpg" alt="image" />
           </div>
-          <div class="applications-item__name">Название приложения</div>
+          <div class="applications-item__name">{{ item.app_name }}</div>
         </div>
       </div>
       <div class="col-xl-2 col-md-6 applications-item__col">
-        <div>Версия 1.2</div>
+        <div>Версия {{ item.ver }}</div>
       </div>
       <div class="col-xl-2 col-md-6 applications-item__col">
-        <div>Оплатить до 01.01.2021</div>
+        <div>Оплатить до {{ item.paid_till | moment("DD.MM.YYYY") }}</div>
       </div>
       <div class="col-xl-4 col-md-6 applications-item__col">
         <div class="applications-item__btns">
@@ -25,7 +25,7 @@
             :shadow="true"
             size="sm"
             @click="clickBtnEdit"
-            >{{btnText}}</app-button
+            >{{ btnText }}</app-button
           >
         </div>
       </div>
@@ -33,18 +33,21 @@
     <applications-controller
       class="applications-item__controller"
       v-if="isEditing"
+      :item="item"
+      ref="itemController"
     />
   </div>
 </template>
 
 <script lang="ts">
 import ApplicationsController from "./ApplicationsController.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import { computed, ref } from "@vue/composition-api";
-
+import { Application } from "@/models/application.entity";
 @Component({
   components: { ApplicationsController },
-  setup() {
+  setup(props, { emit }) {
+    const itemController = ref(null);
     const save = () => {
       return;
     };
@@ -52,25 +55,32 @@ import { computed, ref } from "@vue/composition-api";
       return;
     };
     const isEditing = ref(false);
-    const toggle = () => {
-      isEditing.value = !isEditing.value;
+
+    const open = () => {
+      isEditing.value = true;
     };
-    const clickBtnEdit = () => {
-      // if(isEditing.value) {
-
-      // } else {
-
-      // }
-      toggle()
-      return
-    }
+    const close = () => {
+      isEditing.value = false;
+    };
+    const clickBtnEdit = async () => {
+      if (isEditing.value) {
+        const isValid = await itemController.value.submit();
+        if (!isValid) return;
+        emit("save");
+        close();
+      } else {
+        open();
+      }
+      return;
+    };
     const btnText = computed(() => {
-      return isEditing.value ? 'Сохранить' : 'Редактировать'
-    })
-    return { save, download, isEditing, toggle, clickBtnEdit, btnText};
+      return isEditing.value ? "Сохранить" : "Редактировать";
+    });
+    return { itemController, save, download, isEditing, clickBtnEdit, btnText };
   },
 })
 export default class ApplicationItem extends Vue {
+  @Prop({ type: Object, default: () => ({}) }) item: Application;
   get colClass() {
     return "col-xl-3 col-md-6 applications-item__col";
   }

@@ -1,11 +1,17 @@
 import useField from "@/compositions/validators/useField";
 import * as yup from "yup"
 import "yup-phone"
-const name = useField("", [yup.string().required()]);
-const middleName = useField("", [yup.string().required()]);
-const lastName = useField("", [yup.string().required()]);
+const name = useField("", [yup.string().required().test('', 'Можно вводить только русские буквы', (value) => {
+    return /^[а-яА-Я]*$/i.test(value)
+})]);
+const middleName = useField("", [yup.string().required().test('', 'Можно вводить только русские буквы', (value) => {
+    return /^[а-яА-Я]*$/i.test(value)
+})]);
+const lastName = useField("", [yup.string().required().test('', 'Можно вводить только русские буквы', (value) => {
+    return /^[а-яА-Я]*$/i.test(value)
+})]);
 const birthday = useField("", [yup.string().required()]);
-const passport = useField("", [yup.string().required()]);
+const passport = useField("", [yup.string().required().length(10)]);
 const phone = useField("", [yup.number().typeError("Введите корректный номер телефона"),]);
 const city = useField("", [yup.string().required()]);
 export const fields = {

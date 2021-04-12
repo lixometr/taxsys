@@ -69,6 +69,8 @@ export const baseSchema: FormSchemaItem[] = [
         type: "app-input",
         field: serialLicense,
         props: {
+            maskPlaceholder: '',
+            mask: '**********',
             label: "Серия/номер В.У.",
         },
         class: "col-lg-4",
@@ -80,7 +82,7 @@ export const baseSchema: FormSchemaItem[] = [
         field: countryLicense,
         props: {
             label: "Страна выдачи В.У.",
-            options: ['Российская Федерация', 'Кыргызская Республика', 'Республика Беларусь', 'Республика Казахста']
+            options: ['Российская Федерация', 'Кыргызская Республика', 'Республика Беларусь', 'Республика Казахстан']
         },
         class: "col-lg-4",
         sort: 11
@@ -91,6 +93,8 @@ const sPassport = {
     type: "app-input",
     field: passport,
     props: {
+        maskPlaceholder: '',
+        mask: '**********',
         label: "Серия и номер паспорта",
     },
     class: "col-lg-4",

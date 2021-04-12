@@ -50,7 +50,7 @@ import {useApiGetDriverBlackList} from "@/api/driver"
     const toFetch = computed(() => ({
       page: page.value,
     }));
-    // init({fetchData: toFetch});
+    init({fetchData: toFetch});
 
     return {
       page,

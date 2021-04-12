@@ -16,7 +16,8 @@
       <div class="profile-widget__items">
         <profile-widget
           class="profile-widgets__item"
-          v-for="(item, idx) in 3"
+          v-for="(item, idx) in widgets"
+          :item="item"
           :key="idx"
         />
       </div>
@@ -29,6 +30,9 @@ import ProfileWidget from "./ProfileWidget.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgPlus from "@/assets/icons/plus.svg";
 import useRouter from "@/compositions/useRouter";
+import { useApiGetWidgets } from "@/api/widget";
+import { errorHandler } from "@/helpers/error-handler";
+import { computed } from "@vue/composition-api";
 @Component({
   components: { ProfileWidget, svgPlus },
   setup() {
@@ -37,7 +41,12 @@ import useRouter from "@/compositions/useRouter";
       router.push({name: "SettingsWidgetAdd"})
       return;
     };
+    const {exec: fetchWidgets, result} = useApiGetWidgets({toast: {error: errorHandler()}})
+    fetchWidgets()
+    const widgets = computed(() => result.value)
+
     return {
+      widgets,
       addWidget,
     };
   },

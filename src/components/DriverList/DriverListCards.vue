@@ -23,7 +23,7 @@
         </div>
         <div class="col driver-list-cards__number">
           <span>
-            {{ card.number }}
+            {{ card.getNormNumber() }}
           </span>
           <span class="shrink-0" v-if="canEdit">
             <app-checkbox

@@ -74,4 +74,7 @@ export class Fine {
         if(!this.images) return []
         return this.images.slice(1, this.images.length)
     }
+    getStatus() {
+        return 'оплачен'
+    }
 }

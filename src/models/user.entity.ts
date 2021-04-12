@@ -24,6 +24,17 @@ interface Partner {
     updated_at: string
     user_id: 3
 }
+class Notifications {
+
+    blocked_trip: { telegram: boolean, email: boolean }
+
+    driver_pay_request: { telegram: boolean, email: boolean }
+
+    low_balance: { telegram: boolean, email: boolean }
+
+    new_driver: { telegram: boolean, email: boolean }
+
+}
 export class UserEntity {
     Phone: string
     birthday: string
@@ -38,4 +49,5 @@ export class UserEntity {
     updated_at: string
     user_type: string
     username: string
+    notifications: Notifications
 }

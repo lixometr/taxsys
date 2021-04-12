@@ -30,7 +30,7 @@ enum ModalType {
   },
 })
 export default class AddCardModal extends Vue {
-  @Prop(Number) driverId: string;
+  @Prop(Number) id: string;
   @Prop(String) type: ModalType
 }
 </script>

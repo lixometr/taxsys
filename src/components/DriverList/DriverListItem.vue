@@ -11,10 +11,9 @@
         <app-accardion-col :class="responsiveHeader" class="color-grey-3">{{
           item.created_at | dateTime
         }}</app-accardion-col>
-        <app-accardion-col :class="responsiveHeader"
-          >{{ item.name }} {{ item.middle_name }}
-          {{ item.last_name }}</app-accardion-col
-        >
+        <app-accardion-col :class="responsiveHeader">{{
+          item.fio
+        }}</app-accardion-col>
         <app-accardion-col
           :class="responsiveHeader"
           class="d-flex justify-content-start justify-content-xl-end"
@@ -196,6 +195,9 @@ import { ApiDate } from "@/types/constants";
 import { useApiUpdateDriver } from "@/api/driver";
 import { errorHandler } from "@/helpers/error-handler";
 import useToast from "@/compositions/useToast";
+import { DriverEntity } from "@/models/driver.entity";
+import { Car } from "@/models/car.entity";
+import { ImageEntity } from "@/models/image.entity";
 interface IProps {
   item: any;
   [key: string]: any;
@@ -279,7 +281,7 @@ interface IProps {
   },
 })
 export default class DriverListItem extends Vue {
-  @Prop({ type: Object, default: () => ({}) }) item: any;
+  @Prop({ type: Object, default: () => ({}) }) item: DriverEntity;
   @Prop(Boolean) showAgregators: boolean;
   @Prop({ type: Array, default: () => [] }) antifrauds: any;
   @Prop({ type: Array, default: () => [] }) paymentGroups: any;
@@ -318,13 +320,19 @@ export default class DriverListItem extends Vue {
     return this.item.cards || [];
   }
   get driverImage() {
-    return (prop) => {
-      return this.item.images?.find((item) => item.desc === prop) || {};
+    return (prop: string) => {
+      return (
+        this.item.images?.find((item) => item.desc === prop) ||
+        ({} as ImageEntity)
+      );
     };
   }
   get carImage() {
     return (prop) => {
-      return this.item.car?.images?.find((item) => item.desc === prop) || {};
+      return (
+        this.item.car?.images?.find((item) => item.desc === prop) ||
+        ({} as ImageEntity)
+      );
     };
   }
   get images() {
@@ -361,7 +369,7 @@ export default class DriverListItem extends Vue {
     return fields.filter((field) => !!field.image);
   }
   get car() {
-    return this.item.car || {};
+    return this.item.car || ({} as Car);
   }
   get city() {
     return this.item.user?.city;
@@ -446,7 +454,7 @@ export default class DriverListItem extends Vue {
 
       {
         name: "Дата выдачи паспорта",
-        value: useMoment(this.item.DateIssuePassport).format("DD.MM.YYYY"),
+        value: useMoment(this.item.DateIssuePasport).format("DD.MM.YYYY"),
       },
     ];
     return fields.filter(

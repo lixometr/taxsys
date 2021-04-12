@@ -5,9 +5,15 @@ import { watch } from "@vue/composition-api";
 import * as yup from "yup"
 import "yup-phone"
 
-export const name = useField('', [yup.string().required()])
-export const middleName = useField('', [yup.string().required()])
-export const lastName = useField('', [yup.string().required()])
+export const name = useField('', [yup.string().required().test('', 'Можно вводить только русские буквы', (value) => {
+    return /^[а-яА-Я]*$/i.test(value)
+})])
+export const middleName = useField('', [yup.string().required().test('', 'Можно вводить только русские буквы', (value) => {
+    return /^[а-яА-Я]*$/i.test(value)
+})])
+export const lastName = useField('', [yup.string().required().test('', 'Можно вводить только русские буквы', (value) => {
+    return /^[а-яА-Я]*$/i.test(value)
+})])
 export const serialLicense = useField('', [yup.string().required().length(10)])
 export const countryLicense = useField('', [yup.string().required()])
 export const city = useField('', [yup.string().required()])

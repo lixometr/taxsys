@@ -1,7 +1,6 @@
 import { ref } from "@vue/composition-api"
 import Vue from "vue"
 import { LoaderComponent, PluginOptions } from "vue-loading-overlay"
-import { useQueue } from "./useQueue"
 export default function useLoading(opts?: PluginOptions) {
     let loader = Vue.$loading
     let loaderComponent: LoaderComponent

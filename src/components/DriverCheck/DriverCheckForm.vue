@@ -46,6 +46,8 @@
           <app-input
             v-model="form.values.numberOfPassport"
             label="Серия / номер паспорта"
+            mask="**********"
+
             :errors="form.errors.numberOfPassport"
           />
         </div>
@@ -53,6 +55,7 @@
           <app-input
             v-model="form.values.driverLicense"
             label="Серия / номер В.У."
+            mask="**********"
             :errors="form.errors.driverLicense"
           />
         </div>

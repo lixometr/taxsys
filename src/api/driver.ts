@@ -1,18 +1,20 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
-import { classToPlain } from "class-transformer";
+import { AddCardDto } from "@/dto/card.dto";
+import { DriverEntity } from "@/models/driver.entity";
+import { classToPlain, plainToClass } from "class-transformer";
 
 
 
-export const useApiGetDrivers = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<any>>(({ page }) => ({
+export const useApiGetDrivers = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<DriverEntity>>(({ page }) => ({
     method: "GET",
     url: '/drivers',
     params: {
         page
     },
 
-}), opts)
+}), opts, async ({ data }) => ({ ...data, data: data.data.map(driver => plainToClass(DriverEntity, driver)) }))
 
-export const useApiGetDriversApplys = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<any>>(({ page }) => ({
+export const useApiGetDriversApplys = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<DriverEntity>>(({ page }) => ({
     method: "GET",
     url: '/drivers',
     params: {
@@ -20,27 +22,44 @@ export const useApiGetDriversApplys = (opts?: UseApiOptions) => useApi<{ page: n
         trips: 'none',
     },
 
-}), opts)
+}), opts, async ({ data }) => ({ ...data, data: data.data.map(driver => plainToClass(DriverEntity, driver)) }))
 
-export const useApiUpdateDriver = (opts?: UseApiOptions) => useApi<{payment_group_id: number, antifraud_id: number, id: number}, any>(
-    ({payment_group_id, antifraud_id, id}) => ({
-    method: "PUT",
-    url: `/drivers/${id}`,
-    data: {
-        payment_group_id,
-        antifraud_id
-    }
+export const useApiUpdateDriver = (opts?: UseApiOptions) => useApi<{ payment_group_id: number, antifraud_id: number, id: number }, any>(
+    ({ payment_group_id, antifraud_id, id }) => ({
+        method: "PUT",
+        url: `/drivers/${id}`,
+        data: {
+            payment_group_id,
+            antifraud_id
+        }
 
-}), opts)
+    }), opts)
+export const useApiAddDriverToBlacklist = (opts?: UseApiOptions) => useApi<{ id: number }, any>(
+    ({ id }) => ({
+        method: "POST",
+        url: `/drivers/blacklist`,
+        data: {
+            id
+        }
 
-export const useApiGetDriverBlackList = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<any>>(({ page }) => ({
+    }), opts)
+
+export const useApiGetDriverBlackList = (opts?: UseApiOptions) => useApi<{ page: number }, PaginationResponse<DriverEntity>>(({ page }) => ({
     method: "GET",
     url: '/drivers',
     params: {
-        page
+        page,
+        blacklisted: 1
     },
 
-}), opts)
+}), opts, async ({ data }) => ({ ...data, data: data.data.map(driver => plainToClass(DriverEntity, driver)) }))
+export const useApiGetDriverInfo = (opts?: UseApiOptions) => useApi<{ id: number }, any>(({ id }) => ({
+    method: "GET",
+    url: `/drivers/${id}`,
+    params: {
+    },
+
+}), opts, async ({ data }) => plainToClass(DriverEntity, data))
 
 
 export const useApiDriverSetDefaultCard = (opts?: UseApiOptions) => useApi<{ cardId: number, id: number }, any>(
@@ -61,13 +80,10 @@ export const useApiDriverDeleteCard = (opts?: UseApiOptions) => useApi<{ cardId:
         }
 
     }), opts)
-export const useApiDriverAddCard = (opts?: UseApiOptions) => useApi<{ number: number, def: boolean, id: number }, any>(
-    ({ number, def, id }) => ({
+export const useApiDriverAddCard = (opts?: UseApiOptions) => useApi<{ data: AddCardDto, id: number }, any>(
+    ({ data, id }) => ({
         method: "POST",
         url: `/driver/${id}/add_card`,
-        data: {
-            number,
-            def
-        }
+        data: classToPlain(data)
 
     }), opts)

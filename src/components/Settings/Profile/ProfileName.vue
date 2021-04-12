@@ -31,7 +31,7 @@ export default class ProfileName extends Vue {
   }
   get fio() {
     const user = UserModule.user;
-    return `${user.name} ${user.middle_name} ${user.last_name}`;
+    return `${user.last_name} ${user.name} ${user.middle_name}`;
   }
   get phone() {
     return UserModule.user.Phone;

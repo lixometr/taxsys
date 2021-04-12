@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import WidgetAddForm from './Widget/WidgetAddForm.vue'
+import WidgetAddForm from "@/components/Settings/Widget/WidgetAddForm.vue";
 import TitleBack from '../../components/Register/TitleBack.vue'
 import ProfileNotys from "../../components/Settings/Profile/ProfileNotys.vue";
 import ProfileWidgets from "../../components/Settings/Profile/ProfileWidgets.vue";

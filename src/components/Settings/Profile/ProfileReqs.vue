@@ -6,7 +6,7 @@
         <div class="col-lg-4" v-for="(card, idx) in cards" :key="idx">
           <profile-reqs-card
             class="profile-reqs__card"
-            :cardNumber="card.number"
+            :cardNumber="card.getNormNumber()"
             :active="card.def"
             @update:active="updateDefault(card)"
             @remove="removeCard(card)"

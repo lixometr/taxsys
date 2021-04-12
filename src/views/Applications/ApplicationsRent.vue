@@ -13,7 +13,7 @@
       </div> -->
     </page-title>
     <div class="app-card flex-1">
-      <applications-rent-form />
+      <applications-rent-form @send="onSend"/>
     </div>
   </div>
 </template>
@@ -37,10 +37,14 @@ import useRouter from "@/compositions/useRouter";
   },
   setup() {
     const router = useRouter();
+    const onSend = () => {
+      router.push({name: "ApplicationsItems"})
+    }
     const goBack = () => {
       router.back();
     };
     return {
+      onSend,
       goBack,
     };
   },

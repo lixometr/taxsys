@@ -58,7 +58,7 @@ export default class AppTextArea extends Vue {
     this.emitData(value);
   }
   emitData(data: any) {
-    this.$emit("text-area", data);
+    this.$emit("input", data);
   }
 }
 </script>

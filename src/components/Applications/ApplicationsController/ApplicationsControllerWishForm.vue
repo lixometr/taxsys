@@ -1,15 +1,15 @@
 <template>
   <div class="applications-controller__wish-form">
-    <form action="#" @submit.prevent="onSubmit">
+    <form action="#" @submit.prevent>
       <app-text-area
         label="Ваши пожелания"
         :inputAttrs="{ rows: '3' }"
         v-model="values.text"
         :errors="errors.text"
       />
-      <div class="d-flex justify-content-end">
+      <!-- <div class="d-flex justify-content-end">
         <app-button color="orange-grad" type="submit">отправить</app-button>
-      </div>
+      </div> -->
     </form>
   </div>
 </template>
@@ -18,27 +18,39 @@
 import AppTextArea from "../../AppTextArea.vue";
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import * as yup from "yup";
+import { toRefs, watch } from "@vue/composition-api";
+
+interface IProps {
+  [key: string]: any;
+  value: string;
+}
 @Component({
   components: { AppTextArea },
-  setup() {
-    const { handleSubmit, values, errors, serialize } = useForm({
+  setup(props: IProps, { emit }) {
+    const { value } = toRefs<IProps>(props);
+    const { handleSubmit, values, errors, validate } = useForm({
       fields: {
-        text: useField("", [yup.string().required()]),
+        text: useField(value.value, [yup.string().optional().nullable()]),
       },
     });
-    const onSubmit = handleSubmit(async () => {
-      const toSend = serialize();
+    const submit = async () => {
+      return await validate();
+    };
+    watch(values, () => {
+      emit("input", values.text);
     });
     return {
-      onSubmit,
+      submit,
       values,
       errors,
     };
   },
 })
-export default class ApplicationsControllerWishForm extends Vue {}
+export default class ApplicationsControllerWishForm extends Vue {
+  @Prop({ type: String }) value: string;
+}
 </script>
 
 <style lang="scss">
