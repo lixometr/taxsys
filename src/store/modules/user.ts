@@ -13,6 +13,7 @@ class User extends VuexModule {
   user: UserEntity | null = null
   token: string | null = null
   balance: number = null
+  qiwiBalance: number = null
   get isAuth() {
     return !!this.token && this.user
   }
@@ -25,8 +26,9 @@ class User extends VuexModule {
     this.token = token
   }
   @Mutation
-  setBalance(balance: number) {
-    this.balance = balance
+  setBalance(balance: { balance: number, qiwi: number }) {
+    this.balance = balance.balance
+    this.qiwiBalance = balance.qiwi
   }
   @Action
   setTokenWithCookie({ token, expiresIn }: { token: string, expiresIn: number }) {
@@ -73,7 +75,7 @@ class User extends VuexModule {
     const { exec, result, error } = useApiGetBalance({ toast: { error: errorHandler() } })
     await exec()
     if (!error.value) {
-      this.setBalance(result.value.balance)
+      this.setBalance(result.value)
     }
   }
   @Action

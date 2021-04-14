@@ -36,6 +36,8 @@ class Notifications {
 
 }
 export class UserEntity {
+    blacklist_reasons: string[]
+    fio: string
     Phone: string
     birthday: string
     city: string

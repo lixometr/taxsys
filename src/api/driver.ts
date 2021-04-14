@@ -34,12 +34,12 @@ export const useApiUpdateDriver = (opts?: UseApiOptions) => useApi<{ payment_gro
         }
 
     }), opts)
-export const useApiAddDriverToBlacklist = (opts?: UseApiOptions) => useApi<{ id: number }, any>(
-    ({ id }) => ({
-        method: "POST",
-        url: `/drivers/blacklist`,
+export const useApiAddDriverToBlacklist = (opts?: UseApiOptions) => useApi<{ id: number, cause: number }, any>(
+    ({ id, cause }) => ({
+        method: "PUT",
+        url: `/drivers/${id}`,
         data: {
-            id
+            is_blacklisted: cause
         }
 
     }), opts)

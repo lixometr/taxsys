@@ -4,7 +4,7 @@
       <h2>Проверка водителя</h2>
     </page-title>
     <driver-check-info-driver class="mb-30" :item="item" />
-    <driver-check-info-fcp class="mb-30" :item="item" />
+    <driver-check-info-fcp class="mb-30" :item="item" v-if="showFcp" />
     <driver-check-info-data :item="item" />
   </div>
 </template>
@@ -21,6 +21,7 @@ import { errorHandler } from "@/helpers/error-handler";
 import { computed, toRefs, watch } from "@vue/composition-api";
 import { AxiosError } from "axios";
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { DriverCheckEntity } from "@/models/driver-check.entity";
 @Component({
   metaInfo: {
     title: "Проверка водителя",
@@ -50,8 +51,19 @@ import { Component, Prop, Vue } from "vue-property-decorator";
     });
 
     fetchData({ id: parseInt(id) });
-    const item = computed(() => result.value || {});
+    const item = computed(() => result.value || ({} as DriverCheckEntity));
+    const showDriver = computed(() => {
+      return item.value.statuses.license === 'done'
+    });
+    const showFcp = computed(() => {
+      return item.value.statuses.fssp === 'done'
+    });
+    const showPassport = computed(() => {
+      return item.value.statuses.passport === 'done'
+    });
     return {
+      showPassport,
+      showFcp,
       isLoading,
       item,
     };

@@ -37,7 +37,7 @@
               {{ item.amount }}
             </div>
             <div class="col-xl-1 col-lg-4 driver-info-transactions__row-item">
-              №9856896
+              №{{item.id}}
             </div>
             <div class="col-xl-2 col-lg-4 driver-info-transactions__row-item">
               <app-status

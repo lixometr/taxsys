@@ -84,12 +84,12 @@ interface IProps {
     const { item } = toRefs<IProps>(props);
     const { handleSubmit, values, errors, serialize } = useForm({
       fields: {
-        rent7_0: useField(item.value.Rent70, [yup.number().required()]),
-        rent6_1: useField("", [yup.number().required()]),
-        buyout: useField("", [yup.number().required()]),
-        deposit: useField(null, [yup.number().required().nullable()]),
-        depoistFirstPart: useField("", [yup.number().required()]),
-        rest: useField("", [yup.number().required()]),
+        rent7_0: useField(String(item.value.Rent70), [yup.number().required()]),
+        rent6_1: useField(String(item.value.Rent61), [yup.number().required()]),
+        buyout: useField(String(item.value.Ransom,), [yup.number().required()]),
+        deposit: useField(String(item.value.Deposit), [yup.number().required().nullable()]),
+        depoistFirstPart: useField(String(item.value.first_deposit), [yup.number().required()]),
+        rest: useField(String(item.value.deposit_delay_days), [yup.number().required()]),
       },
       rename: {
         rent7_0: "Rent70",
@@ -102,7 +102,6 @@ interface IProps {
     });
     const onSubmit = handleSubmit(async () => {
       const toSend = serialize();
-      console.log(toSend);
       const { exec, error } = useApiCarUpdatePayoff({
         toast: {
           error: errorHandler(),

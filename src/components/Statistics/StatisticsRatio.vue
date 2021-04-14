@@ -17,7 +17,8 @@
 
 <script lang="ts">
 import StatisticsItem from "./StatisticsItem.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { StatisticsEntity } from "@/models/statistics.entity";
 
 @Component({
   setup() {
@@ -33,12 +34,11 @@ import { Component, Vue } from "vue-property-decorator";
             labels: {
               show: true,
               name: {
-                show: true
+                show: true,
               },
               value: {
-                show: true
+                show: true,
               },
-            
             },
           },
         },
@@ -82,16 +82,22 @@ import { Component, Vue } from "vue-property-decorator";
       },
       labels: ["Безналичные", "Наличные"],
     };
-    const series = [1204, 875];
 
     return {
-      series,
       chartOptions,
     };
   },
   components: { StatisticsItem },
 })
-export default class StatisticsTravels extends Vue {}
+export default class StatisticsTravels extends Vue {
+  @Prop({ type: Object, default: () => ({}) }) value: StatisticsEntity;
+  get series() {
+    return [this.value.trips?.total_cash, this.value.trips?.total_cashless];
+  }
+  get ratioValue() {
+    return this.value.trips;
+  }
+}
 </script>
 
 <style lang="scss">

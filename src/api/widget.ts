@@ -32,11 +32,12 @@ export const useApiUpdateWidget = (opts?: UseApiOptions) => useApi<{data: Create
     ({data, id}) => {
         const toSend = {
             ...classToPlain(data),
-            background: data.background
+            background: data.background,
+            _method: 'PUT'
         }
         const formData = buildFormData(toSend)
         return {
-            method: "PUT",
+            method: "POST",
             url: `/widgets/${id}`,
             data: formData,
 

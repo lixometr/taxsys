@@ -1,0 +1,2 @@
+import { birthday, dateLicense, lastName, middleName, name, passport, serialLicense } from "../Register/RegisterDriver/register-driver-fields";
+export const fields = { birthday, dateLicense, lastName, middleName, name, passport, serialLicense }

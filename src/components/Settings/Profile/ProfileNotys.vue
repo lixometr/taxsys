@@ -15,7 +15,7 @@
           :title="item.title"
         />
       </div>
-      <profile-notys-form />
+      <!-- <profile-notys-form /> -->
     </div>
   </div>
 </template>

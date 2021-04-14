@@ -24,15 +24,15 @@
         >
       </div>
     </page-title>
-    <div class="car-info__items">
+    <div class="car-info__items" v-if="!isLoading">
       <car-info-data :item="car" />
       <car-info-tracker :item="car" />
       <car-info-tech :item="car" @refresh="refreshCar" />
       <car-info-drivers :item="car" />
-      <car-info-fines :item="car" @refresh="refreshCar"/>
+      <car-info-fines :item="car" @refresh="refreshCar" />
       <car-info-photo :item="car" @refresh="refreshCar" />
-      <car-info-lists :item="car" @refresh="refreshCar"/>
-      <car-info-payoff :item="car" @refresh="refreshCar"/>
+      <car-info-lists :item="car" @refresh="refreshCar" />
+      <car-info-payoff :item="car" @refresh="refreshCar" />
     </div>
   </div>
 </template>
@@ -69,29 +69,35 @@ import { Car } from "@/models/car.entity";
       router.back();
     };
     const endRent = async () => {
-      const {exec, error} = useApiCarEndRent({toast: {error: errorHandler(), success: () => "Аренда завершена!"}})
-      await exec({id: car.value.id})
-      if(error.value) return
+      const { exec, error } = useApiCarEndRent({
+        toast: { error: errorHandler(), success: () => "Аренда завершена!" },
+      });
+      await exec({ id: car.value.id });
+      if (error.value) return;
       return;
     };
     const attachDriver = () => {
       return;
     };
+    let isLoading = ref(true);
     const fetchCar = async ({ loading = true } = {}) => {
-      const { exec, error, result, isLoading} = useApiGetCarInfo({ loading });
+      const { exec, error, result } = useApiGetCarInfo({ loading });
       const paramsId = router.currentRoute.params.id;
       const id = parseInt(paramsId);
+      isLoading.value = true;
       await exec({ id });
       if (error.value) {
         router.push({ name: "Rent" });
       }
       car.value = result.value;
+      isLoading.value = false;
     };
     fetchCar();
     const refreshCar = async () => {
       await fetchCar({ loading: false });
     };
     return {
+      isLoading,
       refreshCar,
       car,
       fetchCar,

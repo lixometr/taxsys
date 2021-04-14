@@ -12,6 +12,8 @@ class HistoryItem {
     model_type: string
 }
 export class Car {
+    first_deposit: number
+    deposit_delay_days: number
     Brand: string
     Color: string
     Deposit: number

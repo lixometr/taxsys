@@ -17,7 +17,8 @@
 
 <script lang="ts">
 import StatisticsItem from "./StatisticsItem.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { StatisticsEntity } from "@/models/statistics.entity";
 
 @Component({
   setup() {
@@ -76,16 +77,23 @@ import { Component, Vue } from "vue-property-decorator";
         "Комиссия платежной системы",
       ],
     };
-    const series = [1204, 875, 234];
 
     return {
-      series,
       chartOptions,
     };
   },
   components: { StatisticsItem },
 })
-export default class StatisticsTravels extends Vue {}
+export default class StatisticsTravels extends Vue {
+  @Prop({ type: Object, default: () => ({}) }) value: StatisticsEntity;
+  get series() {
+    return [
+      this.value.drivers?.total_paid,
+      this.value.drivers?.total_drivers,
+      this.value.drivers?.total_pay_fee,
+    ];
+  }
+}
 </script>
 
 <style lang="scss">

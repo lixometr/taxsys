@@ -3,7 +3,7 @@
     <template #header>
       <div class="statistics-commission__header-row">
         <div class="statistics-item__title">Комиссия парка</div>
-        <div class="statistics-commission__header-price">100 900 ₽</div>
+        <div class="statistics-commission__header-price">{{parkCommission}} {{currency}}</div>
       </div>
     </template>
     <template>
@@ -20,7 +20,8 @@
 
 <script lang="ts">
 import StatisticsItem from "./StatisticsItem.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { StatisticsEntity } from "@/models/statistics.entity";
 
 @Component({
   setup() {
@@ -92,7 +93,16 @@ import { Component, Vue } from "vue-property-decorator";
   },
   components: { StatisticsItem },
 })
-export default class StatisticsParmCommission extends Vue {}
+export default class StatisticsParmCommission extends Vue {
+    @Prop({ type: Object, default: () => ({}) }) value: StatisticsEntity;
+
+    get currency() {
+      return this.$store.getters.currency
+    }
+    get parkCommission () {
+      return this.value.fees?.total_agreg_fee || 0
+    }
+}
 </script>
 
 <style lang="scss">

@@ -3,7 +3,7 @@
     <app-accardion :showArrow="false" :isOpen="true" headerClass="border">
       <template #header>
         <app-accardion-col :class="headerCol">
-          <div>{{item.name}} {{item.lastname}} {{item.surname}}</div>
+          <div>{{ item.name }} {{ item.lastname }} {{ item.surname }}</div>
         </app-accardion-col>
         <app-accardion-col :class="headerCol">
           <div class="driver-check-info-driver__header-item">
@@ -11,7 +11,7 @@
             <span class="driver-check-info-driver__header-info">
               {{ item.NumberOfPassport }}
             </span>
-            <svgCheckmarkCircle />
+            <svgCheckmarkCircle v-if="isPassportValid"/>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="headerCol">
@@ -25,65 +25,67 @@
         </app-accardion-col>
       </template>
       <template>
-        <app-accardion-col class="col-12">
-          <div class="color-violet font-md mb-0">Проверка В.У.</div>
-        </app-accardion-col>
-        <app-accardion-col :class="contentCol">
-          <div class="row">
-            <div class="col color-grey-3">Дата рождения:</div>
-            <div class="col color-grey-2">
-              {{ item.DateOfBirth | moment("DD.MM.YYYY") }}
+        <div class="row w-100 row-no-gutter" v-if="showLicense">
+          <app-accardion-col class="col-12">
+            <div class="color-violet font-md mb-0">Проверка В.У.</div>
+          </app-accardion-col>
+          <app-accardion-col :class="contentCol">
+            <div class="row">
+              <div class="col color-grey-3">Дата рождения:</div>
+              <div class="col color-grey-2">
+                {{ item.DateOfBirth | moment("DD.MM.YYYY") }}
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Дата выдачи:</div>
-            <div class="col color-grey-2">
-              {{ item.DateDriverLicense | moment("DD.MM.YYYY") }}
+            <div class="row">
+              <div class="col color-grey-3">Дата выдачи:</div>
+              <div class="col color-grey-2">
+                {{ item.DateDriverLicense | moment("DD.MM.YYYY") }}
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Срок действия:</div>
-            <div class="col color-grey-2">20.01.2016</div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Категории ТС:</div>
-            <div class="col color-grey-2">{{ licenseCheck.cat }}</div>
-          </div>
-        </app-accardion-col>
-        <app-accardion-col :class="contentCol">
-          <div class="color-grey-3 font-500">
-            <span>Лишение права управления #1</span>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Дата постановления:</div>
-            <div class="col color-grey-2">20.01.2013</div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Срок лишения:</div>
-            <div class="col color-grey-2">24 мес</div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Состояние:</div>
-            <div class="col color-grey-2">Начато начисление срока</div>
-          </div>
-        </app-accardion-col>
-        <app-accardion-col :class="contentCol">
-          <div class="color-grey-3 font-500">
-            <span>Лишение права управления #2</span>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Дата постановления:</div>
-            <div class="col color-grey-2">20.01.2013</div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Срок лишения:</div>
-            <div class="col color-grey-2">24 мес</div>
-          </div>
-          <div class="row">
-            <div class="col color-grey-3">Состояние:</div>
-            <div class="col color-grey-2">Начато начисление срока</div>
-          </div>
-        </app-accardion-col>
+            <div class="row">
+              <div class="col color-grey-3">Срок действия:</div>
+              <div class="col color-grey-2">{{item.license_check.date | moment('DD.MM.YYYY') }}</div>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Категории ТС:</div>
+              <div class="col color-grey-2">{{ licenseCheck.cat }}</div>
+            </div>
+          </app-accardion-col>
+          <app-accardion-col :class="contentCol">
+            <div class="color-grey-3 font-500">
+              <span>Лишение права управления #1</span>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Дата постановления:</div>
+              <div class="col color-grey-2">20.01.2013</div>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Срок лишения:</div>
+              <div class="col color-grey-2">24 мес</div>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Состояние:</div>
+              <div class="col color-grey-2">Начато начисление срока</div>
+            </div>
+          </app-accardion-col>
+          <app-accardion-col :class="contentCol">
+            <div class="color-grey-3 font-500">
+              <span>Лишение права управления #2</span>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Дата постановления:</div>
+              <div class="col color-grey-2">20.01.2013</div>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Срок лишения:</div>
+              <div class="col color-grey-2">24 мес</div>
+            </div>
+            <div class="row">
+              <div class="col color-grey-3">Состояние:</div>
+              <div class="col color-grey-2">Начато начисление срока</div>
+            </div>
+          </app-accardion-col>
+        </div>
       </template>
     </app-accardion>
   </div>
@@ -92,14 +94,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import svgCheckmarkCircle from "@/assets/icons/checkmark_circle.svg";
-import { DriverCheck } from "@/models/driver-check.entity";
+import { DriverCheckEntity } from "@/models/driver-check.entity";
 @Component({
   components: {
     svgCheckmarkCircle,
   },
+  
 })
 export default class DriverCheckInfoDriver extends Vue {
-  @Prop({ type: Object, default: () => ({}) }) item: DriverCheck;
+  @Prop({ type: Object, default: () => ({}) }) item: DriverCheckEntity;
   get headerCol() {
     return "col-lg-4 font-md grey-1";
   }
@@ -108,6 +111,12 @@ export default class DriverCheckInfoDriver extends Vue {
   }
   get licenseCheck() {
     return this.item.license_check || {};
+  }
+  get showLicense() {
+    return this.item.statuses.license === 'done'
+  }
+  get isPassportValid () {
+    return this.item.statuses.passport === 'done' && !!this.item.passport_check?.is_valid_passport
   }
 }
 </script>

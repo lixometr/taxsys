@@ -9,7 +9,7 @@ export const useApiRefill = (opts?: UseApiOptions) => useApi<{amount: number}, {
     data: classToPlain(data)
 }), { ...opts })
 
-export const useApiGetBalance = (opts?: UseApiOptions) => useApi<any, {balance: number}>(() => ({
+export const useApiGetBalance = (opts?: UseApiOptions) => useApi<any, {balance: number, qiwi: number}>(() => ({
     method: 'GET',
     url: '/balance',
 }), { ...opts })

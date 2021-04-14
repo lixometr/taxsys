@@ -13,7 +13,7 @@
             v-for="(item, idx) in causeItems"
             :key="idx"
             :class="{active: item === cause}"
-            @click="selectCause(item)"
+            @click="selectCause(idx)"
           >
             {{ item }}
           </div>
@@ -49,6 +49,7 @@ import { ref, toRefs } from "@vue/composition-api";
 import { errorHandler } from "@/helpers/error-handler";
 import { useApiAddDriverToBlacklist } from "@/api/driver";
 import useToast from "@/compositions/useToast";
+import { UserModule } from "@/store/modules/user";
 
 interface IProps {
   [key: string]: any;
@@ -58,7 +59,8 @@ interface IProps {
   components: { AppImage, PreviewImage, ProfileReqsCard, AppTooltip },
   setup(props: IProps, { emit }) {
     const { item } = toRefs<IProps>(props);
-    const cause = ref("");
+    
+    const cause = ref();
     const causeOpen = ref(false);
     const addToBlacklist = async () => {
       const { error: toastError } = useToast();
@@ -69,24 +71,18 @@ interface IProps {
           success: () => "Водитель добавлен в черный список!",
         },
       });
-      await exec({ id: item.value.id });
+      await exec({ id: item.value.id, cause: cause.value });
       if (error.value) return;
     };
     const toggleCause = () => {
       causeOpen.value = !causeOpen.value;
     };
-    const selectCause = (item: string) => {
-      cause.value = item;
+    const selectCause = (idx: number) => {
+      cause.value = idx + 1;
       causeOpen.value = false;
     };
-    const causeItems = [
-      "Не платит аренду",
-      "Мошенничество",
-      "Разбил машину",
-      "Разобрал авто",
-      "Самозаказ",
-      "Угон",
-    ];
+    
+    const causeItems = UserModule.user.blacklist_reasons.slice(1)
     return {
       cause,
       causeOpen,

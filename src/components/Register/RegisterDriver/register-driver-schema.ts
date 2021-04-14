@@ -4,7 +4,7 @@ import { birthday, city, countryLicense, dateLicense, driverExp, endTimeLicense,
 export const baseSchema: FormSchemaItem[] = [
     {
         type: "app-input",
-        field: middleName,
+        field: lastName,
         props: {
             label: "Фамилия",
         },
@@ -24,7 +24,7 @@ export const baseSchema: FormSchemaItem[] = [
 
     {
         type: "app-input",
-        field: lastName,
+        field: middleName,
         props: {
             label: "Отчество",
         },

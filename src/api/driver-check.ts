@@ -1,5 +1,6 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
 import useMoment from "@/compositions/useMoments";
+import { DriverCheckEntity } from "@/models/driver-check.entity";
 interface CheckDriverProps {
     surname: string
     name: string
@@ -43,7 +44,7 @@ export const useApiGetDriverCheckHistory = (opts?: UseApiOptions) => useApi<{ pa
     }),
     { ...opts }
 )
-export const useApiGetDriverCheckById = (opts?: UseApiOptions) => useApi<{ id: number }, any>(
+export const useApiGetDriverCheckById = (opts?: UseApiOptions) => useApi<{ id: number }, DriverCheckEntity>(
     ({ id }) => ({
         method: "GET",
         url: `/driver/check/${id}`,

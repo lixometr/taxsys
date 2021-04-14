@@ -102,7 +102,7 @@
     </div>
     <div class="widget-add-form-btn-wrapper">
       <app-button class="widget-add-form-btn" color="orange-grad" type="submit"
-        >добавить</app-button
+        >{{btnText}}</app-button
       >
       <a href="#" class="widget-add-form-policy">
         Продолжая вы принимаете условия публичной оферты
@@ -159,7 +159,7 @@ interface IProps {
     const types = [
       {
         name: "Поэтапная анкета",
-        value: "step",
+        value: "multistep",
       },
       {
         name: "Открытая анкета",
@@ -275,7 +275,11 @@ interface IProps {
       if (type.value === FormTypes.create) return null;
       return item.value.images.find((img) => img.desc === "background")?.url;
     });
+    const btnText = computed(() => {
+      return type.value === FormTypes.create ? 'добавить' : 'обновить'
+    })
     return {
+      btnText,
       backgroundDefault,
       copyInsertText,
       values,

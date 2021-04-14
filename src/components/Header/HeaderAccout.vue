@@ -34,7 +34,7 @@ import { UserModule } from "@/store/modules/user";
 })
 export default class HeaderAccount extends Vue {
   get userName() {
-    return UserModule.user?.username;
+    return UserModule.user?.fio;
   }
 }
 </script>
