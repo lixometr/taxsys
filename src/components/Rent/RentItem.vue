@@ -5,9 +5,11 @@
         <app-accardion-col class="col-lg-3 col-md-6">
           <div class="rent-item__model">
             <div class="rent-item__image">
-              <img src="@/assets/img/rent_car.png" alt="image" />
+              <app-image :src="mainImage" alt="image" />
             </div>
-            <div class="rent-item__model-name">{{ item.Brand }} {{item.Model}}</div>
+            <div class="rent-item__model-name">
+              {{ item.Brand }} {{ item.Model }}
+            </div>
           </div>
         </app-accardion-col>
 
@@ -19,11 +21,15 @@
         </app-accardion-col>
         <app-accardion-col class="col-lg-2 col-md-4">
           <div class="rent-item__number car-number">
-            <div class="car-number-num">{{ item.GosNomer }}</div>
+            <div class="car-number-num">
+              <router-link class="color-grey-2" :to="{ name: 'CarInfo', params: { id: item.id } }" @click.stop>{{
+                item.GosNomer
+              }}</router-link>
+            </div>
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-2 col-md-4">
-          <div class="rent-item__price">{{activePrice}} {{ currency }}</div>
+          <div class="rent-item__price">{{ activePrice }} {{ currency }}</div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-2 col-md-4">
           <div class="rent-item__btn">
@@ -46,10 +52,7 @@
         </app-accardion-col>
         <app-accardion-col class="col-lg-3">
           <div class="rent-item__deposit w-100">
-            <rent-item-deposit
-              :deposit="item.Deposit"
-              v-model="deposit"
-            />
+            <rent-item-deposit :deposit="item.Deposit" v-model="deposit" />
           </div>
         </app-accardion-col>
         <app-accardion-col class="col-lg-3">
@@ -80,6 +83,7 @@
 </template>
 
 <script lang="ts">
+import AppImage from '../AppImage.vue'
 import RentItemDeposit from "./RentItemDeposit.vue";
 import ActionIconEdit from "../ActionIcons/ActionIconEdit.vue";
 import ActionIconActive from "../ActionIcons/ActionIconActive.vue";
@@ -89,14 +93,14 @@ import svgEdit from "@/assets/icons/edit.svg";
 import svgTrash from "@/assets/icons/trash.svg";
 import svgEye from "@/assets/icons/eye.svg";
 import { computed, ref, toRefs } from "@vue/composition-api";
-import { Car  } from "@/models/car.entity";
+import { Car } from "@/models/car.entity";
 interface IProps {
-  [key: string]: any
-  item: Car
+  [key: string]: any;
+  item: Car;
 }
 @Component({
   setup(props: IProps, { emit }) {
-    const {item} = toRefs<IProps>(props)
+    const { item } = toRefs<IProps>(props);
     const deposit = ref("70");
     const approve = () => {
       emit("approve");
@@ -111,7 +115,7 @@ interface IProps {
     const toggleActive = () => {
       emit("active");
     };
-     const activePrice = computed(() => {
+    const activePrice = computed(() => {
       if (deposit.value === "61") {
         return item.value.Rent61 || 0;
       }
@@ -138,11 +142,14 @@ interface IProps {
     ActionIconDelete,
     ActionIconActive,
     ActionIconEdit,
-    RentItemDeposit,
+    RentItemDeposit, AppImage
   },
 })
 export default class RentItem extends Vue {
   @Prop() item: Car;
+  get mainImage () {
+    return this.item.images[0] && this.item.images[0].url
+  }
   get currency() {
     return this.$store.getters.currency;
   }

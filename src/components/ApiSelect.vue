@@ -44,8 +44,8 @@ interface IProps {
   },
   components: { AppSelect },
 })
-export default class CitySelect extends Vue {
-  @Prop(String) value: string;
+export default class ApiSelect extends Vue {
+  @Prop([String, Number]) value: string;
   @Prop(Function) fetchFunc: (...args: any[]) => Promise<any[]>;
 }
 </script>

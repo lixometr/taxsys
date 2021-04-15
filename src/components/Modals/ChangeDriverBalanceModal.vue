@@ -57,7 +57,8 @@ interface IProps {
         value: "put",
       },
     ];
-    const onSent = () => {
+    const onSent = (e) => {
+      emit('send', e)
       emit('close')
     }
     return {

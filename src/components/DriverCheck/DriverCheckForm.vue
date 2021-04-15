@@ -48,21 +48,21 @@ interface IDefaultData {
     const query = router.currentRoute.query;
     const defaultData: IDefaultData = {
       name: query.name,
-      surname: query.surname,
-      lastname: query.lastname,
-      numberOfPassport: query.numberOfPassport,
-      driverLicense: query.driverLicense,
+      lastName: query.surname,
+      middleName: query.lastname,
+      passport: query.numberOfPassport,
+      serialLicense: query.driverLicense,
     };
     if (query.dateOfBirth && typeof query.dateOfBirth === "string") {
       const dateOfBirth = new Date(query.dateOfBirth);
-      defaultData.dateOfBirth = dateOfBirth;
+      defaultData.birthday = dateOfBirth;
     }
     if (
       query.dateDriverLicense &&
       typeof query.dateDriverLicense === "string"
     ) {
       const test = new Date(query.dateDriverLicense);
-      defaultData.dateDriverLicense = test;
+      defaultData.dateLicense = test;
     }
     const { exec: sendForm, result, error } = useApiDriverCheck({
       toast: {
@@ -103,6 +103,7 @@ interface IDefaultData {
         dateLicense: "dateDriverLicense",
       },
     });
+    Object.assign(form.values, defaultData)
 
     const onSubmit = form.handleSubmit(async () => {
       console.log(form.serialize())

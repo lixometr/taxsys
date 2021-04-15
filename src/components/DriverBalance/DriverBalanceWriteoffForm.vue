@@ -46,7 +46,7 @@ import { toRefs } from "@vue/composition-api";
 interface IProps {
   [key: string]: any;
   driverId: number;
-  agregator: string
+  agregator: string;
 }
 @Component({
   components: { AppCheckboxInput },
@@ -59,10 +59,10 @@ interface IProps {
         pay: useField(false, [yup.boolean().required()]),
       },
       rename: {
-        pay: 'pay_off'
-      }
+        pay: "pay_off",
+      },
     });
-    const { exec, error } = useApiDriverBalanceWriteoff({
+    const { exec, error, result } = useApiDriverBalanceWriteoff({
       toast: {
         error: errorHandler(),
         success: () => "Заявка на выплату успешно создана!",
@@ -74,11 +74,11 @@ interface IProps {
         plainToClass(DriverWriteOffBalanceDto, {
           ...toSend,
           id: driverId.value,
-          agreg: agregator.value
+          agreg: agregator.value,
         })
       );
       if (error.value) return;
-      emit("send");
+      emit("send", result.value);
     });
     return {
       onSubmit,
@@ -89,8 +89,7 @@ interface IProps {
 })
 export default class DriverBalanceWriteOffForm extends Vue {
   @Prop(Number) driverId: number;
-  @Prop(String) agregator: string
-
+  @Prop(String) agregator: string;
 }
 </script>
 

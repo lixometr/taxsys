@@ -1,4 +1,5 @@
 import { Type } from "class-transformer"
+import { DriverEntity } from "./driver.entity"
 import { Fine } from "./fine.entity"
 import { ImageEntity } from "./image.entity"
 
@@ -12,6 +13,7 @@ class HistoryItem {
     model_type: string
 }
 export class Car {
+    driver?: DriverEntity
     first_deposit: number
     deposit_delay_days: number
     Brand: string

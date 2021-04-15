@@ -15,6 +15,8 @@ import AppSelect from "./AppSelect.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { useApiGetGeoIp } from "@/api/geoip";
 import { toRefs } from "@vue/composition-api";
+import { useApiGetCities } from "@/api/cities";
+import { errorHandler } from "@/helpers/error-handler";
 
 @Component({
   inheritAttrs: false,
@@ -22,8 +24,11 @@ import { toRefs } from "@vue/composition-api";
     const { value } = toRefs(props);
     const { exec: getIpInfo, result: definedCity } = useApiGetGeoIp();
     const fetchFunc = async () => {
-      const opts = await (import("@/assets/cities.json") as Promise<any>);
-      const options = opts.default;
+      const {exec, error, result} = useApiGetCities({toast: {error: errorHandler()}})
+      // const opts = await (import("@/assets/cities.json") as Promise<any>);
+      await exec()
+      const opts = result.value
+      const options = opts;
       await getIpInfo();
       if (!value.value && definedCity.value) {
         emit("input", definedCity.value);

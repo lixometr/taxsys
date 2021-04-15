@@ -2,10 +2,11 @@ import useApi, { UseApiOptions } from "@/compositions/useApi";
 import { DriverPutBalanceDto, DriverWriteOffBalanceDto } from "@/dto/driver-balance.dto";
 import { classToPlain } from "class-transformer";
 
-export const useApiDriverBalanceWriteoff = (opts?: UseApiOptions) => useApi<DriverWriteOffBalanceDto, any>(
+export const useApiDriverBalanceWriteoff = (opts?: UseApiOptions) => useApi<DriverWriteOffBalanceDto, { balance: number }>(
     (data: DriverWriteOffBalanceDto) => {
         const toSend = classToPlain(data)
         toSend.id = undefined
+        toSend.amount = -toSend.amount
         if (toSend.pay_off) {
             return {
                 method: "POST",
@@ -13,7 +14,6 @@ export const useApiDriverBalanceWriteoff = (opts?: UseApiOptions) => useApi<Driv
                 data: toSend
             }
         } else {
-            toSend.amount = -toSend.amount
             return {
                 method: "POST",
                 url: `/driver/${data.id}/balance`,

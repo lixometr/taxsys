@@ -38,6 +38,7 @@
 import DriverAgregator from "../DriverAgregator.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { AgregName } from "@/types/agregator.enum";
+import { DriverEntity } from "@/models/driver.entity";
 
 @Component({
   components: { DriverAgregator },
@@ -49,11 +50,12 @@ import { AgregName } from "@/types/agregator.enum";
   },
 })
 export default class DriverInfoAgregators extends Vue {
-  @Prop({ type: Object, default: () => ({}) }) item: any;
+  @Prop({ type: Object, default: () => ({}) }) item: DriverEntity;
   get agregatorBalance() {
     return {
       [AgregName.yandex]: this.item.YandexBalans?.toString(),
       [AgregName.citymobil]: this.item.citimobil_balance?.toString(),
+      [AgregName.gett]: this.item.gett_balance?.toString(),
     };
   }
 }

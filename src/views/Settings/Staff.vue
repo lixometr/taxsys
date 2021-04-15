@@ -1,34 +1,38 @@
 <template>
   <div class="settings-staff page-items flex-layout flex-1">
-    <page-title :between="true">
-      <div><h2>Персонал</h2></div>
-      <div>
-        <app-button color="orange" @click="addStaff"
-          >Добавить сотрудника <svgPlus class="ml-10"
-        /></app-button>
-      </div>
-    </page-title>
+    <div class="flex-1 flex-layout" v-if="items.length">
+      <page-title :between="true">
+        <div><h2>Персонал</h2></div>
+        <div>
+          <app-button color="orange" @click="addStaff"
+            >Добавить сотрудника <svgPlus class="ml-10"
+          /></app-button>
+        </div>
+      </page-title>
 
-    <div class="settings-staff-items flex-layout flex-1">
-      <staff-item
-        v-for="item in items"
-        :item="item"
-        :key="item.id"
-        @delete="deleteItem(item.id)"
-      />
-      <app-pagination
-        class="mt-auto"
-        :nowPage="page"
-        :totalPages="totalPages"
-        @next="nextPage"
-        @prev="prevPage"
-        @showMore="nextPage"
-      />
+      <div class="settings-staff-items flex-layout flex-1">
+        <staff-item
+          v-for="item in items"
+          :item="item"
+          :key="item.id"
+          @delete="deleteItem(item.id)"
+        />
+        <app-pagination
+          class="mt-auto"
+          :nowPage="page"
+          :totalPages="totalPages"
+          @next="nextPage"
+          @prev="prevPage"
+          @showMore="nextPage"
+        />
+      </div>
     </div>
+    <staff-placeholder @refresh="refreshItems" v-else />
   </div>
 </template>
 
 <script lang="ts">
+import StaffPlaceholder from "../../components/Placeholders/StaffPlaceholder.vue";
 import StaffItem from "../../components/Settings/Staff/StaffItem.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -76,6 +80,7 @@ import { errorHandler } from "@/helpers/error-handler";
       await refreshItems();
     };
     return {
+      refreshItems,
       deleteItem,
       page,
       showMore,
@@ -90,6 +95,7 @@ import { errorHandler } from "@/helpers/error-handler";
     PageTitle,
     svgPlus,
     StaffItem,
+    StaffPlaceholder,
   },
 })
 export default class SettignsStaff extends Vue {}

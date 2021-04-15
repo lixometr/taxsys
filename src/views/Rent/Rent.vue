@@ -17,15 +17,25 @@
         </div>
       </page-title>
       <div class="page-rent__items flex flex-column flex-1">
-        <rent-item
-          v-for="(item) in items"
-          :key="item.id"
-          :item="item"
-          class="page-rent-item"
-          @approve="onApprove"
-          @remove="removeCar(item.id)"
-          @edit="editCar(item.id)"
-        />
+        <div v-if="entity === 'free'">
+          <rent-item
+            v-for="item in items"
+            :key="item.id"
+            :item="item"
+            class="page-rent-item"
+            @approve="onApprove"
+            @remove="removeCar(item.id)"
+            @edit="editCar(item.id)"
+          />
+        </div>
+        <div v-else>
+          <rent-item-work
+            v-for="item in items"
+            :key="item.id"
+            :item="item"
+            class="page-rent-item"
+          />
+        </div>
         <app-pagination
           class="mt-auto"
           :nowPage="page"
@@ -44,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import RentItemWork from "../../components/Rent/RentItemWork.vue";
 import RentWorkPlaceholder from "../../components/Placeholders/RentWorkPlaceholder.vue";
 import RentFreePlaceholder from "../../components/Placeholders/RentFreePlaceholder.vue";
 import PageTitle from "../../components/Page/PageTitle.vue";
@@ -80,7 +91,7 @@ import { errorHandler } from "@/helpers/error-handler";
       showMore,
       items,
       init,
-      refreshItems
+      refreshItems,
     } = useItemsPage({ api: useApiGetCarsRentable });
     const toFetch = computed(() => ({
       withoutDriver: entity.value === "free",
@@ -88,14 +99,19 @@ import { errorHandler } from "@/helpers/error-handler";
     init({ fetchData: toFetch });
 
     const removeCar = async (id: number) => {
-      const { exec, error } = useApiDeleteCar({toast: {error: errorHandler(), success: () => 'Машина успешно удалена!'}});
+      const { exec, error } = useApiDeleteCar({
+        toast: {
+          error: errorHandler(),
+          success: () => "Машина успешно удалена!",
+        },
+      });
       await exec({ id });
-      if(error.value) return
-      await refreshItems()
+      if (error.value) return;
+      await refreshItems();
     };
     const editCar = async (id: number) => {
-      return
-    }
+      return;
+    };
     return {
       removeCar,
       editCar,
@@ -118,6 +134,7 @@ import { errorHandler } from "@/helpers/error-handler";
     PageTitle,
     RentFreePlaceholder,
     RentWorkPlaceholder,
+    RentItemWork,
   },
 })
 export default class Rent extends Vue {}

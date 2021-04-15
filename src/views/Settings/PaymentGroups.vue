@@ -9,7 +9,7 @@
       </div>
     </page-title>
 
-    <div class="settings-payment-groups-items flex-layout flex-1">
+    <div class="settings-payment-groups-items flex-layout flex-1" v-if="items.length">
       <payment-groups-item
         v-for="(item, idx) in items"
         :item="item"
@@ -17,10 +17,12 @@
         @delete="onDeleteItem(item.id)"
       />
     </div>
+    <payment-group-placeholder v-else/>
   </div>
 </template>
 
 <script lang="ts">
+import PaymentGroupPlaceholder from '../../components/Placeholders/PaymentGroupPlaceholder.vue'
 import PaymentGroupsItem from "../../components/Settings/PaymentGroups/PaymentGroupsItem.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -70,7 +72,7 @@ import { errorHandler } from "@/helpers/error-handler";
   components: {
     PageTitle,
     svgPlus,
-    PaymentGroupsItem,
+    PaymentGroupsItem, PaymentGroupPlaceholder
   },
 })
 export default class SettignsPaymentGroups extends Vue {}

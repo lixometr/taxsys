@@ -23,6 +23,7 @@ export class DriverEntity {
     DriverIdYandex: "0a1a09da3643ba127b8d2c3b641cd752"
     DrivingExperience: "2014-02-25"
     GettDriver: 0
+    gett_balance: number
     citimobil_balance: number
     GettId: null
     IssuedBy: null

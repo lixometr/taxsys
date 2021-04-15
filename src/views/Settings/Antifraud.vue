@@ -15,7 +15,10 @@
         </div>
       </div>
     </page-title>
-    <div class="settings-antifraud__content flex-layout flex-1">
+    <div
+      class="settings-antifraud__content flex-layout flex-1"
+      v-if="items.length"
+    >
       <settings-antifraud-item
         v-for="item in items"
         :key="item.id"
@@ -34,10 +37,12 @@
         class="mt-auto"
       />
     </div>
+    <antifraud-placeholder v-else />
   </div>
 </template>
 
 <script lang="ts">
+import AntifraudPlaceholder from "../../components/Placeholders/AntifraudPlaceholder.vue";
 import SettingsAntifraudItem from "../../components/Settings/Antifraud/SettingsAntifraudItem.vue";
 import PageTitle from "../../components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -54,7 +59,12 @@ import { computed } from "@vue/composition-api";
 import { AntifraudEntity } from "@/models/antifraud.entity";
 import { errorHandler } from "@/helpers/error-handler";
 @Component({
-  components: { PageTitle, svgPlus, SettingsAntifraudItem },
+  components: {
+    PageTitle,
+    svgPlus,
+    SettingsAntifraudItem,
+    AntifraudPlaceholder,
+  },
   setup() {
     const { showByName } = useModal();
 
@@ -93,7 +103,7 @@ import { errorHandler } from "@/helpers/error-handler";
           success: () => {
             return "Успешно удален!";
           },
-          error: errorHandler()
+          error: errorHandler(),
         },
       });
       await exec({ id: item.id });
@@ -116,7 +126,10 @@ import { errorHandler } from "@/helpers/error-handler";
     };
     const toggleActive = async (active: boolean, item: AntifraudEntity) => {
       const { exec, error } = useApiUpdateAntifraud({
-        toast: { success: () => (active ? "Активирован" : "Деактивирован"), error: errorHandler() },
+        toast: {
+          success: () => (active ? "Активирован" : "Деактивирован"),
+          error: errorHandler(),
+        },
       });
       await exec({
         id: item.id,

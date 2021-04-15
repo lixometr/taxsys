@@ -52,7 +52,7 @@ interface IProps {
         comment: useField("", [yup.string().optional()]),
       },
     });
-    const { exec, error } = useApiDriverBalancePut({
+    const { exec, error, result} = useApiDriverBalancePut({
       toast: {
         error: errorHandler(),
         success: () => "Баланс успешно пополнен!",
@@ -62,7 +62,7 @@ interface IProps {
       const toSend = serialize();
       await exec(plainToClass(DriverPutBalanceDto, {...toSend, id: driverId.value, agreg: agregator.value}));
       if (error.value) return;
-      emit("send");
+      emit("send", result.value);
     });
     return {
       onSubmit,

@@ -18,7 +18,14 @@
           :class="responsiveHeader"
           class="d-flex justify-content-start justify-content-xl-end"
           ><div class="car-number">
-            <div class="car-number-num">{{ car.GosNomer }}</div>
+            <div class="car-number-num">
+              <router-link
+                class="color-grey-2"
+                :to="{ name: 'CarInfo', params: { id: car.id } }"
+                @click.stop
+                >{{ car.GosNomer }}</router-link
+              >
+            </div>
           </div></app-accardion-col
         >
         <app-accardion-col
@@ -67,6 +74,7 @@
                 class="driver-list-item__agregator"
                 :agregator="'gett'"
                 :active="!!item.GettDriver"
+                :price="agregatorBalance[AgregName.gett]"
                 :driverId="item.id"
                 @refresh="refresh"
               />
@@ -88,9 +96,27 @@
             <div class="color-grey-3 row mb-15 font-600">
               <div class="col">Данные водителя</div>
             </div>
-            <div class="row mb-15" v-for="(item, idx) in driverData" :key="idx">
-              <div class="col color-grey-3">{{ item.name }}</div>
-              <div class="col color-grey-2">{{ item.value }}</div>
+            <div
+              class="row mb-15"
+              v-for="(dataItem, idx) in driverData"
+              :key="idx"
+            >
+              <div class="col color-grey-3">{{ dataItem.name }}</div>
+              <component
+                :is="!dataItem.isLink ? 'div' : 'router-link'"
+                :to="
+                  dataItem.isLink && {
+                    name: 'DriverInfo',
+                    params: { id: item.id },
+                  }
+                "
+                :class="{
+                  col: true,
+                  'color-purple': dataItem.isLink,
+                  'color-grey-2': !dataItem.isLink,
+                }"
+                >{{ dataItem.value }}</component
+              >
             </div>
             <div class="row" v-if="item.IssuedBy">
               <div class="col color-grey-3">Кем выдан:</div>
@@ -301,6 +327,7 @@ export default class DriverListItem extends Vue {
     return {
       [AgregName.yandex]: this.item.YandexBalans?.toString(),
       [AgregName.citymobil]: this.item.citimobil_balance?.toString(),
+      [AgregName.gett]: this.item.gett_balance?.toString(),
     };
   }
   get activeAgregators() {
@@ -418,6 +445,7 @@ export default class DriverListItem extends Vue {
       {
         name: "Серия/номер В.У.:",
         value: this.item.SerialDriverLicense,
+        isLink: true,
       },
 
       {
