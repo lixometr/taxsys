@@ -84,12 +84,24 @@ interface IProps {
     const { item } = toRefs<IProps>(props);
     const { handleSubmit, values, errors, serialize } = useForm({
       fields: {
-        rent7_0: useField(String(item.value.Rent70), [yup.number().required()]),
-        rent6_1: useField(String(item.value.Rent61), [yup.number().required()]),
-        buyout: useField(String(item.value.Ransom,), [yup.number().required()]),
-        deposit: useField(String(item.value.Deposit), [yup.number().required().nullable()]),
-        depoistFirstPart: useField(String(item.value.first_deposit), [yup.number().required()]),
-        rest: useField(String(item.value.deposit_delay_days), [yup.number().required()]),
+        rent7_0: useField(String(item.value.Rent70 || ""), [
+          yup.number().required(),
+        ]),
+        rent6_1: useField(String(item.value.Rent61 || "") , [
+          yup.number().required(),
+        ]),
+        buyout: useField(String(item.value.Ransom || ""), [
+          yup.number().required(),
+        ]),
+        deposit: useField(item.value.Deposit ? String(item.value.Deposit) : null, [
+          yup.number().required().nullable(),
+        ]),
+        depoistFirstPart: useField(String(item.value.first_deposit || ""), [
+          yup.number().required(),
+        ]),
+        rest: useField(String(item.value.deposit_delay_days || ""), [
+          yup.number().required(),
+        ]),
       },
       rename: {
         rent7_0: "Rent70",

@@ -50,18 +50,26 @@ interface IProps {
       showByName(ModalName.changeDriverBalance, {
         props: {
           driverId: driverId.value,
-          agregator: agregator.value
+          agregator: agregator.value,
         },
         on: {
           send: () => {
-            emit('refresh')
-          }
-        }
+            emit("refresh");
+          },
+        },
       });
       return;
     };
+
     const add = () => {
-      emit("add");
+      const { showByName } = useModal();
+      showByName(ModalName.connectDriver, {
+        props: {
+          agregator: agregator.value,
+          id: driverId.value,
+        },
+      });
+      // emit("add");
       return;
     };
     return {

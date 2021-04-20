@@ -11,4 +11,5 @@ export class Application {
     partner_id: number
     stop_reg: boolean
     wishes: string
+    images: Array<{url: string}>
 }

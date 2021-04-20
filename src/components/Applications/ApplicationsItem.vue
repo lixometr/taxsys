@@ -4,7 +4,7 @@
       <div class="col-xl-4 col-md-6 applications-item__col">
         <div class="applications-item__name-wrapper">
           <div class="applications-item__image">
-            <img src="@/assets/img/application_mock.jpg" alt="image" />
+            <img :src="icon" alt="image" v-if="icon" width="40"/>
           </div>
           <div class="applications-item__name">{{ item.app_name }}</div>
         </div>
@@ -84,6 +84,9 @@ export default class ApplicationItem extends Vue {
   get colClass() {
     return "col-xl-3 col-md-6 applications-item__col";
   }
+  get icon() {
+    return this.item.images[0] && this.item.images[0].url;
+  }
 }
 </script>
 
@@ -123,6 +126,7 @@ export default class ApplicationItem extends Vue {
     }
     img {
       border-radius: 5px;
+      width: 80px;
     }
   }
   &__btns {

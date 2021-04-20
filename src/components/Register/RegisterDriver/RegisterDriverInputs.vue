@@ -1,5 +1,5 @@
 <template>
-  <form action="#" class="flex-1 flex-layout" @submit.prevent="onSubmit">
+  <form action="#" class="flex-1 flex-layout register-driver-inputs" @submit.prevent="onSubmit">
     <form-schema class="row" :schema="formSchema">
       <template v-slot:field-gettid="{ item }">
         <div class="gett-input-checkbox">
@@ -123,7 +123,30 @@ export default class RegisterDriverInput extends Vue {
 <style lang="scss">
 .app-image-upload {
   svg {
-    color: #6979F8;
+    color: #6979f8;
+  }
+}
+.register-driver-inputs {
+  .form-schema__input {
+    margin-bottom: 10px;
+  }
+  .driver-license {
+    svg {
+      fill: none;
+    }
+  }
+  .gett-input-checkbox {
+    position: relative;
+    .app-checkbox {
+      position: absolute;
+      right: 10px;
+      top: 14px;
+    }
+    .gett-input__input {
+      input {
+        padding-right: 40px;
+      }
+    }
   }
 }
 </style>

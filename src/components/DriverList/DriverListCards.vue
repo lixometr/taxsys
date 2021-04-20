@@ -19,6 +19,7 @@
               class="cursor-pointer"
               @click="onRemoveCard(card)"
               width="13"
+              v-if="canEdit"
           /></span>
         </div>
         <div class="col driver-list-cards__number">
@@ -66,7 +67,7 @@ interface IProps {
       showByName(ModalName.addCard, {
         props: {
           id: driverId.value,
-          type: "driver"
+          type: "driver",
         },
         on: {
           send: () => {

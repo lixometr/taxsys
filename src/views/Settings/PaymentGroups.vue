@@ -9,7 +9,10 @@
       </div>
     </page-title>
 
-    <div class="settings-payment-groups-items flex-layout flex-1" v-if="items.length">
+    <div
+      class="settings-payment-groups-items flex-layout flex-1"
+      v-if="items.length"
+    >
       <payment-groups-item
         v-for="(item, idx) in items"
         :item="item"
@@ -17,12 +20,12 @@
         @delete="onDeleteItem(item.id)"
       />
     </div>
-    <payment-group-placeholder v-else/>
+    <payment-group-placeholder v-else />
   </div>
 </template>
 
 <script lang="ts">
-import PaymentGroupPlaceholder from '../../components/Placeholders/PaymentGroupPlaceholder.vue'
+import PaymentGroupPlaceholder from "../../components/Placeholders/PaymentGroupPlaceholder.vue";
 import PaymentGroupsItem from "../../components/Settings/PaymentGroups/PaymentGroupsItem.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
 import { Component, Vue } from "vue-property-decorator";
@@ -36,13 +39,18 @@ import svgPlus from "@/assets/icons/plus.svg";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
 import { errorHandler } from "@/helpers/error-handler";
+import useGlobalLoading from "@/compositions/useGlobalLoading";
 @Component({
   metaInfo: {
     title: "Группы выплат",
   },
   setup() {
-    const { exec: fetchItems, result } = useApiGetPaymentGroups();
-    fetchItems();
+    const gLoading = useGlobalLoading();
+    const { exec: fetchItems, result } = useApiGetPaymentGroups({
+      toast: { error: errorHandler() },
+    });
+    gLoading.show();
+    fetchItems().then(() => gLoading.hide());
 
     const items = ref([]);
     watch(result, (data: any) => {
@@ -72,7 +80,8 @@ import { errorHandler } from "@/helpers/error-handler";
   components: {
     PageTitle,
     svgPlus,
-    PaymentGroupsItem, PaymentGroupPlaceholder
+    PaymentGroupsItem,
+    PaymentGroupPlaceholder,
   },
 })
 export default class SettignsPaymentGroups extends Vue {}

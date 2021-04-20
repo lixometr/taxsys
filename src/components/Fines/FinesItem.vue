@@ -16,7 +16,7 @@
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader"
           ><div class="car-number">
-            <div class="car-number-num">{{ item.car.GosNomer }}</div>
+            <div class="car-number-num">{{ car.GosNomer }}</div>
           </div></app-accardion-col
         >
 
@@ -39,7 +39,7 @@
       <template #default>
         <app-accardion-col :class="responsiveContent">
           <div>
-            <div class="color-grey-2 mb-10">{{ item.car.driver.fio }}</div>
+            <div class="color-grey-2 mb-10">{{ car.driver.fio }}</div>
             <div class="row mb-15">
               <div class="col color-grey-2">Нарушение:</div>
               <div class="col color-grey-1">
@@ -135,6 +135,7 @@ import { computed, ref } from "@vue/composition-api";
 import AppStatus from "../AppStatus.vue";
 import AppImage from "@/components/AppImage.vue";
 import { Fine } from "@/models/fine.entity";
+import { Car } from "@/models/car.entity";
 @Component({
   components: { AppStatus, AppImage },
   setup(props, { emit }) {
@@ -155,7 +156,9 @@ export default class DriverListItem extends Vue {
   get responsiveContent() {
     return "col-12 col-xl-4";
   }
-
+  get car() {
+    return this.item?.car || {} as Car
+  }
   get currency() {
     return this.$store.getters.currency;
   }

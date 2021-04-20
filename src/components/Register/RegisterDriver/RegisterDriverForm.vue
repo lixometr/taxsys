@@ -80,26 +80,6 @@ export default class RegisterDriverForm extends Vue {
   &__btn {
     margin-top: auto;
   }
-  .form-schema__input {
-    margin-bottom: 10px;
-  }
-  .driver-license {
-    svg {
-      fill: none;
-    }
-  }
-  .gett-input-checkbox {
-    position: relative;
-    .app-checkbox {
-      position: absolute;
-      right: 10px;
-      top: 14px;
-    }
-    .gett-input__input {
-      input {
-        padding-right: 40px;
-      }
-    }
-  }
+  
 }
 </style>

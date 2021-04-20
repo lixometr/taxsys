@@ -11,7 +11,7 @@
             <span class="driver-check-info-driver__header-info">
               {{ item.NumberOfPassport }}
             </span>
-            <svgCheckmarkCircle v-if="isPassportValid"/>
+            <svgCheckmarkCircle v-if="isPassportValid" />
           </div>
         </app-accardion-col>
         <app-accardion-col :class="headerCol">
@@ -20,7 +20,7 @@
             <span class="driver-check-info-driver__header-info">
               {{ item.SerialDriverLicense }}
             </span>
-            <svgCheckmarkCircle />
+            <svgCheckmarkCircle v-if="isPassportValid" />
           </div>
         </app-accardion-col>
       </template>
@@ -44,47 +44,33 @@
             </div>
             <div class="row">
               <div class="col color-grey-3">Срок действия:</div>
-              <div class="col color-grey-2">{{item.license_check.date | moment('DD.MM.YYYY') }}</div>
+              <div class="col color-grey-2">
+                {{ item.license_check.date | moment("DD.MM.YYYY") }}
+              </div>
             </div>
             <div class="row">
               <div class="col color-grey-3">Категории ТС:</div>
               <div class="col color-grey-2">{{ licenseCheck.cat }}</div>
             </div>
           </app-accardion-col>
-          <app-accardion-col :class="contentCol">
-            <div class="color-grey-3 font-500">
-              <span>Лишение права управления #1</span>
+          <app-accardion-col :class="contentCol" v-for="(dec, idx) in decis" :key="idx">
+            <div class="color-grey-3 font-500" >
+              <span>Лишение права управления #{{idx + 1}}</span>
             </div>
             <div class="row">
               <div class="col color-grey-3">Дата постановления:</div>
-              <div class="col color-grey-2">20.01.2013</div>
+              <div class="col color-grey-2">{{dec.date | moment('DD.MM.YYYY')}}</div>
             </div>
             <div class="row">
               <div class="col color-grey-3">Срок лишения:</div>
-              <div class="col color-grey-2">24 мес</div>
+              <div class="col color-grey-2">{{dec.srok}} мес</div>
             </div>
             <div class="row">
               <div class="col color-grey-3">Состояние:</div>
-              <div class="col color-grey-2">Начато начисление срока</div>
+              <div class="col color-grey-2">{{dec.comment}}</div>
             </div>
           </app-accardion-col>
-          <app-accardion-col :class="contentCol">
-            <div class="color-grey-3 font-500">
-              <span>Лишение права управления #2</span>
-            </div>
-            <div class="row">
-              <div class="col color-grey-3">Дата постановления:</div>
-              <div class="col color-grey-2">20.01.2013</div>
-            </div>
-            <div class="row">
-              <div class="col color-grey-3">Срок лишения:</div>
-              <div class="col color-grey-2">24 мес</div>
-            </div>
-            <div class="row">
-              <div class="col color-grey-3">Состояние:</div>
-              <div class="col color-grey-2">Начато начисление срока</div>
-            </div>
-          </app-accardion-col>
+       
         </div>
       </template>
     </app-accardion>
@@ -99,7 +85,6 @@ import { DriverCheckEntity } from "@/models/driver-check.entity";
   components: {
     svgCheckmarkCircle,
   },
-  
 })
 export default class DriverCheckInfoDriver extends Vue {
   @Prop({ type: Object, default: () => ({}) }) item: DriverCheckEntity;
@@ -113,10 +98,21 @@ export default class DriverCheckInfoDriver extends Vue {
     return this.item.license_check || {};
   }
   get showLicense() {
-    return this.item.statuses.license === 'done'
+    return this.item.statuses.license === "done";
   }
-  get isPassportValid () {
-    return this.item.statuses.passport === 'done' && !!this.item.passport_check?.is_valid_passport
+  get isPassportValid() {
+    return (
+      this.item.statuses.passport === "done" &&
+      !!this.item.passport_check?.is_valid_passport
+    );
+  }
+  get decis() {
+    try {
+      const decisions = JSON.parse(this.item.license_check?.decis);
+      return decisions || []
+    } catch (err) {
+      return [];
+    }
   }
 }
 </script>

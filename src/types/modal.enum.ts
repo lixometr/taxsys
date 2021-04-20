@@ -11,7 +11,8 @@ export enum ModalName {
     addPaymentGroup = 'add-payment-group',
     addDispetcher = 'add-dispetcher',
     giveCar = 'give-car',
-    changeDriverBalance = 'change-driver-balance'
+    changeDriverBalance = 'change-driver-balance',
+    connectDriver = 'connect-driver'
 }
 
 export const ModalComponents = {
@@ -28,5 +29,6 @@ export const ModalComponents = {
     [ModalName.addDispetcher]: () => import("@/components/Modals/AddDispetcherModal.vue"),
     [ModalName.giveCar]: () => import("@/components/Modals/GiveCarModal.vue"),
     [ModalName.changeDriverBalance]: () => import("@/components/Modals/ChangeDriverBalanceModal.vue"),
+    [ModalName.connectDriver]: () => import("@/components/Modals/ConnectDriverModal.vue"),
     
 }

@@ -4,8 +4,8 @@
       <h2>Чёрный список</h2>
     </page-title>
 
-    <div class="driver-blacklist-items flex flex-column flex-1" v-if="false">
-      <driver-black-list-item v-for="item in 5" :key="item.id" />
+    <div class="driver-blacklist-items flex flex-column flex-1" v-if="items.length">
+      <driver-black-list-item v-for="item in items" :item="item" :key="item.id" />
       <app-pagination
         class="mt-auto"
         :nowPage="page"

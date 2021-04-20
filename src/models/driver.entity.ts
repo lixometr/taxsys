@@ -14,7 +14,8 @@ class Transaction {
 }
 export class DriverEntity {
     fio: string
-    CityMobilDriver: 0
+    is_blacklisted: number
+    CityMobilDriver: number
     DateDriverLicense: null
     DateIssuePasport: null
     DateOfBirth: null

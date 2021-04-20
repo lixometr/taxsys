@@ -6,20 +6,37 @@
           <div class="font-md color-violet">База водителей</div>
         </app-accardion-col>
       </div>
-      <driver-check-info-data-item class="driver-check-info-data__item"/>
-      <driver-check-info-data-item class="driver-check-info-data__item"/>
+      <driver-check-info-data-item class="driver-check-info-data__item" v-for="(item, idx) in items" :key="idx" :item="item"/>
+      <!-- <driver-check-info-data-item class="driver-check-info-data__item" /> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import DriverCheckInfoDataItem from "./DriverCheckInfoDataItem.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { DriverCheckEntity } from "@/models/driver-check.entity";
 
 @Component({
   components: { DriverCheckInfoDataItem },
 })
-export default class DriverCheckInfoData extends Vue {}
+export default class DriverCheckInfoData extends Vue {
+  @Prop({ type: Object, default: () => ({}) }) item: DriverCheckEntity;
+  get result() {
+    try {
+      if (this.item.yandex_check?.status !== "done") return null;
+      const result = JSON.parse(this.item.yandex_check.result);
+      return result
+    } catch (err) {
+      return null;
+    }
+  }
+  get items() {
+    if(!this.result) return []
+    console.log(this.result)
+    return this.result?.free_scoring?.report
+  }
+}
 </script>
 
 <style lang="scss">

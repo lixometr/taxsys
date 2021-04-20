@@ -54,10 +54,10 @@ import { useApiGetCarsRentable } from "@/api/car";
     const items = ref([]);
     const { exec: searchItems, result, error } = useApiGetCarsRentable();
     watch(searchPhrase, (value) => {
-      searchItems({withoutDriver: true});
+      searchItems({ withoutDriver: true });
     });
     watch(result, (newItems) => {
-      items.value = newItems;
+      items.value = newItems?.data || [];
     });
     const selectCar = (id: number) => {
       emit("input", id);

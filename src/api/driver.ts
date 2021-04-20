@@ -1,6 +1,8 @@
 import useApi, { UseApiOptions } from "@/compositions/useApi";
 import { AddCardDto } from "@/dto/card.dto";
+import buildFormData from "@/helpers/build-form-data";
 import { DriverEntity } from "@/models/driver.entity";
+import { AgregName } from "@/types/agregator.enum";
 import { classToPlain, plainToClass } from "class-transformer";
 
 
@@ -87,3 +89,18 @@ export const useApiDriverAddCard = (opts?: UseApiOptions) => useApi<{ data: AddC
         data: classToPlain(data)
 
     }), opts)
+
+export const useApiDriverAddAgregator = (opts?: UseApiOptions) => useApi<{ id: number, agregator: AgregName, values: any }, any>(
+    ({ id, agregator, values }) => {
+        const toSend = {
+            agreg: agregator,
+            ...values
+        }
+        const formData = buildFormData(toSend)
+        return {
+            method: "POST",
+            url: `/driver/${id}/addagreg`,
+            data: formData
+        }
+
+    }, opts)

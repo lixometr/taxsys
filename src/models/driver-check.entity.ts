@@ -28,11 +28,11 @@ export class DriverCheckEntity {
     id: number
     lastname: "Сергеевич"
     license_check: {
+        decis: string
         bdate: null
         cat: null
         created_at: "2021-04-14T06:15:41.000000Z"
         date: null
-        decis: null
         divid: null
         division: null
         driver_check_id: 20
