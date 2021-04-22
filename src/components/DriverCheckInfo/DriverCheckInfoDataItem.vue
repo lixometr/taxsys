@@ -40,16 +40,19 @@
         </div>
         <div class="row mb-15">
           <div class="col color-grey-3">Долг пред парком:</div>
-          <div class="col" :class="{ 'color-green': !debt, 'color-red': !!debt }">
+          <div
+            class="col"
+            :class="{ 'color-green': !debt, 'color-red': !!debt }"
+          >
             {{ debt ? debt : "Отсутствует" }}
           </div>
         </div>
       </app-accardion-col>
     </div>
-    <div class="row row-no-gutter">
+    <div class="row row-no-gutter" v-if="comment">
       <app-accardion-col class="col-12">
         <div class="row">
-          <div class="col-lg-4 col color-grey-3">Примечание:</div>
+          <div class="col-lg-4 col color-grey-3 text-right">Примечание:</div>
           <div class="col-lg-8 col color-grey-2" v-html="comment"></div>
         </div>
       </app-accardion-col>

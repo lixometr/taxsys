@@ -1,29 +1,20 @@
 <template>
   <div class="page-modern-login modern-login">
-    <div class="modern-login__header">
-      <div class="modern-login__logo">
-        <svgLogo width="280" />
-      </div>
-    </div>
-    <div class="modern-login__form-wrapper">
-      <div class="modern-login__form-card">
-        <h2 class="form-title"><slot name="title" /></h2>
-        <slot name="form"/>
-        
-      </div>
-      <div class="modern-login__btns">
-       <slot name="btns" />
-      </div>
-      <div>
-        <a href="#" class="modern-login__support" @click.prevent="onSupport">
-          <svgChat /> Чат с поддержкой
-        </a>
-      </div>
-    </div>
+    <modern-login-layout>
+      <template #title>Авторизация для таксопарков</template>
+      <template #form><modern-login-form /></template>
+      <template #btns>
+        <div class="modern-login__btn">
+          <div class="modern-login__btn-icon"><svgPower width="20" /></div>
+          <div class="modern-login__btn-text">Подключить свой автопарк</div>
+        </div>
+      </template>
+    </modern-login-layout>
   </div>
 </template>
 
 <script lang="ts">
+import ModernLoginLayout from "@/components/ModernLogin/ModernLoginLayout.vue";
 import ModernLoginForm from "@/components/ModernLogin/ModernLoginForm.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgLogo from "@/assets/icons/modern_logo.svg";
@@ -35,17 +26,10 @@ import svgChat from "@/assets/icons/chat_round.svg";
     ModernLoginForm,
     svgPower,
     svgChat,
+    ModernLoginLayout,
   },
-  setup() {
-      const onSupport = () => {
-          return
-      }
-      return {
-          onSupport
-      }
-  }
 })
-export default class ModernLoginLayout extends Vue {}
+export default class ModernLogin extends Vue {}
 </script>
 
 <style lang="scss">
@@ -85,10 +69,6 @@ export default class ModernLoginLayout extends Vue {}
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 40px;
-    @include md {
-      flex-direction: column;
-      align-items: center;
-    }
   }
   &__btn {
     padding: 1.3rem 5rem;
@@ -101,14 +81,8 @@ export default class ModernLoginLayout extends Vue {}
     justify-content: center;
     cursor: pointer;
     transition: $transition;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    &:first-child {
-      margin-left: 0;
-    }
     @include md {
       padding: 1.3rem 3rem;
-      margin-left: 0;
     }
     &:hover {
       box-shadow: none;

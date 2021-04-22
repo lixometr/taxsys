@@ -1,13 +1,20 @@
-import { Action, getModule, Module, Mutation, VuexModule } from "vuex-module-decorators";
-import store from "@/store";
-import { useApiGetUser, useApiLogin } from "@/api/login";
-import useCookie from "@/compositions/useCookie";
-import { UserEntity } from "@/models/user.entity";
-import { UserToken } from "@/types/constants";
-import { errorHandler } from "@/helpers/error-handler";
-import useRouter from "@/compositions/useRouter";
-import useToast from "@/compositions/useToast";
-import { useApiGetBalance } from "@/api/balance";
+import {
+  Action,
+  getModule,
+  Module,
+  Mutation,
+  VuexModule,
+} from 'vuex-module-decorators'
+import store from '@/store'
+import { useApiGetUser, useApiLogin } from '@/api/login'
+import useCookie from '@/compositions/useCookie'
+import { UserEntity } from '@/models/user.entity'
+import { UserToken } from '@/types/constants'
+import { errorHandler } from '@/helpers/error-handler'
+import useRouter from '@/compositions/useRouter'
+import useToast from '@/compositions/useToast'
+import { useApiGetBalance } from '@/api/balance'
+import { UserType } from '@/types/types'
 @Module({ dynamic: true, store, name: 'user' })
 class User extends VuexModule {
   user: UserEntity | null = null
@@ -16,6 +23,9 @@ class User extends VuexModule {
   qiwiBalance: number = null
   get isAuth() {
     return !!this.token && this.user
+  }
+  get type() {
+    return UserType.driver
   }
   @Mutation
   setUser(value: UserEntity) {
@@ -26,12 +36,18 @@ class User extends VuexModule {
     this.token = token
   }
   @Mutation
-  setBalance(balance: { balance: number, qiwi: number }) {
+  setBalance(balance: { balance: number; qiwi: number }) {
     this.balance = balance.balance
     this.qiwiBalance = balance.qiwi
   }
   @Action
-  setTokenWithCookie({ token, expiresIn }: { token: string, expiresIn: number }) {
+  setTokenWithCookie({
+    token,
+    expiresIn,
+  }: {
+    token: string
+    expiresIn: number
+  }) {
     this.setToken(token)
     const cookie = useCookie()
     cookie.set(UserToken, token, expiresIn)
@@ -72,7 +88,9 @@ class User extends VuexModule {
   }
   @Action
   async fetchBalance() {
-    const { exec, result, error } = useApiGetBalance({ toast: { error: errorHandler() } })
+    const { exec, result, error } = useApiGetBalance({
+      toast: { error: errorHandler() },
+    })
     await exec()
     if (!error.value) {
       this.setBalance(result.value)
@@ -88,12 +106,15 @@ class User extends VuexModule {
         },
         success(data) {
           return 'Успешный вход'
-        }
+        },
       },
     })
     await login.exec({ phone, password })
     if (login.result.value) {
-      this.setTokenWithCookie({ token: login.result.value.token, expiresIn: login.result.value.expires_in });
+      this.setTokenWithCookie({
+        token: login.result.value.token,
+        expiresIn: login.result.value.expires_in,
+      })
     }
     return login
   }
@@ -102,10 +123,10 @@ class User extends VuexModule {
     this.removeToken()
     this.setUser(null)
     const router = useRouter()
-    router.push({ name: "Login" })
+    router.push({ name: 'Login' })
     const { success } = useToast()
     success({
-      message: 'Выход'
+      message: 'Выход',
     })
     return true
   }

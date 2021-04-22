@@ -11,7 +11,7 @@
     <sidebar-menu />
     <div class="sidebar__settings">
       <sidebar-menu-item
-        :routeName="'Settings'"
+        :routeName="settingRouteName"
         :img="require('@/assets/icons/settings.svg')"
         :name="'Настройки'"
       />
@@ -23,10 +23,12 @@
 import SidebarMenuItem from "./SidebarMenuItem.vue";
 import SidebarMenu from "./SidebarMenu.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import SidebarItems from "./menu-items";
+import SidebarItems from "./partner-menu-items";
 import Logo from "@/components/Logo/Logo.vue";
-import { ref } from "@vue/composition-api";
+import { computed, ref } from "@vue/composition-api";
 import useSidebar from "./useSidebar";
+import { UserModule } from "@/store/modules/user";
+import { UserType } from "@/types/types";
 @Component({
   components: {
     Logo,
@@ -35,18 +37,22 @@ import useSidebar from "./useSidebar";
   },
   setup() {
     const items = SidebarItems;
-    const {open, close, isOpen} = useSidebar()
+    const { open, close, isOpen } = useSidebar();
     const onMouseEnter = (e: MouseEvent) => {
-     open()
+      open();
     };
     const onMouseLeave = (e: MouseEvent) => {
-      close()
+      close();
     };
+    const settingsRouteName = computed(() =>
+      UserModule.type === UserType.partner ? "Settings" : "CDSettings"
+    );
     return {
+      settingsRouteName,
       items,
       onMouseEnter,
       onMouseLeave,
-      isOpen
+      isOpen,
     };
   },
 })

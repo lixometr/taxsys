@@ -14,11 +14,19 @@
 <script lang="ts">
 import SidebarMenuItem from "./SidebarMenuItem.vue";
 import { Component, Vue } from "vue-property-decorator";
-import menuItems from "@/components/Sidebar/menu-items";
+import partnerMenuItems from "@/components/Sidebar/partner-menu-items";
+import driverMenuItems from "@/components/Sidebar/driver-menu-items";
+import { computed } from "@vue/composition-api";
+import { UserModule } from "@/store/modules/user";
+import { UserType } from "@/types/types";
 
 @Component({
   components: { SidebarMenuItem },
   setup() {
+    const menuItems = computed(() => {
+      if(UserModule.type === UserType.driver) return driverMenuItems
+      return partnerMenuItems
+    })
     return {
       menuItems,
     };

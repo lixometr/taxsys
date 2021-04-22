@@ -71,6 +71,7 @@ import "yup-phone";
       serverError.value = login.error.value;
       if (!login.error.value) {
         await UserModule.fetchUser();
+        await UserModule.fetchBalance()
         router.push({ name: "Home" });
       }
     };

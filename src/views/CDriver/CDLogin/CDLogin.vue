@@ -1,33 +1,34 @@
 <template>
   <div class="page-modern-login modern-login">
-    <div class="modern-login__header">
-      <div class="modern-login__logo">
-        <svgLogo width="280" />
-      </div>
-    </div>
-    <div class="modern-login__form-wrapper">
-      <div class="modern-login__form-card">
-        <h2 class="form-title"><slot name="title" /></h2>
-        <slot name="form"/>
-        
-      </div>
-      <div class="modern-login__btns">
-       <slot name="btns" />
-      </div>
-      <div>
-        <a href="#" class="modern-login__support" @click.prevent="onSupport">
-          <svgChat /> Чат с поддержкой
-        </a>
-      </div>
-    </div>
+    <modern-login-layout>
+      <template #title>Авторизация</template>
+      <template #form><modern-login-form /></template>
+      <template #btns>
+        <div class="modern-login__btn">
+          <div class="modern-login__btn-icon"><svgTaxy width="20" /></div>
+          <div class="modern-login__btn-text">Подключение водителей</div>
+        </div>
+        <div class="modern-login__btn">
+          <div class="modern-login__btn-icon"><svgPower width="20" /></div>
+          <div class="modern-login__btn-text">Подключить свой автопарк</div>
+        </div>
+        <div class="modern-login__btn">
+          <div class="modern-login__btn-icon"><svgRentCar width="20" /></div>
+          <div class="modern-login__btn-text">Аренда автомобиля</div>
+        </div>
+      </template>
+    </modern-login-layout>
   </div>
 </template>
 
 <script lang="ts">
+import ModernLoginLayout from "@/components/ModernLogin/ModernLoginLayout.vue";
 import ModernLoginForm from "@/components/ModernLogin/ModernLoginForm.vue";
 import { Component, Vue } from "vue-property-decorator";
 import svgLogo from "@/assets/icons/modern_logo.svg";
 import svgPower from "@/assets/icons/power.svg";
+import svgTaxy from "@/assets/icons/connect_taxy.svg";
+import svgRentCar from "@/assets/icons/rent_car.svg";
 import svgChat from "@/assets/icons/chat_round.svg";
 @Component({
   components: {
@@ -35,17 +36,12 @@ import svgChat from "@/assets/icons/chat_round.svg";
     ModernLoginForm,
     svgPower,
     svgChat,
+    ModernLoginLayout,
+    svgTaxy,
+    svgRentCar,
   },
-  setup() {
-      const onSupport = () => {
-          return
-      }
-      return {
-          onSupport
-      }
-  }
 })
-export default class ModernLoginLayout extends Vue {}
+export default class ModernLogin extends Vue {}
 </script>
 
 <style lang="scss">
@@ -85,10 +81,6 @@ export default class ModernLoginLayout extends Vue {}
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 40px;
-    @include md {
-      flex-direction: column;
-      align-items: center;
-    }
   }
   &__btn {
     padding: 1.3rem 5rem;
@@ -101,14 +93,8 @@ export default class ModernLoginLayout extends Vue {}
     justify-content: center;
     cursor: pointer;
     transition: $transition;
-    margin-bottom: 20px;
-    margin-left: 20px;
-    &:first-child {
-      margin-left: 0;
-    }
     @include md {
       padding: 1.3rem 3rem;
-      margin-left: 0;
     }
     &:hover {
       box-shadow: none;

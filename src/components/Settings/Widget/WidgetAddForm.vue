@@ -112,9 +112,9 @@
 </template>
 
 <script lang="ts">
-import AppImageUpload from "../../../components/AppImageUpload.vue";
-import AppTextArea from "../../../components/AppTextArea.vue";
-import AppSelect from "../../../components/AppSelect.vue";
+import AppImageUpload from "@/components/AppImageUpload.vue";
+import AppTextArea from "@/components/AppTextArea.vue";
+import AppSelect from "@/components/AppSelect.vue";
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
 import { Component, Prop, Vue } from "vue-property-decorator";
