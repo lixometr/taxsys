@@ -87,22 +87,16 @@
           :errors="errors.background"
         />
       </div>
-      <div class="col-lg-6">
-        <div class="widget-add-form-code__wrapper">
-          <div class="widget-add-form-code__label">
-            <span>Код для вставки</span>
-            <svgCopy width="23" @click="copyInsertText" />
-          </div>
-          <div class="widget-add-form-code">{{ insertCode }}</div>
-        </div>
-      </div>
     </div>
     <div class="widget-add-form-preview">
       <svgFormPreview />
     </div>
     <div class="widget-add-form-btn-wrapper">
-      <app-button class="widget-add-form-btn" color="orange-grad" type="submit"
-        >{{btnText}}</app-button
+      <app-button
+        class="widget-add-form-btn"
+        color="orange-grad"
+        type="submit"
+        >{{ btnText }}</app-button
       >
       <a href="#" class="widget-add-form-policy">
         Продолжая вы принимаете условия публичной оферты
@@ -121,7 +115,6 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import * as yup from "yup";
 import { AgregatorType } from "@/types/agregator.enum";
 import svgPicture from "@/assets/icons/picuture_icon.svg";
-import svgCopy from "@/assets/icons/copy.svg";
 import { computed, ref, toRefs } from "@vue/composition-api";
 import useToast from "@/compositions/useToast";
 import svgFormPreview from "@/assets/icons/widget_form_preview.svg";
@@ -132,6 +125,8 @@ import { errorHandler } from "@/helpers/error-handler";
 import { Widget } from "@/models/widget.entity";
 import { complect } from "@/components/Car/CarAdd/add-car-fields";
 import router from "@/router";
+import useModal from "@/compositions/useModal";
+import { ModalName } from "@/types/modal.enum";
 enum FormTypes {
   edit = "edit",
   create = "create",
@@ -147,7 +142,7 @@ interface IProps {
     AppTextArea,
     AppImageUpload,
     svgPicture,
-    svgCopy,
+
     svgFormPreview,
   },
   setup(props: IProps) {
@@ -241,6 +236,7 @@ interface IProps {
           },
         });
         await formAction.exec(sendDto);
+        insertCode.value = formAction.result.value.code;
       } else {
         formAction = useApiUpdateWidget({
           toast: {
@@ -251,44 +247,31 @@ interface IProps {
         await formAction.exec({ data: sendDto, id: item.value.id });
       }
       if (formAction.error.value) return;
-      insertCode.value = formAction.result.value.code;
-      router.push({ name: "SettingsProfile" });
+      const { showByName } = useModal();
+      showByName(ModalName.widgetCode, {
+        props: {
+          code: insertCode.value,
+        },
+      });
+      // router.push({ name: "SettingsProfile" });
     });
-    const { success: toastSuccess, error: toastError } = useToast();
 
-    const copyInsertText = async () => {
-      try {
-        if (navigator.clipboard) {
-          await navigator.clipboard.writeText(insertCode.value);
-          toastSuccess({ message: "Текст скопирован в буфер обмена!" });
-        } else {
-          throw { error: true };
-        }
-      } catch (err) {
-        toastError({
-          message:
-            "К сожалению, не удалось скопировать текст. Попробуйте это сделать вручную",
-        });
-      }
-    };
     const backgroundDefault = computed(() => {
       if (type.value === FormTypes.create) return null;
       return item.value.images.find((img) => img.desc === "background")?.url;
     });
     const btnText = computed(() => {
-      return type.value === FormTypes.create ? 'добавить' : 'обновить'
-    })
+      return type.value === FormTypes.create ? "добавить" : "обновить";
+    });
     return {
       btnText,
       backgroundDefault,
-      copyInsertText,
       values,
       onSubmit,
       errors,
       agregators,
       types,
       svgPicture,
-      insertCode,
     };
   },
 })
@@ -341,25 +324,7 @@ export default class WidgetAddForm extends Vue {
   &-upload-bg {
     width: 128px;
   }
-  &-code__wrapper {
-  }
-  &-code__label {
-    color: $grey_3;
-    font-size: $fz_md;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    svg {
-      color: $purple;
-      cursor: pointer;
-      margin-left: 10px;
-    }
-  }
-  &-code {
-    min-height: 80px;
-    border-bottom: 1px solid $purple;
-    color: $grey_2;
-  }
+
   &-preview {
     padding: 20px 0;
     text-align: center;

@@ -3,7 +3,9 @@
     <template #header>
       <div class="statistics-commission__header-row">
         <div class="statistics-item__title">Комиссия парка</div>
-        <div class="statistics-commission__header-price">{{parkCommission}} {{currency}}</div>
+        <div class="statistics-commission__header-price">
+          {{ parkCommission }} {{ currency }}
+        </div>
       </div>
     </template>
     <template>
@@ -22,10 +24,28 @@
 import StatisticsItem from "./StatisticsItem.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { StatisticsEntity } from "@/models/statistics.entity";
-
+import { computed, toRefs } from "@vue/composition-api";
+import useMoment from "@/compositions/useMoments";
+interface IProps {
+  [name: string]: any;
+  item: StatisticsEntity;
+}
 @Component({
-  setup() {
-    const chartOptions = {
+  setup(props: IProps) {
+    const { value: item } = toRefs<IProps>(props);
+    const datesObj = computed(() => item.value?.fees?.data || {});
+    const categories = computed(() => {
+      const dates = Object.keys(datesObj.value).map((item) => {
+        return new Date(item);
+      });
+      dates.sort((a, b) => b.getTime() - a.getTime());
+      return dates.map(date => {
+        return useMoment(date).format('YYYY-MM-DD')
+      })
+      // console.log(dates);
+      // return dates;
+    });
+    const chartOptions = computed(() => ({
       chart: {
         toolbar: {
           show: false,
@@ -43,14 +63,7 @@ import { StatisticsEntity } from "@/models/statistics.entity";
       },
       xaxis: {
         type: "datetime",
-        categories: [
-          "01/01/2011 GMT",
-          "01/02/2011 GMT",
-          "01/03/2011 GMT",
-          "01/04/2011 GMT",
-          "01/05/2011 GMT",
-          "01/06/2011 GMT",
-        ],
+        categories: categories.value,
         labels: {
           style: { fontFamily: "Montserrat" },
           datetimeFormatter: {
@@ -64,7 +77,7 @@ import { StatisticsEntity } from "@/models/statistics.entity";
       legend: {
         show: false,
       },
-      colors: ['#5A13A7'],
+      colors: ["#5A13A7"],
 
       tooltip: {
         enabled: true,
@@ -78,13 +91,18 @@ import { StatisticsEntity } from "@/models/statistics.entity";
           );
         },
       },
-    };
-    const series = [
-      {
-        name: "Сумма заказов",
-        data: [30, 40, 35, 50, 49, 60],
-      },
-    ];
+    }));
+    const series = computed(() => {
+      const data = Object.keys(datesObj.value).map(
+        (date) => datesObj.value[date].park_fee
+      );
+      return [
+        {
+          name: "Сумма заказов",
+          data,
+        },
+      ];
+    });
 
     return {
       series,
@@ -94,14 +112,14 @@ import { StatisticsEntity } from "@/models/statistics.entity";
   components: { StatisticsItem },
 })
 export default class StatisticsParmCommission extends Vue {
-    @Prop({ type: Object, default: () => ({}) }) value: StatisticsEntity;
+  @Prop({ type: Object, default: () => ({}) }) value: StatisticsEntity;
 
-    get currency() {
-      return this.$store.getters.currency
-    }
-    get parkCommission () {
-      return this.value.fees?.total_agreg_fee || 0
-    }
+  get currency() {
+    return this.$store.getters.currency;
+  }
+  get parkCommission() {
+    return this.value.fees?.total_agreg_fee || 0;
+  }
 }
 </script>
 

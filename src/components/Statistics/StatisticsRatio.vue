@@ -92,7 +92,7 @@ import { StatisticsEntity } from "@/models/statistics.entity";
 export default class StatisticsTravels extends Vue {
   @Prop({ type: Object, default: () => ({}) }) value: StatisticsEntity;
   get series() {
-    return [this.value.trips?.total_cash, this.value.trips?.total_cashless];
+    return [this.value.trips?.total_cashless, this.value.trips?.total_cash];
   }
   get ratioValue() {
     return this.value.trips;

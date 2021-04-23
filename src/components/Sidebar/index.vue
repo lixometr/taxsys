@@ -11,7 +11,7 @@
     <sidebar-menu />
     <div class="sidebar__settings">
       <sidebar-menu-item
-        :routeName="settingRouteName"
+        :routeName="settingsRouteName"
         :img="require('@/assets/icons/settings.svg')"
         :name="'Настройки'"
       />

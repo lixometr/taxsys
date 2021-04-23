@@ -1,4 +1,5 @@
 import { Car } from "./car.entity"
+import { DriverEntity } from "./driver.entity"
 
 export class Fine {
     account: "40101810845250010102"
@@ -7,6 +8,7 @@ export class Fine {
     bank: "ГУ БАНКА РОССИИ ПО ЦФО//УФК ПО М"
     bik: "044525000"
     car: Car
+    driver: DriverEntity
     car_id: 4062
     commission: 0
     coords: "38.260883,55.560464000000003"

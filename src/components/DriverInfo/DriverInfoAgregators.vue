@@ -1,72 +1,36 @@
 <template>
   <div class="app-card driver-info">
-    <div class="row">
-      <div class="col-xl-4 ">
-        <driver-agregator
-          class="driver-info__agregator"
-          :agregator="'yandex'"
-          :active="!!item.YandexDriver"
-          :price="agregatorBalance[AgregName.yandex]"
-          :driverId="item.id"
-          @refresh="refresh"
-        />
-      </div>
-      <div class="col-xl-4 ">
-        <driver-agregator
-          class="driver-info__agregator"
-          :agregator="'gett'"
-          :active="!!item.GettDriver"
-          :driverId="item.id"
-          @refresh="refresh"
-        />
-      </div>
-      <div class="col-xl-4">
-        <driver-agregator
-          class="driver-info__agregator"
-          :agregator="'citymobil'"
-          :active="!!item.CityMobilDriver"
-          :driverId="item.id"
-          :price="agregatorBalance[AgregName.citymobil]"
-          @refresh="refresh"
-        />
-      </div>
-    </div>
+    <driver-agregators :item="item" @refresh="refresh" />
   </div>
 </template>
 
 <script lang="ts">
+import DriverAgregators from "../DriverAgregators.vue";
 import DriverAgregator from "../DriverAgregator.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { AgregName } from "@/types/agregator.enum";
 import { DriverEntity } from "@/models/driver.entity";
 
 @Component({
-  components: { DriverAgregator },
+  components: { DriverAgregator, DriverAgregators },
   setup(props, { emit }) {
     const refresh = () => {
       emit("refresh");
     };
-    return { refresh, AgregName };
+
+    return { refresh };
   },
 })
 export default class DriverInfoAgregators extends Vue {
   @Prop({ type: Object, default: () => ({}) }) item: DriverEntity;
-  get agregatorBalance() {
-    return {
-      [AgregName.yandex]: this.item.YandexBalans?.toString(),
-      [AgregName.citymobil]: this.item.citimobil_balance?.toString(),
-      [AgregName.gett]: this.item.gett_balance?.toString(),
-    };
-  }
 }
 </script>
 
 <style lang="scss">
-.driver-info {
-  &__agregator {
-    @include lg {
-      margin-bottom: 20px;
-    }
-  }
-}
+// .driver-info {
+//   &__agregator {
+//     @include lg {
+//       margin-bottom: 20px;
+//     }
+//   }
+// }
 </style>

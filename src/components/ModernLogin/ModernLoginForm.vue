@@ -1,5 +1,5 @@
 <template>
-  <form class="modern-login-form" @submit="submit">
+  <form class="modern-login-form" @submit.prevent="submit">
     <phone-input
       class="modern-login-form__input"
       v-model="values.phone"

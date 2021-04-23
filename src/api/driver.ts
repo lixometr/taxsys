@@ -26,13 +26,13 @@ export const useApiGetDriversApplys = (opts?: UseApiOptions) => useApi<{ page: n
 
 }), opts, async ({ data }) => ({ ...data, data: data.data.map(driver => plainToClass(DriverEntity, driver)) }))
 
-export const useApiUpdateDriver = (opts?: UseApiOptions) => useApi<{ payment_group_id: number, antifraud_id: number, id: number }, any>(
+export const useApiUpdateDriver = (opts?: UseApiOptions) => useApi<{ payment_group_id?: number, antifraud_id?: number, id: number }, any>(
     ({ payment_group_id, antifraud_id, id }) => ({
         method: "PUT",
         url: `/drivers/${id}`,
         data: {
             payment_group_id,
-            antifraud_id
+            antifraud_id: antifraud_id ? antifraud_id  : undefined
         }
 
     }), opts)

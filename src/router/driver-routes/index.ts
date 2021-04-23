@@ -5,9 +5,9 @@ import auth from './auth'
 import payments from './finances'
 const routes: Array<RouteConfig> = [
   {
-    beforeEnter: (from, to, next) => {
-      if (to.name === 'CDLogin') return next()
-      if (UserModule.type !== UserType.driver) {
+    beforeEnter: (to, from, next) => {
+      if (to.name === 'CDLogin' || to.name === 'CDLoginPark') return next()
+      if (!UserModule.user?.isDriver) {
         next({ name: 'CDLogin' })
         return
       }

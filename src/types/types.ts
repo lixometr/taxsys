@@ -5,5 +5,6 @@ export enum LayoutType {
 
 export enum UserType {
     driver = 'driver',
-    partner = 'partner'
+    partner = 'partner',
+    admin = 'admin'
 }

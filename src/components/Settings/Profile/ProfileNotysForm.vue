@@ -3,13 +3,15 @@
     <form action="#" @submit.prevent="onSubmit">
       <div class="row">
         <div class="col-md-6">
-          <app-input
-            label="Телефон"
-            v-model="values.phone"
-            :errors="errors.phone"
-          />
+          <app-button
+            color="purple-grad"
+            class="mt-10"
+            @click="connectTelegram"
+            v-if="showConnectTelegram"
+            >Подключить телеграм</app-button
+          >
         </div>
-        <div class="col-md-6">
+        <div :class="{'col-md-6': showConnectTelegram, 'col-md-12': !showConnectTelegram}">
           <app-input
             label="E-mail"
             v-model="values.email"
@@ -18,7 +20,7 @@
         </div>
       </div>
       <div class="text-center mt-5">
-        <app-button color="orange-grad" type="submit">выполнить</app-button>
+        <app-button color="orange-grad" type="submit">сохранить</app-button>
       </div>
     </form>
   </div>
@@ -27,20 +29,29 @@
 <script lang="ts">
 import useField from "@/compositions/validators/useField";
 import useForm from "@/compositions/validators/useForm";
+import { UserModule } from "@/store/modules/user";
+import { UserType } from "@/types/types";
+import { computed } from "@vue/composition-api";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   setup() {
     const { values, errors, handleSubmit, serialize } = useForm({
       fields: {
-        phone: useField("", []),
         email: useField("", []),
       },
     });
     const onSubmit = handleSubmit(() => {
-        console.log(serialize())
+      console.log(serialize());
     });
-    return { values, errors, onSubmit };
+    const connectTelegram = () => {
+      window.open(UserModule.user?.tg_link, "_blank");
+      return;
+    };
+    const showConnectTelegram = computed(() => {
+      return !UserModule.user?.tg_id || UserModule.user.tg_blocked;
+    });
+    return { values, errors, onSubmit, connectTelegram, showConnectTelegram };
   },
 })
 export default class ProfileNotysForm extends Vue {}
@@ -48,6 +59,6 @@ export default class ProfileNotysForm extends Vue {}
 
 <style lang="scss">
 .profile-notys-form {
-    padding-top: 3rem;
+  padding-top: 3rem;
 }
 </style>

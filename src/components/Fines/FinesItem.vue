@@ -39,7 +39,7 @@
       <template #default>
         <app-accardion-col :class="responsiveContent">
           <div>
-            <div class="color-grey-2 mb-10">{{ car.driver.fio }}</div>
+            <div class="color-grey-2 mb-10">{{ driver.fio }}</div>
             <div class="row mb-15">
               <div class="col color-grey-2">Нарушение:</div>
               <div class="col color-grey-1">
@@ -55,7 +55,7 @@
           <div>
             <div class="row align-items-center mt-25">
               <div class="col-lg-3">
-                <div class="font-md font-500">
+                <div class="font-md font-500 text-nowrap">
                   {{ item.getPrice() }} {{ currency }}
                 </div>
               </div>
@@ -136,6 +136,7 @@ import AppStatus from "../AppStatus.vue";
 import AppImage from "@/components/AppImage.vue";
 import { Fine } from "@/models/fine.entity";
 import { Car } from "@/models/car.entity";
+import { DriverEntity } from "@/models/driver.entity";
 @Component({
   components: { AppStatus, AppImage },
   setup(props, { emit }) {
@@ -158,6 +159,9 @@ export default class DriverListItem extends Vue {
   }
   get car() {
     return this.item?.car || {} as Car
+  }
+  get driver () {
+    return this.item?.driver || {} as DriverEntity
   }
   get currency() {
     return this.$store.getters.currency;

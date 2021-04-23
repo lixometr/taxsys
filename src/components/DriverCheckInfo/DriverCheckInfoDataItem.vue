@@ -12,7 +12,7 @@
         </div>
         <div class="row mb-15">
           <div class="col color-grey-3">Фотоконтроль:</div>
-          <div class="col color-grey-2"><svgCheckmark class="checkmark" /></div>
+          <div class="col color-grey-2"><svgCheckmark class="checkmark" v-if="hasPhotoControl"/></div>
         </div>
       </app-accardion-col>
       <app-accardion-col class="col-lg-4">
@@ -92,6 +92,9 @@ export default class DriverCheckInfoDataItem extends Vue {
   }
   get hireDate() {
     return useMoment(this.item?.driver?.hire_date).format("DD.MM.YYYY");
+  }
+  get hasPhotoControl() {
+    return this.item?.driver?.dkk_is_blocked
   }
   get debt() {
     return this.item?.debt?.bounds_to;

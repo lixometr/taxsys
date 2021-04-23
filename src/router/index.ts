@@ -10,7 +10,11 @@ const routes: Array<RouteConfig> = [
   {
     name: 'Home',
     path: '/',
-    redirect: {name: 'Statistics'},
+    redirect: () => {
+      return UserModule.user?.isPartner
+        ? { name: 'Statistics' }
+        : { name: 'CDFinances' }
+    },
   },
   ...partnerRoutes,
   ...driverRoutes,

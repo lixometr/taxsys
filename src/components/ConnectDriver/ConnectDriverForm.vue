@@ -1,9 +1,8 @@
 <template>
   <form class="connect-driver-form" @submit.prevent="onSubmit">
-    <register-driver-agregators
-      :value="agregators"
-      class="connect-driver-form__agregators mb-10"
-    />
+    <div class="d-flex justify-content-center w-100 mb-15">
+      <register-driver-agregator :item="agregatorItem" :value="true" />
+    </div>
     <form-schema class="row" :schema="fSchema">
       <template v-slot:field-gettid="{ item }">
         <div class="gett-input-checkbox">
@@ -43,6 +42,7 @@
 </template>
 
 <script lang="ts">
+import RegisterDriverAgregator from "../Register/RegisterDriver/RegisterDriverAgregator.vue";
 import RegisterDriverAgregators from "../Register/RegisterDriver/RegisterDriverAgregators.vue";
 import AppCheckbox from "../AppCheckbox.vue";
 import FormSchema from "../FormSchema/FormSchema.vue";
@@ -50,7 +50,7 @@ import AppDatePicker from "../AppDatePicker.vue";
 import RegisterDriverInputs from "../Register/RegisterDriver/RegisterDriverInputs.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { schema } from "@/components/Register/RegisterDriver/register-driver-schema";
-import { AgregName } from "@/types/agregator.enum";
+import { AgregatorType, AgregName } from "@/types/agregator.enum";
 import { computed, ref, toRefs } from "@vue/composition-api";
 import useForm from "@/compositions/validators/useForm";
 import { fields } from "../Register/RegisterDriver/register-driver-fields";
@@ -70,6 +70,7 @@ interface IProps {
     FormSchema,
     AppCheckbox,
     RegisterDriverAgregators,
+    RegisterDriverAgregator,
   },
   setup(props: IProps, { emit }) {
     const { agregator, id } = toRefs(props);
@@ -133,9 +134,11 @@ interface IProps {
       });
       await exec();
     };
-    const agregators = computed(() => [agregator.value]);
+    const agregatorItem = computed(() => {
+      return AgregatorType[agregator.value];
+    });
     return {
-      agregators,
+      agregatorItem,
       onSubmit,
       fSchema,
     };

@@ -58,38 +58,7 @@
       </template>
       <template #default>
         <app-accardion-col class="col-12" v-if="showAgregators">
-          <div class="row">
-            <div class="col-xl-4">
-              <driver-list-item-agregator
-                class="driver-list-item__agregator"
-                :agregator="'yandex'"
-                :active="!!item.YandexDriver"
-                :price="agregatorBalance[AgregName.yandex]"
-                :driverId="item.id"
-                @refresh="refresh"
-              />
-            </div>
-            <div class="col-xl-4">
-              <driver-list-item-agregator
-                class="driver-list-item__agregator"
-                :agregator="'gett'"
-                :active="!!item.GettDriver"
-                :price="agregatorBalance[AgregName.gett]"
-                :driverId="item.id"
-                @refresh="refresh"
-              />
-            </div>
-            <div class="col-xl-4">
-              <driver-list-item-agregator
-                class="driver-list-item__agregator"
-                :agregator="'citymobil'"
-                :active="!!item.CityMobilDriver"
-                :driverId="item.id"
-                :price="agregatorBalance[AgregName.citymobil]"
-                @refresh="refresh"
-              />
-            </div>
-          </div>
+          <driver-agregators @refresh="refresh" :item="item" />
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div>
@@ -133,7 +102,7 @@
               :searchable="false"
               variant="border"
               placeholder="Группа выплат"
-              :options="paymentGroups || []"
+              :options="paymentGroupsItems || []"
               selectLabel="name"
               :reduce="(item) => item.id"
               v-model="paymentGroup"
@@ -202,6 +171,7 @@
 </template>
 
 <script lang="ts">
+import DriverAgregators from "../DriverAgregators.vue";
 import PreviewImage from "../PreviewImage.vue";
 import DriverListCards from "./DriverListCards.vue";
 import AppSelect from "../AppSelect.vue";
@@ -227,6 +197,8 @@ import { ImageEntity } from "@/models/image.entity";
 interface IProps {
   item: any;
   [key: string]: any;
+  antifrauds: any[];
+  paymentGroups: any[];
 }
 @Component({
   components: {
@@ -239,22 +211,23 @@ interface IProps {
     svgFile,
     svgPassportOpen,
     PreviewImage,
+    DriverAgregators,
   },
   setup(props: IProps, { emit }) {
-    const { item } = toRefs<IProps>(props);
+    const { item, antifrauds, paymentGroups } = toRefs<IProps>(props);
+    const activeAntifraud = antifrauds.value.find(
+      (item) => item.default && item.active
+    );
+
     const paymentGroup = ref(item.value.payment_group_id);
-    const antifrod = ref(item.value.antifraud_id);
+    const antifrod = ref(item.value.antifraud_id || activeAntifraud?.id);
     const router = useRouter();
+    const paymentGroupsItems = computed(() => {
+      const items = [...paymentGroups.value];
+      items.unshift({ id: null, name: "По умолчанию" });
+      return items;
+    });
     const updateDriver = async () => {
-      const { error: toastError } = useToast();
-      if (typeof antifrod.value !== "number") {
-        toastError({ message: "Пожалуйста, выберите антифрод" });
-        return;
-      }
-      if (typeof paymentGroup.value !== "number") {
-        toastError({ message: "Пожалуйста, выберите группу выплат" });
-        return;
-      }
       const { exec, error } = useApiUpdateDriver({
         toast: {
           error: errorHandler(),
@@ -303,6 +276,7 @@ interface IProps {
       antifrod,
       svgDriverLicense,
       checkDriver,
+      paymentGroupsItems,
     };
   },
 })
