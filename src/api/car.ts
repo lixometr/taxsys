@@ -28,7 +28,7 @@ export const useApiGetCarsRentable = (opts?: UseApiOptions) => useApi<{ withoutD
     method: 'GET',
     url: '/cars/rentable',
     params: {
-        without_driver: withoutDriver ? 1 : 0,
+        without_driver: withoutDriver === false ? 0 : withoutDriver === undefined ? undefined : 1,
         paginate: paginate ? 10 : 0
     }
 }), { ...opts })

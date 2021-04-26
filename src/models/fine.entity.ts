@@ -38,7 +38,7 @@ export class Fine {
     photos: "0"
     profit: 0
     purpose: ""
-    status: ""
+    status: 'unpaid' | 'pending' | 'paid'
     summa: 30000
     supplier_bill_id: "18810450203110006422"
     updated_at: "2021-02-11T00:27:50.000000Z"

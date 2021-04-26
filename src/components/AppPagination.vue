@@ -13,7 +13,7 @@
         class="app-pagination__left app-pagination__arrow font-0"
         @click="prev"
       >
-        <svgArrowRight />
+        <svgArrowRight  class="color-violet"/>
       </div>
       <div class="app-pagination__info">
         <span>{{ page }}</span>
@@ -24,7 +24,7 @@
         class="app-pagination__right app-pagination__arrow font-0"
         @click="next"
       >
-        <svgArrowRight />
+        <svgArrowRight class="color-violet"/>
       </div>
     </div>
   </div>

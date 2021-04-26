@@ -24,6 +24,7 @@ const routes: Array<RouteConfig> = [
       next()
     },
     path: '/partner',
+    name: "CPartner",
     component: {
       render: (c) => c('router-view'),
     },

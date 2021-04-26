@@ -14,8 +14,8 @@ export const useApiGetPartnerCards = (opts?: UseApiOptions) => useApi<any, any>(
         return data.map((card: CardEntity) => plainToClass(CardEntity, card))
     })
 
-export const useApiPartnerAddCard = (opts?: UseApiOptions) => useApi<AddCardDto, any>(
-    (data) => ({
+export const useApiPartnerAddCard = (opts?: UseApiOptions) => useApi<{data: AddCardDto}, any>(
+    ({data}) => ({
         method: "POST",
         url: `/partner/add_card`,
         data: classToPlain(data)

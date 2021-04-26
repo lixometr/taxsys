@@ -11,13 +11,16 @@
       <div
         class="driver-add-car-exist-form__item"
         v-for="(item, idx) in items"
+        :class="{ active: value === item.id }"
         :key="idx"
         @click="selectCar(item.id)"
       >
-        <div class="driver-add-car-exist-form__item-col">{{ item.number }}</div>
-        <div class="driver-add-car-exist-form__item-col">{{ item.mark }}</div>
-        <div class="driver-add-car-exist-form__item-col">{{ item.year }}</div>
-        <div class="driver-add-car-exist-form__item-col">{{ item.color }}</div>
+        <div class="driver-add-car-exist-form__item-col">
+          {{ item.GosNomer }}
+        </div>
+        <div class="driver-add-car-exist-form__item-col">{{ item.Brand }}</div>
+        <div class="driver-add-car-exist-form__item-col">{{ item.Year }}</div>
+        <div class="driver-add-car-exist-form__item-col">{{ item.Color }}</div>
       </div>
     </div>
   </div>
@@ -25,12 +28,17 @@
 
 <script lang="ts">
 import SearchInput from "../SearchInput.vue";
-import { Component, Vue } from "vue-property-decorator";
-import { ref, watch } from "@vue/composition-api";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { ref, toRefs, watch } from "@vue/composition-api";
 import { useApiGetCarsRentable } from "@/api/car";
+interface IProps {
+  [key: string]: any;
+  value: number;
+}
 @Component({
   components: { SearchInput },
   setup(props, { emit }) {
+    const { value } = toRefs(props);
     const searchPhrase = ref("");
     /*
     {
@@ -54,7 +62,7 @@ import { useApiGetCarsRentable } from "@/api/car";
     const items = ref([]);
     const { exec: searchItems, result, error } = useApiGetCarsRentable();
     watch(searchPhrase, (value) => {
-      searchItems({ withoutDriver: true });
+      searchItems({ withoutDriver: undefined});
     });
     watch(result, (newItems) => {
       items.value = newItems?.data || [];
@@ -62,14 +70,22 @@ import { useApiGetCarsRentable } from "@/api/car";
     const selectCar = (id: number) => {
       emit("input", id);
     };
+    const submit = () => {
+      if (typeof value.value !== "number") return false;
+
+      return true;
+    };
     return {
+      submit,
       selectCar,
       searchPhrase,
       items,
     };
   },
 })
-export default class DriverAddCarExistForm extends Vue {}
+export default class DriverAddCarExistForm extends Vue {
+  @Prop(Number) value: number;
+}
 </script>
 
 <style lang="scss">
@@ -81,7 +97,11 @@ export default class DriverAddCarExistForm extends Vue {}
     background: $white;
     box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    border: 1px solid transparent;
     margin-bottom: 20px;
+    &.active {
+      border: 1px solid $violet;
+    }
     @include sm {
       flex-direction: column;
       justify-content: flex-start;

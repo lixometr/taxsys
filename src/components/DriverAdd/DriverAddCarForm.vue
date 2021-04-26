@@ -12,7 +12,7 @@
       v-if="carStatus === 'new'"
       @submit="onSubmit"
     />
-    <driver-add-car-exist-form v-else v-model="carId" />
+    <driver-add-car-exist-form ref="carFormExist" v-else v-model="carId" />
   </div>
 </template>
 
@@ -37,17 +37,23 @@ import { ref, watch } from "@vue/composition-api";
         value: "exist",
       },
     ];
+    const carId = ref(null);
+
     const carForm = ref(null);
+    const carFormExist = ref(null);
     const submit = async () => {
-      await carForm.value.submit();
+      if (carStatus.value === "new") {
+        await carForm.value.submit();
+      } else {
+        emit("submit", { car_id: carId.value });
+      }
     };
     const onSubmit = (values: any) => {
       emit("submit", values);
     };
-    const carId = ref(null);
     watch(carId, (newId) => {
       if (carStatus.value !== "new") {
-        emit("submit", newId);
+        emit("submit", { car_id: newId });
       }
     });
     watch(carStatus, (newStatus) => {
@@ -60,6 +66,7 @@ import { ref, watch } from "@vue/composition-api";
       carForm,
       carStatus,
       carStatuses,
+      carFormExist,
     };
   },
 })

@@ -9,7 +9,7 @@
           <agregator-badge :type="item.agreg" />
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
-          <div>{{item.name}}</div>
+          <div>{{ item.name }}</div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveHeader">
           <div>(Москва и МО)</div>
@@ -36,7 +36,7 @@
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Оборот по закаазам</div>
-            <div class="col-6">{{item.TurnoverOnOrders}} {{ currency }}</div>
+            <div class="col-6">{{ item.TurnoverOnOrders }} {{ currency }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
@@ -47,7 +47,7 @@
         </app-accardion-col>
       </template>
       <template #actions>
-        <div class="dispetchers-item__remove">
+        <div class="dispetchers-item__remove cursor-pointer">
           <svgTrash widht="20" @click="onDelete" />
         </div>
       </template>
@@ -60,11 +60,27 @@ import AgregatorBadge from "../../AgregatorBadge.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import AppStatus from "@/components/AppStatus.vue";
 import svgTrash from "@/assets/icons/trash.svg";
+import { useApiDeleteDispetcher } from "@/api/dispetchers";
+import { errorHandler } from "@/helpers/error-handler";
+import { toRefs } from "@vue/composition-api";
+interface IProps {
+  [key: string]: any;
+  item: any;
+}
 @Component({
   components: { AgregatorBadge, AppStatus, svgTrash },
-  setup(props, { emit }) {
-    const onDelete = () => {
-      emit("delete");
+  setup(props: IProps, { emit }) {
+    const { item } = toRefs<IProps>(props);
+    const onDelete = async () => {
+      const { exec, error } = useApiDeleteDispetcher({
+        toast: {
+          error: errorHandler(),
+          success: () => "Диспетчерская успешно удалена!",
+        },
+      });
+      await exec({ id: item.value.id });
+      if (error.value) return;
+      emit("refresh");
     };
     return {
       onDelete,

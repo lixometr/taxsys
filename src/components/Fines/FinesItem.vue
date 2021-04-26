@@ -33,7 +33,9 @@
           >{{ item.summa }} {{ currency }}</app-accardion-col
         >
         <app-accardion-col :class="responsiveHeader" class="fines-item__status">
-          <app-status color="green" :stroke="true">оплачен</app-status>
+          <app-status :color="statusColor" :stroke="true">{{
+            statusText
+          }}</app-status>
         </app-accardion-col>
       </template>
       <template #default>
@@ -157,11 +159,29 @@ export default class DriverListItem extends Vue {
   get responsiveContent() {
     return "col-12 col-xl-4";
   }
-  get car() {
-    return this.item?.car || {} as Car
+  get statusText() {
+    if (this.item.status === "paid") {
+      return "Оплачен";
+    } else if (this.item.status === "pending") {
+      return "В ожидании";
+    } else {
+      return "Не оплачен";
+    }
   }
-  get driver () {
-    return this.item?.driver || {} as DriverEntity
+  get statusColor() {
+    if (this.item.status === "paid") {
+      return "green";
+    } else if (this.item.status === "pending") {
+      return "orange";
+    } else {
+      return "red";
+    }
+  }
+  get car() {
+    return this.item?.car || ({} as Car);
+  }
+  get driver() {
+    return this.item?.driver || ({} as DriverEntity);
   }
   get currency() {
     return this.$store.getters.currency;

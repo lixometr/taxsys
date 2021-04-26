@@ -1,5 +1,5 @@
 <template>
-  <form class="modern-login-form" @submit.prevent="submit">
+  <form class="modern-login-form" @submit.prevent="onLogin">
     <phone-input
       class="modern-login-form__input"
       v-model="values.phone"
@@ -7,6 +7,7 @@
       label="+7 999 999 99 99"
     />
     <app-input
+      type="password"
       class="modern-login-form__input"
       v-model="values.password"
       :errors="errors.password"
@@ -26,25 +27,21 @@
 <script lang="ts">
 import ModernBtn from "../ModernBtn.vue";
 import PhoneInput from "../PhoneInput.vue";
-import useField from "@/compositions/validators/useField";
-import useForm from "@/compositions/validators/useForm";
 import { Component, Vue } from "vue-property-decorator";
-import * as yup from "yup";
+import useLoginForm from "../Auth/Login/useLoginForm";
+import useRouter from "@/compositions/useRouter";
 @Component({
   components: { PhoneInput, ModernBtn },
   setup() {
-    const { values, errors, handleSubmit, serialize } = useForm({
-      fields: {
-        phone: useField("", [
-          yup.number().typeError("Введите корректный номер телефона"),
-        ]),
-        password: useField("", [yup.string().required()]),
+    const {
+      loginForm: { values, errors },
+      onLogin,
+    } = useLoginForm({
+      afterLogin: () => {
+        useRouter().push({ name: "CDFinances" });
       },
     });
-    const submit = handleSubmit(async () => {
-      console.log(serialize());
-    });
-    return { values, errors, submit };
+    return { values, errors, onLogin };
   },
 })
 export default class ModernLoginForm extends Vue {}

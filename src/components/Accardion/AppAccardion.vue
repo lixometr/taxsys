@@ -11,7 +11,7 @@
         <slot name="header" />
       </div>
       <div class="app-accardion__arrow" v-if="showArrow">
-        <svgArrowRight />
+        <svgArrowRight class="color-violet"/>
       </div>
     </div>
     <div

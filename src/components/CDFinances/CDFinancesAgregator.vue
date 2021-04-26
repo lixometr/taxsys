@@ -1,5 +1,5 @@
 <template>
-  <div class="cd-finances-agregator">
+  <div class="cd-finances-agregator cursor-pointer">
     <div class="cd-finances-agregator__burger">
       <svgDotsBurger width="30" />
     </div>
@@ -67,7 +67,6 @@ export default class CDFinancesAgreagor extends Vue {}
     }
   }
   &__burger {
-    cursor: pointer;
     position: absolute;
     top: 18px;
     right: 10px;

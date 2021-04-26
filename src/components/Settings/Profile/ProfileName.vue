@@ -12,17 +12,28 @@
           <div class="">Телефон: {{ phone }}</div>
         </div>
       </div>
+      <div class="text-left">
+        <app-button @click="goToDriver" color="purple-grad font-normal mt-20"
+          >Перейти в водительский кабинет
+          <svgArrowRight width="15" class="ml-3 color-white"
+        /></app-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import useRouter from "@/compositions/useRouter";
 import { UserModule } from "@/store/modules/user";
 import { Component, Vue } from "vue-property-decorator";
-
+import svgArrowRight from "@/assets/icons/arrow-right.svg";
 @Component({
+  components: { svgArrowRight },
   setup() {
-    return {};
+    const goToDriver = () => {
+      useRouter().push({ name: "CDFinances" });
+    };
+    return { goToDriver };
   },
 })
 export default class ProfileName extends Vue {

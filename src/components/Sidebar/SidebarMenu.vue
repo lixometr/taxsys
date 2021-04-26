@@ -16,21 +16,26 @@ import SidebarMenuItem from "./SidebarMenuItem.vue";
 import { Component, Vue } from "vue-property-decorator";
 import partnerMenuItems from "@/components/Sidebar/partner-menu-items";
 import driverMenuItems from "@/components/Sidebar/driver-menu-items";
-import { computed } from "@vue/composition-api";
-import { UserModule } from "@/store/modules/user";
-import { UserType } from "@/types/types";
 
 @Component({
   components: { SidebarMenuItem },
-  setup() {
-    const menuItems = computed(() => {
-      if(UserModule.type === UserType.driver) return driverMenuItems
-      return partnerMenuItems
-    })
-    return {
-      menuItems,
-    };
+
+  computed: {
+    menuItems() {
+      const { matched } = this.$route;
+      const isDriver =
+        matched.findIndex((route) => route.name === "CDriver") > -1;
+      if (isDriver) {
+        return driverMenuItems;
+      } else {
+        return partnerMenuItems;
+      }
+    },
   },
+  setup() {
+    return {};
+  },
+  watch: {},
 })
 export default class SibebarMenu extends Vue {}
 </script>

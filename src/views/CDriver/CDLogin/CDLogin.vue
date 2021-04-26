@@ -30,6 +30,7 @@ import svgPower from "@/assets/icons/power.svg";
 import svgTaxy from "@/assets/icons/connect_taxy.svg";
 import svgRentCar from "@/assets/icons/rent_car.svg";
 import svgChat from "@/assets/icons/chat_round.svg";
+import useLoginForm from "@/components/Auth/Login/useLoginForm";
 @Component({
   components: {
     svgLogo,
@@ -40,6 +41,7 @@ import svgChat from "@/assets/icons/chat_round.svg";
     svgTaxy,
     svgRentCar,
   },
+
 })
 export default class ModernLogin extends Vue {}
 </script>

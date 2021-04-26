@@ -2,7 +2,10 @@ import { UserModule } from '@/store/modules/user'
 import { UserType } from '@/types/types'
 import { RouteConfig } from 'vue-router'
 import auth from './auth'
-import payments from './finances'
+import finances from './finances'
+import rent from './rent'
+import profile from './profile'
+import fines from './fines'
 const routes: Array<RouteConfig> = [
   {
     beforeEnter: (to, from, next) => {
@@ -14,10 +17,11 @@ const routes: Array<RouteConfig> = [
       next()
     },
     path: '/driver',
+    name: 'CDriver',
     component: {
       render: (c) => c('router-view'),
     },
-    children: [...auth, ...payments],
+    children: [...auth, ...finances, ...rent, ...profile, ...fines],
   },
 ]
 export default routes

@@ -1,4 +1,6 @@
 import { UserType } from '@/types/types'
+import { Car } from './car.entity'
+import { DriverEntity } from './driver.entity'
 
 interface Partner {
   Adress: string
@@ -63,6 +65,7 @@ export class UserEntity {
   tg_id: number
   tg_link: string
   roles: Role[]
+  driver?: DriverEntity
 
   get isPartner() {
     const isPartnerOrAdmin =

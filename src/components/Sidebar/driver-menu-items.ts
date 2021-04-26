@@ -26,9 +26,9 @@ const menuItems: IMenuItems[] = [
         children: []
     },
     {
-        name: 'Поделится',
+        name: 'Профиль',
         img: require('@/assets/icons/share.svg'),
-        routeName: 'CDShare',
+        routeName: 'CDProfile',
         children: []
     },
   

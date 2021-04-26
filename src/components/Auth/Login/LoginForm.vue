@@ -22,68 +22,31 @@
         <router-link :to="{ name: 'Register' }">Регистрация</router-link>
       </div>
       <div class="login-form__link">
-        <router-link to="#"
-          >Восстановление доступа</router-link
-        >
+        <router-link to="#">Восстановление доступа</router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import PhoneInput from '../../PhoneInput.vue'
+import PhoneInput from "../../PhoneInput.vue";
 import { UserModule } from "@/store/modules/user";
 import { ref, watch } from "@vue/composition-api";
 import { Component, Vue } from "vue-property-decorator";
-import useField from "@/compositions/validators/useField";
-import useForm from "@/compositions/validators/useForm";
-import useRouter from "@/compositions/useRouter";
-import * as yup from "yup";
+import useLoginForm from "./useLoginForm";
 import "yup-phone";
+import useRouter from "@/compositions/useRouter";
 @Component({
   components: { PhoneInput },
   setup() {
-    const router = useRouter();
-    // login.exec({
-    //   phone: "+79660108888",
-    //   password: "123456",
-    //   deviceName: "test",
-    // });
-    const loginForm = useForm({
-      fields: {
-        phone: useField(process.env.NODE_ENV === 'development' ? "+79660108888" : '', [
-          yup.number().typeError("Введите корректный номер телефона"),
-        ]),
-        password: useField(process.env.NODE_ENV === 'development' ? "123456" : '', [yup.string().required("Введите пароль")]),
+    const { loginForm, onLogin } = useLoginForm({
+      afterLogin: () => {
+        useRouter().push({ name: "Statistics" });
       },
-
-      watchAfterSubmit: true,
     });
-   
-   
-
-    let serverError = ref(null);
-    const sendInfo = async () => {
-      const login = await UserModule.login({
-        phone: loginForm.values.phone,
-        password: loginForm.values.password,
-      });
-      serverError.value = login.error.value;
-      if (!login.error.value) {
-        await UserModule.fetchUser();
-        await UserModule.fetchBalance()
-        router.push({ name: "Home" });
-      }
-    };
-
-    const onLogin = loginForm.handleSubmit(async (e: MouseEvent) => {
-      e.preventDefault();
-      await sendInfo();
-    });
-
     return {
-      onLogin,
       loginForm,
+      onLogin,
     };
   },
 })

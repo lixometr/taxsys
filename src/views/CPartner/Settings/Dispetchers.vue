@@ -20,6 +20,7 @@
           v-for="(item, idx) in items"
           :key="idx"
           :item="item"
+          @refresh="refreshItems"
         />
         <app-pagination
           class="mt-auto"
