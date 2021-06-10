@@ -65,7 +65,7 @@ interface IProps {
     };
     const registerDriverInputs = ref(null);
     const submit = async () => {
-      await registerDriverInputs.value.submit();
+      return await registerDriverInputs.value.submit();
     };
     return { onSubmit, submit, registerDriverInputs, onChangeAgregators };
   },

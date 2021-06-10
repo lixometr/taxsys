@@ -4,7 +4,7 @@
       <h2 class="modal-title">Подключение водителя</h2>
     </template>
     <template>
-        <connect-driver-form :id="id" :agregator="agregator"/>
+        <connect-driver-form :id="id" :agregator="agregator" @send="onSend"/>
     </template>
   </modal-content>
 </template>

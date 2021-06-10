@@ -21,6 +21,7 @@ export default class CDFinances extends Vue {}
 <style lang="scss">
 .page-cd-finances {
     padding-top: 5rem;
+    padding-bottom: 3rem;
     &__agregators {
       margin-bottom: 40px;
     }

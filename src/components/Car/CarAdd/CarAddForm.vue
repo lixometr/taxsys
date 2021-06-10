@@ -25,7 +25,7 @@ import { CreateCarDto } from "@/dto/car.dto";
 import { errorHandler } from "@/helpers/error-handler";
 @Component({
   components: { FormSchema, CarAddMarkInput },
-  setup() {
+  setup(props, {emit}) {
     const { handleSubmit, serialize, errors } = useForm({
       fields: fields,
       rename: {
@@ -54,6 +54,7 @@ import { errorHandler } from "@/helpers/error-handler";
           plainToClass(CreateCarDto, { ...toSend, mark: toSend.mark.name })
         );
         if (error.value) return;
+        emit('send')
       })();
     };
     return {

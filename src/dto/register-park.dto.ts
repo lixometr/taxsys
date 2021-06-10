@@ -5,7 +5,7 @@ export class RegisterParkDto {
     name: string
     middle_name: string
     last_name: string
-    city: string
+    city: number
 
     @DateTransform()
     birthday: string

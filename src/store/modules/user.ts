@@ -25,7 +25,7 @@ class User extends VuexModule {
     return !!this.token && this.user
   }
   get type() {
-    return this.user.user_type
+    return this.user?.user_type
   }
   @Mutation
   setUser(value: UserEntity) {

@@ -8,7 +8,7 @@
       </title-back>
     </page-title>
     <div class="car-add__form">
-      <div class="app-card"><car-add-form /></div>
+      <div class="app-card"><car-add-form @send="onSend" /></div>
     </div>
   </div>
 </template>
@@ -30,7 +30,11 @@ import useRouter from "@/compositions/useRouter";
     const goBack = () => {
       router.back();
     };
+    const onSend = () => {
+      router.push({ name: "Rent" });
+    };
     return {
+      onSend,
       goBack,
     };
   },

@@ -13,7 +13,7 @@ const lastName = useField("", [yup.string().required().test('', 'Можно вв
 const birthday = useField("", [yup.string().required()]);
 const passport = useField("", [yup.string().required().length(10)]);
 const phone = useField("", [yup.number().typeError("Введите корректный номер телефона"),]);
-const city = useField("", [yup.string().required()]);
+const city = useField(null, [yup.number().required()]);
 export const fields = {
     name,
     middleName,

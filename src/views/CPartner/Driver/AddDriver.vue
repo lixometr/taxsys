@@ -87,7 +87,7 @@ import { errorHandler } from "@/helpers/error-handler";
       } else {
         toSend = {
           ...driverValues.value,
-          car_id: carValues.value,
+          ...carValues.value,
           agregators: agregators.value,
         };
       }

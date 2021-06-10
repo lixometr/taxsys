@@ -1,6 +1,6 @@
 <template>
   <div class="settings-dispetchers page-items flex-layout flex-1">
-    <div class="flex-layout flex-1" v-if="items.length">
+    <div class="flex-layout flex-1" v-if="items.length > 0">
       <page-filters :calendar.sync="date">
         <template v-slot:filters>
           <agregator-filters v-model="agregator" />
@@ -20,24 +20,24 @@
           v-for="(item, idx) in items"
           :key="idx"
           :item="item"
-          @refresh="refreshItems"
+          @refresh="fetchItems"
         />
-        <app-pagination
+        <!-- <app-pagination
           class="mt-auto"
           :nowPage="page"
           :totalPages="totalPages"
           @next="nextPage"
           @prev="prevPage"
           @showMore="nextPage"
-        />
+        /> -->
       </div>
     </div>
-    <dispetcher-placeholder v-else @refresh="refreshItems"/>
+    <dispetcher-placeholder v-else @refresh="fetchItems" />
   </div>
 </template>
 
 <script lang="ts">
-import DispetcherPlaceholder from '@/components/Placeholders/DispetcherPlaceholder.vue'
+import DispetcherPlaceholder from "@/components/Placeholders/DispetcherPlaceholder.vue";
 import DispetchersItem from "@/components/Settings/Dispetchers/DispetchersItem.vue";
 import PageFilters from "@/components/Page/PageFilters.vue";
 import PageTitle from "@/components/Page/PageTitle.vue";
@@ -49,51 +49,49 @@ import svgPlus from "@/assets/icons/plus.svg";
 import AgregatorFilters from "@/components/Travels/AgregatorFilters.vue";
 import useModal from "@/compositions/useModal";
 import { ModalName } from "@/types/modal.enum";
+import useGlobalLoading from "@/compositions/useGlobalLoading";
+import { errorHandler } from "@/helpers/error-handler";
 @Component({
   metaInfo: {
     title: "Диспетчерские",
   },
   setup() {
-    const agregator = ref("yandex");
+    const agregator = ref("all");
     const date = ref({
       start: new Date(),
       end: new Date(),
     });
 
-    const {
-      page,
-      nextPage,
-      prevPage,
-      showMore,
-      items,
-      totalPages,
-      refreshItems,
-      init,
-    } = useItemsPage({
-      api: useApiGetDispetchers,
-    });
     const toFetch = computed(() => ({
       dateFrom: date.value.start,
       dateTo: date.value.end,
-      page: page.value,
       agregator: agregator.value,
     }));
-    init({ fetchData: toFetch });
+    const items = ref([]);
+
+    const fetchItems = async ({ gLoading = false } = {}) => {
+      const { exec, result } = useApiGetDispetchers({
+        toast: { error: errorHandler() },
+        loading: gLoading,
+      });
+      await exec(toFetch.value);
+      items.value = result.value;
+    };
+    fetchItems({ gLoading: true });
+    watch(toFetch, () => {
+      fetchItems({ gLoading: false });
+    });
+
     const addDispetcher = () => {
       const { showByName } = useModal();
       showByName(ModalName.addDispetcher);
     };
     return {
-      refreshItems,
       agregator,
       date,
-      page,
-      showMore,
-      nextPage,
-      prevPage,
       items,
-      totalPages,
       addDispetcher,
+      fetchItems,
     };
   },
   components: {
@@ -101,7 +99,8 @@ import { ModalName } from "@/types/modal.enum";
     PageFilters,
     svgPlus,
     AgregatorFilters,
-    DispetchersItem, DispetcherPlaceholder
+    DispetchersItem,
+    DispetcherPlaceholder,
   },
 })
 export default class SettignsDispetchers extends Vue {}

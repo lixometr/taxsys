@@ -18,12 +18,13 @@
       </page-title>
       <div class="page-rent__items flex flex-column flex-1">
         <div v-if="entity === 'free'">
+
           <rent-item
             v-for="item in items"
             :key="item.id"
             :item="item"
             class="page-rent-item"
-            @approve="onApprove"
+            @approve="onApprove(item.id)"
             @remove="removeCar(item.id)"
             @edit="editCar(item.id)"
           />
@@ -79,9 +80,9 @@ import { errorHandler } from "@/helpers/error-handler";
     const createRent = () => {
       router.push({ name: "CarAdd" });
     };
-    const onApprove = () => {
+    const onApprove = (carId: number) => {
       const { showByName } = useModal();
-      showByName(ModalName.giveCar);
+      showByName(ModalName.giveCar, { props: { carId } });
     };
     const {
       page,

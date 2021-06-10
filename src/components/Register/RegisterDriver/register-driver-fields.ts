@@ -16,7 +16,7 @@ export const lastName = useField('', [yup.string().required().test('', 'Можн
 })])
 export const serialLicense = useField('', [yup.string().required().length(10)])
 export const countryLicense = useField('', [yup.string().required()])
-export const city = useField('', [yup.string().required()])
+export const city = useField(null, [yup.number().required()])
 export const phone = useField("", [yup.number().typeError("Введите корректный номер телефона"),]);
 export const birthday = useField("", [yup.date().required()]);
 export const dateLicense = useField("", [yup.date().required()]);

@@ -2,7 +2,7 @@
   <div class="cd-profile-cards">
     <div class="cd-profile-cards__header">
       <div class="color-grey-3 font-md">Карта для вывода средств</div>
-      <app-button color="bold-purple" :stroke="true" @click="addCard"
+      <app-button color="bold-purple" :stroke="true" @click="addCard" size="sm"
         >Добавить карту <svgPlus class="ml-10" width="20"
       /></app-button>
     </div>
@@ -46,11 +46,11 @@ export default class CDProfileCards extends Vue {}
     align-items: center;
     justify-content: space-between;
     @include md {
-        flex-direction: column;
-        align-items: flex-start;
-        .btn {
-            margin-top: 10px;
-        }
+      flex-direction: column;
+      align-items: flex-start;
+      .btn {
+        margin-top: 10px;
+      }
     }
   }
   &__item {

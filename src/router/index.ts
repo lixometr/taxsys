@@ -34,12 +34,15 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 })
-const noAuthList = ['Login', 'Register']
+const noAuthList = ['Login', 'Register', 'CDLogin']
 router.beforeEach((to, from, next) => {
   // return next()
-  if (!noAuthList.includes(to.name) && !UserModule.isAuth)
-    next({ name: 'Login' })
-  else next()
+  if (!noAuthList.includes(to.name) && !UserModule.isAuth) {
+    const loginPath = to.matched.findIndex(item => item.name === 'CPartner') > -1
+      ? { name: 'Login' }
+      : { name: 'CDLogin' }
+    next(loginPath)
+  } else next()
 })
 
 export default router

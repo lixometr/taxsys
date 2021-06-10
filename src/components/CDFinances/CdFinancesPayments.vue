@@ -1,5 +1,5 @@
 <template>
-  <div class="cd-finances-payments row">
+  <div class="cd-finances-payments row font-md">
     <div class="col-xl-6">
       <div class="app-card">
         <cd-finances-payments-info />

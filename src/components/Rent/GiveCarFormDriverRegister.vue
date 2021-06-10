@@ -2,7 +2,7 @@
   <div class="give-car-form-driver-register">
     <register-driver-form
       :agregators.sync="agregators"
-      @sumit="onSubmit"
+      @submit="onSubmit"
       ref="registerDriver"
     />
   </div>
@@ -19,10 +19,14 @@ import { ref } from "@vue/composition-api";
     const agregators = ref([]);
     const registerDriver = ref(null);
     const onSubmit = (values: any) => {
-      emit("submit", values);
+      const toSend = {
+        agregators: agregators.value,
+        ...values,
+      };
+      emit("submit", toSend);
     };
-    const submit = () => {
-      registerDriver.value.submit();
+    const submit = async () => {
+      await registerDriver.value.submit();
     };
     return {
       submit,

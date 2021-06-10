@@ -221,8 +221,11 @@ export default class RentItem extends Vue {
   }
   &__status-btns {
     display: flex;
+    justify-content: flex-end;
+    width: 100%;
     @include md {
       flex-direction: column;
+      justify-content: flex-start;
     }
     .btn {
       &:first-child {

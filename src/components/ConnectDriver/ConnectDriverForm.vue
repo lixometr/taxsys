@@ -58,6 +58,8 @@ import * as _ from "lodash";
 import { DriverEntity } from "@/models/driver.entity";
 import { useApiDriverAddAgregator, useApiGetDriverInfo } from "@/api/driver";
 import { errorHandler } from "@/helpers/error-handler";
+import { plainToClass } from "class-transformer";
+import { RegisterDriverDto } from "@/dto/register-driver.dto";
 interface IProps {
   [key: string]: any;
   agregator: AgregName;
@@ -118,18 +120,20 @@ interface IProps {
     const onSubmit = async () => {
       const exec = form.handleSubmit(async () => {
         const toSend = form.serialize();
-        console.log(toSend);
         const { exec, error } = useApiDriverAddAgregator({
           toast: {
             error: errorHandler(),
             success: () => "Агрегатор успешно добавлен!",
           },
         });
+        const toSendDto = plainToClass(RegisterDriverDto, toSend)
         await exec({
           id: id.value,
           agregator: agregator.value,
-          values: toSend,
+          values: toSendDto,
         });
+        if(error.value) return
+        emit('send')
         return;
       });
       await exec();

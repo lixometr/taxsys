@@ -6,6 +6,7 @@ import finances from './finances'
 import rent from './rent'
 import profile from './profile'
 import fines from './fines'
+import agregator from './agregator'
 const routes: Array<RouteConfig> = [
   {
     beforeEnter: (to, from, next) => {
@@ -21,7 +22,8 @@ const routes: Array<RouteConfig> = [
     component: {
       render: (c) => c('router-view'),
     },
-    children: [...auth, ...finances, ...rent, ...profile, ...fines],
+    children: [...auth, ...finances, ...rent, ...profile, ...fines, ...agregator],
   },
 ]
 export default routes
+

@@ -24,19 +24,21 @@ export default function useItemsPage(props: UseItemsPageProps) {
     totalPages,
   } = usePagination({ nowPage: useQuery ? +router.currentRoute.query.page : 1 })
   const showMore = () => nextPage()
+  const gLoading = useGlobalLoading()
+
   const { exec, result } = api({
     toast: { error: (err) => 'Ошибка при запросе данных' },
   })
   const fetchItems = async () => {
+    gLoading.show()
+
     await exec(toFetch.value)
     setPage(result.value.current_page)
     setTotalPages(result.value.last_page)
+    gLoading.hide()
   }
   const _init = async () => {
-    const gLoading = useGlobalLoading()
-    gLoading.show()
     await fetchItems()
-    gLoading.hide()
     setPage(result.value.current_page)
     setTotalPages(result.value.last_page)
     watch(toFetch, () => {

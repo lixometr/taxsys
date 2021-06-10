@@ -62,6 +62,9 @@ export default class TravelsMixin extends Vue {
   get parkComission() {
     return Math.abs(this.fees.park_fee);
   }
+  get totalCommission () {
+    return this.agregComission + this.parkComission
+  }
   get chargedDriver() {
     const result =
       this.item.Price +
@@ -70,6 +73,9 @@ export default class TravelsMixin extends Vue {
     if (isNaN(result) || result === Infinity) return false;
 
     return result.toFixed(2);
+  }
+  get totalSum() {
+    return this.item.Price
   }
   get costPerKm() {
     const result = this.item.Price / this.distanceKm;

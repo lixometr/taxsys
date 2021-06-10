@@ -5,11 +5,11 @@
         <driver-list-filters v-model="entity" />
       </template>
     </page-filters>
-    <div class="flex-layout flex-1" v-if="items.length ">
+    <div class="flex-layout flex-1" v-if="items.length">
       <page-title :between="true">
         <div><h2>Список водителей</h2></div>
         <div>
-          <download-btn />
+          <download-btn @click="downloadList" />
         </div>
       </page-title>
 
@@ -34,16 +34,16 @@
       </div>
     </div>
     <div class="flex-layout flex-1" key="noItems" v-else>
-      <driver-list-connect-placeholder v-if="entity === 'park'"/>
-      <driver-list-rent-placeholder v-if="entity === 'rent'"/>
+      <driver-list-connect-placeholder v-if="entity === 'park'" />
+      <driver-list-rent-placeholder v-if="entity === 'rent'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import DownloadBtn from '@/components/DownloadBtn.vue'
-import DriverListRentPlaceholder from '@/components/Placeholders/DriverListRentPlaceholder.vue'
-import DriverListConnectPlaceholder from '@/components/Placeholders/DriverListConnectPlaceholder.vue'
+import DownloadBtn from "@/components/DownloadBtn.vue";
+import DriverListRentPlaceholder from "@/components/Placeholders/DriverListRentPlaceholder.vue";
+import DriverListConnectPlaceholder from "@/components/Placeholders/DriverListConnectPlaceholder.vue";
 import DriverListItem from "@/components/DriverList/DriverListItem.vue";
 import AppButton from "@/components/AppButton.vue";
 import DriverListFilters from "@/components/DriverList/DriverListFilters.vue";
@@ -53,10 +53,12 @@ import { Component, Vue } from "vue-property-decorator";
 import { computed, ref, watch } from "@vue/composition-api";
 import svgPlus from "@/assets/icons/plus.svg";
 import useItemsPage from "@/compositions/useItemsPage";
-import { useApiGetDrivers } from "@/api/driver";
+import { useApiDownloadDrivers, useApiGetDrivers } from "@/api/driver";
 import useRouter from "@/compositions/useRouter";
 import { useApiGetAntifrauds } from "@/api/antifraud";
 import { useApiGetPaymentGroups } from "@/api/payment-groups";
+import { errorHandler } from "@/helpers/error-handler";
+import downloadURI from "@/helpers/downloadUri"
 @Component({
   components: {
     PageTitle,
@@ -64,14 +66,17 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     DriverListFilters,
     AppButton,
     svgPlus,
-    DriverListItem, DriverListConnectPlaceholder, DriverListRentPlaceholder, DownloadBtn
+    DriverListItem,
+    DriverListConnectPlaceholder,
+    DriverListRentPlaceholder,
+    DownloadBtn,
   },
   metaInfo: {
     title: "Список водителей",
   },
   setup() {
     const router = useRouter();
-    const entity = ref('park');
+    const entity = ref("park");
     const date = ref({
       start: undefined,
       end: undefined,
@@ -108,7 +113,20 @@ import { useApiGetPaymentGroups } from "@/api/payment-groups";
     } = useApiGetPaymentGroups();
     getPaymentGroups();
 
+   
+    const downloadList = async () => {
+      const { exec, error, result } = useApiDownloadDrivers({
+        toast: { error: errorHandler() },
+      });
+      await exec({
+        dateFrom: toFetch.value.dateFrom,
+        dateTo: toFetch.value.dateEnd,
+      });
+      if (error.value) return;
+      downloadURI(`data:text/csv,${result.value}`, 'data.csv')
+    };
     return {
+      downloadList,
       paymentGroups,
       antifrauds,
       refresh,

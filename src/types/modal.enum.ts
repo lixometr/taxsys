@@ -14,6 +14,7 @@ export enum ModalName {
     changeDriverBalance = 'change-driver-balance',
     connectDriver = 'connect-driver',
     widgetCode = 'widget-code',
+    CDEarnsModal = 'cd-earns-modal'
 
 }
 
@@ -33,5 +34,6 @@ export const ModalComponents = {
     [ModalName.changeDriverBalance]: () => import("@/components/Modals/ChangeDriverBalanceModal.vue"),
     [ModalName.connectDriver]: () => import("@/components/Modals/ConnectDriverModal.vue"),
     [ModalName.widgetCode]: () => import("@/components/Modals/WidgetCodeModal.vue"),
+    [ModalName.CDEarnsModal]: () => import("@/components/Modals/CdEarnsModal.vue"),
     
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!isLoading">
     <Carousel3d
       class="cd-finances-agregators__slider"
       :perspective="0"
@@ -10,19 +10,29 @@
       v-if="showCarousel"
     >
       <Slide
-        v-for="(item, idx) in 3"
+        v-for="(item, idx) in items"
         :key="idx"
         :index="idx"
         class="cd-finances-agregators__slide"
       >
-        <cd-finances-agregator class="cd-finances-agregators__item" />
+        <cd-finances-agregator
+          class="cd-finances-agregators__item"
+          :agregator="item.name"
+          :balance="item.balance"
+          :total="totalBalance"
+          @click.native="goToAgregator(item.name)"
+        />
       </Slide>
     </Carousel3d>
     <div class="cd-finances-agregators" v-else>
       <cd-finances-agregator
         class="cd-finances-agregators__item"
-        v-for="(item, idx) in 3"
+        v-for="(item, idx) in items"
         :key="idx"
+        :agregator="item.name"
+        :balance="item.balance"
+        :total="totalBalance"
+        @click.native="goToAgregator(item.name)"
       />
     </div>
   </div>
@@ -32,8 +42,15 @@
 import CdFinancesAgregator from "./CdFinancesAgregator.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { Carousel3d, Slide } from "vue-carousel-3d";
-import { ref } from "@vue/composition-api";
-
+import { computed, ref } from "@vue/composition-api";
+import useRouter from "@/compositions/useRouter";
+import { AgregatorType } from "@/types/agregator.enum";
+import {
+  useApiGetAgregatorBalance,
+  useApiGetAgregators,
+} from "@/api/agregators";
+import { errorHandler } from "@/helpers/error-handler";
+import useCdAgregators from "./use-cd-agregators";
 @Component({
   components: {
     CdFinancesAgregator,
@@ -56,7 +73,15 @@ import { ref } from "@vue/composition-api";
     };
     window.addEventListener("resize", checkWindowSize);
     checkWindowSize();
+    const goToAgregator = (name: string) => {
+      useRouter().push({ name: "CDAgregatorTravels", params: { name } });
+    };
+    const { items, totalBalance, availableAgregators, isLoading} = useCdAgregators();
     return {
+      isLoading,
+      totalBalance,
+      items,
+      goToAgregator,
       showCarousel,
       carousel,
       goToSlide,

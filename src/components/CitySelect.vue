@@ -3,7 +3,7 @@
     :value="value"
     v-bind="$attrs"
     v-on="$listeners"
-    :reduce="(item) => item.name"
+    :reduce="(item) => item.id"
     selectLabel="name"
     :fetchFunc="fetchFunc"
   />
@@ -43,7 +43,7 @@ import { errorHandler } from "@/helpers/error-handler";
   components: { AppSelect, ApiSelect },
 })
 export default class CitySelect extends Vue {
-  @Prop(String) value: string;
+  @Prop([String, Number]) value: number;
 }
 </script>
 

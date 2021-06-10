@@ -30,19 +30,19 @@
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Количество заказов</div>
-            <div class="col-6">{{ item.count_orders }}</div>
+            <div class="col-6">{{ stats.trips_count }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Оборот по закаазам</div>
-            <div class="col-6">{{ item.TurnoverOnOrders }} {{ currency }}</div>
+            <div class="col-6">{{ stats.total_price }} {{ currency }}</div>
           </div>
         </app-accardion-col>
         <app-accardion-col :class="responsiveContent">
           <div class="row">
             <div class="col-6 color-grey-3">Комиссия парка</div>
-            <div class="col-6">{{ item.ParkCommission }} {{ currency }}</div>
+            <div class="col-6">{{ stats.park_fee }} {{ currency }}</div>
           </div>
         </app-accardion-col>
       </template>
@@ -97,6 +97,9 @@ export default class DispetchersItem extends Vue {
   }
   get responsiveContent() {
     return "col-12 col-md-6 col-xl-3";
+  }
+  get stats() {
+    return this.item?.stats || {}
   }
 }
 </script>
