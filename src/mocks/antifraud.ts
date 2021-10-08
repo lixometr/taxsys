@@ -28,7 +28,7 @@ export default [
         ])
       );
     } else {
-      return res(json([]));
+      return res(json({ data: [] }));
     }
   }),
   rest.post("/api/partner/antifraud", (req, res, { json }) =>

@@ -5,7 +5,7 @@
         <driver-applys-filters v-model="entity" />
       </template>
     </page-filters>
-    <div class="flex-layout flex-1" v-if="items.length">
+    <div class="flex-layout flex-1" v-if="items.length && !isLoading">
       <page-title :between="true">
         <div><h2>Заявки водителей</h2></div>
         <div>
@@ -90,6 +90,7 @@ import useRouter from "@/compositions/useRouter";
     } = useItemsPage({
       api: useApiGetDriversApplys,
     });
+    const isLoading = ref(false);
     const toFetch = computed(() => ({
       page: page.value,
       dateFrom: date.value.start,
@@ -101,18 +102,24 @@ import useRouter from "@/compositions/useRouter";
       refreshItems();
     };
     const { exec: getAntifraud, result: antifrauds } = useApiGetAntifrauds();
-    getAntifraud({ paginate: false });
 
     const {
       exec: getPaymentGroups,
       result: paymentGroups,
     } = useApiGetPaymentGroups();
-    getPaymentGroups();
+    const fetchData = async () => {
+      isLoading.value = true;
+      await getAntifraud({ paginate: false });
+      await getPaymentGroups();
+      isLoading.value = false;
+    };
+    fetchData();
     const router = useRouter();
     const addDriver = () => {
       router.push({ name: "AddDriver" });
     };
     return {
+      isLoading,
       addDriver,
       antifrauds,
       paymentGroups,
@@ -131,5 +138,4 @@ import useRouter from "@/compositions/useRouter";
 export default class DriverApplys extends Vue {}
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

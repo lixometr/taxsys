@@ -28,9 +28,9 @@ import "@/libs/apex-chart";
 
 import beforeLoad from "@/libs/before-load";
 import { worker as MockWorker } from "./mocks/browser";
-console.log(process.env.VUE_APP_NODE_TYPE)
+console.log(process.env.VUE_APP_NODE_TYPE);
 if (process.env.VUE_APP_NODE_TYPE === "demo") {
-  MockWorker.start();
+  MockWorker.start({ onUnhandledRequest: "bypass" });
 }
 
 Vue.config.productionTip = false;

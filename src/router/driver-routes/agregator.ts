@@ -3,7 +3,6 @@ import { RouteConfig } from 'vue-router'
 const routes: Array<RouteConfig> = [
   {
     path: 'agregator/:name',
-    name: 'CDAgregator',
     component: () => import('@/views/CDriver/CDAgregator/CDAgregator.vue'),
     meta: {},
     children: [

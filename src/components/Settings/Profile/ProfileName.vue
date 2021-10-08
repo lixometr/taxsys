@@ -2,7 +2,7 @@
   <div class="profile-name">
     <div class="app-card">
       <div class="profile-name__row">
-        <div class="profile-name__item">
+        <div class="profile-name__item" v-if="companyName">
           <div class="color-purple">{{ companyName }}</div>
         </div>
         <div class="profile-name__item">
@@ -12,12 +12,12 @@
           <div class="">Телефон: {{ phone }}</div>
         </div>
       </div>
-      <div class="text-left">
+      <!-- <div class="text-left">
         <app-button @click="goToDriver" color="purple-grad font-normal mt-20"
           >Перейти в водительский кабинет
           <svgArrowRight width="15" class="ml-3 color-white"
         /></app-button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ import svgArrowRight from "@/assets/icons/arrow-right.svg";
 })
 export default class ProfileName extends Vue {
   get companyName() {
-    return UserModule.user.partner.Name;
+    return UserModule.user?.partner?.Name;
   }
   get fio() {
     const user = UserModule.user;

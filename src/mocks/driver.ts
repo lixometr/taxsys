@@ -1,21 +1,18 @@
 import { rest } from "msw";
 
 export default [
+  rest.put("/api/drivers/:id", (req, res, { json }) => res(json({ ok: true }))),
   rest.post("/api/driver/check", (req, res, { json }) =>
     res(json({ ok: true, message: "Ваша проверка поставлена в очередь" }))
   ),
-  rest.post("/api/driver/add", (req, res, { json }) =>
-    res(json({ ok: true }))
-  ),
+  rest.post("/api/driver/add", (req, res, { json }) => res(json({ ok: true }))),
   rest.post("/api/driver/:id/addagreg", (req, res, { json }) =>
     res(json({ ok: true }))
   ),
   rest.post("/api/driver/:id/balance", (req, res, { json }) =>
     res(json({ ok: true }))
   ),
-  rest.get("/api/driver/suggestions", (req, res, { json }) =>
-    res(json([]))
-  ),
+  rest.get("/api/driver/suggestions", (req, res, { json }) => res(json([]))),
 
   rest.get("/api/drivers/:id", (req, res, { json }) =>
     res(

@@ -5,7 +5,7 @@
         <driver-list-filters v-model="entity" />
       </template>
     </page-filters>
-    <div class="flex-layout flex-1" v-if="items.length">
+    <div class="flex-layout flex-1" v-if="items.length && !isLoading">
       <page-title :between="true">
         <div><h2>Список водителей</h2></div>
         <div>
@@ -58,7 +58,7 @@ import useRouter from "@/compositions/useRouter";
 import { useApiGetAntifrauds } from "@/api/antifraud";
 import { useApiGetPaymentGroups } from "@/api/payment-groups";
 import { errorHandler } from "@/helpers/error-handler";
-import downloadURI from "@/helpers/downloadUri"
+import downloadURI from "@/helpers/downloadUri";
 @Component({
   components: {
     PageTitle,
@@ -75,6 +75,7 @@ import downloadURI from "@/helpers/downloadUri"
     title: "Список водителей",
   },
   setup() {
+    const isLoading = ref(false);
     const router = useRouter();
     const entity = ref("park");
     const date = ref({
@@ -105,15 +106,18 @@ import downloadURI from "@/helpers/downloadUri"
       await refreshItems();
     };
     const { exec: getAntifraud, result: antifrauds } = useApiGetAntifrauds();
-    getAntifraud({ paginate: false });
 
     const {
       exec: getPaymentGroups,
       result: paymentGroups,
     } = useApiGetPaymentGroups();
-    getPaymentGroups();
-
-   
+    const fetchData = async () => {
+      isLoading.value = true;
+      await getAntifraud({ paginate: false });
+      await getPaymentGroups();
+      isLoading.value = false;
+    };
+    fetchData();
     const downloadList = async () => {
       const { exec, error, result } = useApiDownloadDrivers({
         toast: { error: errorHandler() },
@@ -123,9 +127,10 @@ import downloadURI from "@/helpers/downloadUri"
         dateTo: toFetch.value.dateEnd,
       });
       if (error.value) return;
-      downloadURI(`data:text/csv,${result.value}`, 'data.csv')
+      downloadURI(`data:text/csv,${result.value}`, "data.csv");
     };
     return {
+      isLoading,
       downloadList,
       paymentGroups,
       antifrauds,
@@ -144,5 +149,4 @@ import downloadURI from "@/helpers/downloadUri"
 export default class DriverList extends Vue {}
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

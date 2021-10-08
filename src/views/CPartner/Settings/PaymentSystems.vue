@@ -78,7 +78,7 @@ import useGlobalLoading from "@/compositions/useGlobalLoading";
       return;
     };
 
-    const items = computed(() => result.value);
+    const items = computed(() => result.value || []);
     return {
       fetchItems,
       addSystem,

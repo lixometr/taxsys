@@ -13,7 +13,9 @@ const items = [
   },
 ];
 export default [
-  rest.get("/api/partner/paysystem", (req, res, { json }) => res(json(items))),
+  rest.get("/api/partner/paysystem", (req, res, { json }) => {
+    return res(json(items));
+  }),
   rest.post("/api/partner/paysystem", (req, res, { json }) =>
     res(json({ ok: true }))
   ),
