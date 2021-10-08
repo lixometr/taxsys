@@ -21,7 +21,7 @@ export const useApiGetDrivers = (opts?: UseApiOptions) =>
     opts,
     async ({ data }) => ({
       ...data,
-      data: data.data.map((driver) => plainToClass(DriverEntity, driver)),
+      data: data.data?.map((driver) => plainToClass(DriverEntity, driver)),
     }),
   )
 
@@ -38,7 +38,7 @@ export const useApiGetDriversApplys = (opts?: UseApiOptions) =>
     opts,
     async ({ data }) => ({
       ...data,
-      data: data.data.map((driver) => plainToClass(DriverEntity, driver)),
+      data: data.data?.map((driver) => plainToClass(DriverEntity, driver)),
     }),
   )
 
@@ -79,7 +79,7 @@ export const useApiGetDriverBlackList = (opts?: UseApiOptions) =>
     opts,
     async ({ data }) => ({
       ...data,
-      data: data.data.map((driver) => plainToClass(DriverEntity, driver)),
+      data: data.data?.map((driver) => plainToClass(DriverEntity, driver)),
     }),
   )
 export const useApiGetDriverInfo = (opts?: UseApiOptions) =>

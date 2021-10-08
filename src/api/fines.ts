@@ -13,5 +13,5 @@ export const useApiGetFines = (opts: UseApiOptions) => useApi<{ dateFrom: Date, 
         filter
     }
 }), { ...opts }, ({data}) => {
-    return {...data, data: data.data.map(item => plainToClass(Fine, item))}
+    return {...data, data: data.data?.map(item => plainToClass(Fine, item))}
 })
