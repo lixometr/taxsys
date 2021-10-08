@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import CdFinancesAgregator from "./CdFinancesAgregator.vue";
+import CdFinancesAgregator from "./CDFinancesAgregator.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { Carousel3d, Slide } from "vue-carousel-3d";
 import { computed, ref } from "@vue/composition-api";

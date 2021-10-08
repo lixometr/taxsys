@@ -9,7 +9,7 @@
 <script lang="ts">
 import CdFinancesHistory from '../../../components/CDFinances/CdFinancesHistory.vue'
 import CdFinancesPayments from '@/components/CDFinances/CdFinancesPayments.vue'
-import CdFinancesAgregators from "@/components/CDFinances/CdFinancesAgregators.vue";
+import CdFinancesAgregators from "@/components/CDFinances/CDFinancesAgregators.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
