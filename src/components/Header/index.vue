@@ -2,10 +2,10 @@
   <header class="header">
     <div class="header__row">
       <header-burger class="md-show" />
-      <header-search-mob class="header__search-mob md-show ml-30" />
-      <header-search class="mr-15 md-hidden header__search" />
+      <!-- <header-search-mob class="header__search-mob md-show ml-30" />
+      <header-search class="mr-15 md-hidden header__search" /> -->
       <header-balance class="mr-15 header__balance md-hidden" />
-      <header-actions class="mr-20 header__actions md-hidden" />
+      <!-- <header-actions class="mr-20 header__actions md-hidden" /> -->
       <header-accout />
     </div>
   </header>

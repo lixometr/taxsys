@@ -1,0 +1,60 @@
+import { rest } from "msw";
+const items = [
+  {
+    id: 1,
+    partner_id: 3,
+    name: "\u0422\u0440\u0430\u043d\u0437\u0438\u0442",
+    city_id: 1123,
+    count_drivers: 1047,
+    count_orders: 0,
+    TurnoverOnOrders: 0,
+    ParkCommission: 0,
+    agreg: "yandex",
+    paymentgroup_id: 1,
+    keyApiV7: "GexebO/mnrLRHcjaJrOWtoTFD+EnNqtpiGQFHb",
+    parkId: "d7593fd75baf4a44938d9d193c61d19c",
+    clientId: "taxi/park/d7593fd75baf4a44938d9d193c61d19c",
+    loginGett: null,
+    loginGettApi: null,
+    commisionPark: null,
+    commisionAgreg: null,
+    commisionOfBonus: null,
+    citiApiKey: null,
+    created_at: "2020-11-08T09:20:23.000000Z",
+    updated_at: "2020-11-08T09:20:23.000000Z",
+    deleted_at: null,
+  },
+  {
+    id: 9,
+    partner_id: 3,
+    name: "\u0442\u0435\u0441\u0442",
+    city_id: 2,
+    count_drivers: 0,
+    count_orders: 0,
+    TurnoverOnOrders: 0,
+    ParkCommission: 0,
+    agreg: "yandex",
+    paymentgroup_id: 4,
+    keyApiV7: "123123",
+    parkId: "123",
+    clientId: "123",
+    loginGett: null,
+    loginGettApi: null,
+    commisionPark: null,
+    commisionAgreg: null,
+    commisionOfBonus: null,
+    citiApiKey: null,
+    created_at: "2021-04-29T11:39:37.000000Z",
+    updated_at: "2021-04-29T11:39:37.000000Z",
+    deleted_at: null,
+  },
+];
+export default [
+  rest.get("/api/controlroom", (req, res, { json }) => res(json(items))),
+  rest.post("/api/controlroom", (req, res, { json }) =>
+    res(json({ ok: true }))
+  ),
+  rest.delete("/api/controlroom/:id", (req, res, { json }) =>
+    res(json({ ok: true }))
+  ),
+];

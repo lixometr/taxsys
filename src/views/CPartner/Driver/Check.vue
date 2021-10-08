@@ -13,7 +13,6 @@ import DriverCheckHistory from "@/components/DriverCheck/DriverCheckHistory.vue"
 import PageTitle from "@/components/Page/PageTitle.vue";
 import DriverCheckForm from "@/components/DriverCheck/DriverCheckForm.vue";
 import { Component, Vue } from "vue-property-decorator";
-import useSocket from "@/compositions/useSocket";
 import { UserModule } from "@/store/modules/user";
 
 @Component({

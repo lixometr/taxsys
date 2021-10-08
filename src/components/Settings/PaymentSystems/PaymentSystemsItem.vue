@@ -10,7 +10,7 @@
         <div class="col-lg-7">
           <div class="font-ml payment-systems-item__balance">
             <div class="color-grey-2">Баланс:</div>
-            <div class="color-grey-1">{{ item.balans }} {{ currency }}</div>
+            <div class="color-grey-1">{{ item.balance }} {{ currency }}</div>
           </div>
         </div>
         <div class="col-lg-2 payment-systems-item__remove">
