@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-/dist
+
 credentials_2
 
 # local env files
