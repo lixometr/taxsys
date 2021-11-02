@@ -38,9 +38,10 @@ const noAuthList = ['Login', 'Register', 'CDLogin']
 router.beforeEach((to, from, next) => {
   // return next()
   if (!noAuthList.includes(to.name) && !UserModule.isAuth) {
-    const loginPath = to.matched.findIndex(item => item.name === 'CPartner') > -1
-      ? { name: 'Login' }
-      : { name: 'CDLogin' }
+    // const loginPath = to.matched.findIndex(item => item.name === 'CPartner') > -1
+    //   ? { name: 'Login' }
+    //   : { name: 'CDLogin' }
+    const loginPath = { name: 'Login' }
     next(loginPath)
   } else next()
 })
